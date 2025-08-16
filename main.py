@@ -15,6 +15,9 @@ from typing import Dict, List, Optional, Tuple
 
 logger = logging.getLogger("qfs-evaluation")
 
+# Determine the evaluation project's root (directory containing this script)
+eval_root = Path.cwd()
+
 # ----------------------------
 # Utilities
 # ----------------------------
@@ -111,15 +114,12 @@ def git_checkout(repo: Path, ref: str) -> None:
 # QFS runner
 # ----------------------------
 
-def resolve_article_paths(inputs: List[str], qfs_root: Path) -> List[Path]:
+def resolve_article_paths(inputs: List[str], base_root: Path) -> List[Path]:
     resolved: List[Path] = []
     allowed_suffixes = {".pdf", ".md", ".txt"}
     for raw in inputs:
-        p = Path(raw)
-        if not p.is_absolute():
-            # Try relative to QFS repo first, then CWD
-            p1 = (qfs_root / raw).resolve()
-            p = p1 if p1.exists() else p.resolve()
+        # Always resolve relative to eval_root
+        p = (eval_root / raw).resolve()
         if p.is_dir():
             # Collect allowed files recursively
             for ext in allowed_suffixes:
@@ -140,18 +140,18 @@ def resolve_article_paths(inputs: List[str], qfs_root: Path) -> List[Path]:
     return unique
 
 
-def resolve_article_path(input_path: str, qfs_root: Path) -> Path:
+def resolve_article_path(input_path: str, base_root: Path) -> Path:
     allowed_suffixes = {".pdf", ".md", ".txt"}
-    p = Path(input_path)
-    if not p.is_absolute():
-        p1 = (qfs_root / input_path).resolve()
-        p = p1 if p1.exists() else p.resolve()
+    # Always resolve relative to eval_root
+    p = (eval_root / input_path).resolve()
+    
     if not p.exists():
         raise FileNotFoundError(f"Article not found: {input_path}")
     if p.is_dir():
         raise ValueError(f"Expected a file for 'article', got a directory: {input_path}")
     if p.suffix.lower() not in allowed_suffixes:
         raise ValueError(f"Unsupported article type: {input_path}")
+    
     return p
 
 
@@ -196,12 +196,14 @@ def _extract_last_json_blob(text: str) -> Dict:
     raise json.JSONDecodeError("Could not locate a valid JSON object in output", text, 0)
 
 
-def run_qfs_for_file(qfs_root: Path, py: List[str], file_path: Path, query: str, max_iterations: Optional[int]) -> Tuple[Dict, str, str]:
+
+def run_qfs_for_file(qfs_root: Path, py: List[str], file_path: Path, query: str, max_iterations: Optional[int], output_json_path: Path) -> Tuple[Dict, str, str]:
     cmd = py + [
         str(qfs_root / "src/main.py"),
         "--file", str(file_path),
         "--query", query,
         "--output_format", "json",
+        "--json_path", str(output_json_path),
     ]
     if max_iterations is not None:
         cmd += ["--max_iterations", str(max_iterations)]
@@ -209,11 +211,15 @@ def run_qfs_for_file(qfs_root: Path, py: List[str], file_path: Path, query: str,
     code, out, err = run_cmd(cmd, cwd=qfs_root)
     if code != 0:
         raise RuntimeError(f"QFS run failed for {file_path.name}: {err or out}")
-    # Extract JSON even if there's noise on stdout
+
+    # Ensure file was written and load it
+    if not output_json_path.exists():
+        raise RuntimeError(f"Expected JSON output not found at {output_json_path}. Stdout snippet:\n{out[:500]}")
     try:
-        data = _extract_last_json_blob(out)
+        data = json.loads(output_json_path.read_text(encoding="utf-8"))
     except Exception as e:
-        raise RuntimeError(f"Failed to parse JSON output for {file_path.name}: {e}\nOutput was:\n{out[:2000]}")
+        raise RuntimeError(f"Failed to read/parse JSON at {output_json_path}: {e}")
+
     return data, out, err
 
 
@@ -242,27 +248,23 @@ def append_run_csv(csv_path: Path, row: Dict[str, str]) -> None:
         writer.writerow({k: row.get(k, "") for k in headers})
 
 
-def load_requests_from_json(json_path: Path, qfs_root: Path) -> List[Tuple[Path, str]]:
+def load_requests_from_json(json_path: Path) -> List[Tuple[Path, str]]:
     data = json.loads(json_path.read_text(encoding="utf-8"))
-    if isinstance(data, dict):
-        # Accept common container keys
-        for key in ("items", "data", "requests", "runs"):
-            if isinstance(data.get(key), list):
-                data = data[key]
-                break
     if not isinstance(data, list):
-        raise ValueError("Input JSON must be a list of {\"article\":..., \"query\":...} objects or a dict containing such a list under 'items'/'data'/'requests'/'runs'.")
-    pairs: List[Tuple[Path, str]] = []
+        raise ValueError("Input JSON must be a list of {\"article\":..., \"query\":...} objects")
+    
+    pairs = []
     for idx, item in enumerate(data):
         if not isinstance(item, dict) or "article" not in item or "query" not in item:
-            raise ValueError(f"Entry {idx} must be an object with 'article' and 'query' fields.")
-        article = resolve_article_path(str(item["article"]), qfs_root)
-        query = str(item["query"]) if item["query"] is not None else ""
+            raise ValueError(f"Entry {idx} must be an object with 'article' and 'query' fields")
+        article = resolve_article_path(str(item["article"]), Path.cwd())
+        query = str(item["query"])
         if not query:
-            raise ValueError(f"Entry {idx} has an empty query.")
+            raise ValueError(f"Entry {idx} has an empty query")
         pairs.append((article, query))
+        
     if not pairs:
-        raise ValueError("No valid article/query pairs found in input JSON.")
+        raise ValueError("No valid article/query pairs found in input JSON")
     return pairs
 
 
@@ -272,13 +274,13 @@ def load_requests_from_json(json_path: Path, qfs_root: Path) -> List[Tuple[Path,
 
 def main():
     parser = argparse.ArgumentParser(description="Run batch evaluations against Query-Focused-Summarization.")
-    parser.add_argument("--qfs-path", default=str(Path(__file__).resolve().parent.parent / "Query-Focused-Summarization"), help="Path to the Query-Focused-Summarization repo (default: ../Query-Focused-Summarization)")
+    parser.add_argument("--qfs-path", default="../Query-Focused-Summarization", help="Path to QFS repo relative to current directory")
     parser.add_argument("--branch", required=True, help="Branch in QFS repo to checkout and run")
-    parser.add_argument("--run-name", required=True, help="Name for this evaluation run; results will be saved under results/<run-name>/")
-    parser.add_argument("--meta", help="JSON string with run metadata, or a path to a JSON file")
-    parser.add_argument("--input-json", required=True, help="Path to JSON file with a list of {article, query} items. Also accepts an object containing such a list under 'items'/'data'/'requests'/'runs'.")
-    parser.add_argument("--max-iterations", type=int, default=None, help="Max iterations for the QFS workflow")
-    parser.add_argument("--output-root", default=str(Path(__file__).resolve().parent / "results"), help="Where to store run results (default: ./results)")
+    parser.add_argument("--run-name", required=True, help="Name for this evaluation run")
+    parser.add_argument("--input-json", required=True, help="Path to requests JSON file relative to current directory")
+    parser.add_argument("--output-root", default="results", help="Where to store results relative to current directory")
+    parser.add_argument("--max-iterations", type=int, help="Max iterations for QFS workflow")
+    parser.add_argument("--meta", help="Optional metadata as JSON string or file relative to current directory")
 
     args = parser.parse_args()
 
@@ -288,13 +290,13 @@ def main():
 
     logger.info("Starting run '%s' on branch '%s'", args.run_name, args.branch)
 
-    qfs_root = Path(args.qfs_path).resolve()
+    qfs_root = (eval_root / args.qfs_path).resolve()
     logger.info("Using QFS repo at %s", qfs_root)
     if not (qfs_root.exists() and (qfs_root / "src/main.py").exists()):
         logger.error("QFS repo not found at %s", qfs_root)
         sys.exit(1)
 
-    output_root = Path(args.output_root).resolve()
+    output_root = (eval_root / args.output_root).resolve()
     run_dir = output_root / safe_slug(args.run_name)
     run_dir.mkdir(parents=True, exist_ok=True)
     (run_dir / "raw").mkdir(parents=True, exist_ok=True)
@@ -318,11 +320,10 @@ def main():
     (run_dir / "meta.json").write_text(json.dumps(meta_obj, ensure_ascii=False, indent=2), encoding="utf-8")
 
     # Build requests (article, query) list from required JSON
-    json_path = Path(args.input_json)
-    if not json_path.exists():
-        logger.error("Input JSON not found: %s", json_path)
-        sys.exit(1)
-    requests = load_requests_from_json(json_path, qfs_root)
+    json_path = (eval_root / args.input_json).resolve()
+    
+    # Load requests from JSON file
+    requests = load_requests_from_json(json_path)
     logger.info("Loaded %d requests from %s", len(requests), json_path)
 
     # Prep CSV
@@ -362,26 +363,15 @@ def main():
             logger.info("Processing %s", article.name)
             started_at = datetime.now(UTC)
             t0 = time.time()
-            data, stdout_text, stderr_text = run_qfs_for_file(qfs_root, py, article, query, args.max_iterations)
+
+            name_slug = safe_slug(article.stem)
+            qfs_json_file = run_dir / f"{name_slug}.json"
+
+            # Run QFS which writes JSON directly to qfs_json_file
+            data, stdout_text, stderr_text = run_qfs_for_file(qfs_root, py, article, query, args.max_iterations, qfs_json_file)
             duration = time.time() - t0
 
-            # Save wrapped JSON output per article to include the whole process
-            name_slug = safe_slug(article.stem)
-            out_file = run_dir / f"{name_slug}.json"
-            result_obj = {
-                "article": str(article),
-                "query": query,
-                "branch": args.branch,
-                "commit": target_commit,
-                "run_name": args.run_name,
-                "started_at": started_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
-                "duration_sec": round(duration, 3),
-                "max_iterations": args.max_iterations,
-                "meta": meta_obj,
-                "qfs_output": data,  # Includes all iterations from the QFS workflow
-            }
-            out_file.write_text(json.dumps(result_obj, ensure_ascii=False, indent=2), encoding="utf-8")
-            logger.info("Saved output to %s (%.1fs)", out_file, duration)
+            logger.info("Saved QFS output to %s (%.1fs)", qfs_json_file, duration)
 
             # Save raw stdout/stderr for debugging
             raw_stdout = run_dir / "raw" / f"{name_slug}.stdout.txt"

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QFS Evaluation Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .controls {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        select {
+            padding: 8px;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .results {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .summary {
+            white-space: pre-wrap;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        .qa-pair {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .qa-pair h4 {
+            margin: 0 0 10px 0;
+            color: #2c5282;
+        }
+
+        .qa-pair p {
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .missing-topics {
+            color: #c53030;
+            margin-top: 15px;
+        }
+
+        h2 {
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+
+        .metadata {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .iteration {
+            border: 1px solid #e2e8f0;
+            margin: 15px 0;
+        }
+
+        .iteration h3 {
+            background-color: #edf2f7;
+            margin: 0;
+            padding: 10px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="controls">
+        <select id="runSelect">
+            <option value="">Select a run...</option>
+        </select>
+        <select id="articleSelect" disabled>
+            <option value="">Select an article...</option>
+        </select>
+    </div>
+    <div id="results" class="results">
+        <p>Select a run and article to view results.</p>
+    </div>
+
+    <script>
+        async function loadRuns() {
+            const runs = ['exp-001', 'exp-002'];
+            const runSelect = document.getElementById('runSelect');
+            runs.forEach(run => {
+                const option = document.createElement('option');
+                option.value = run;
+                option.textContent = run;
+                runSelect.appendChild(option);
+            });
+        }
+
+        async function loadArticles(run) {
+            try {
+                const articleSelect = document.getElementById('articleSelect');
+                articleSelect.innerHTML = '<option value="">Select an article...</option>';
+
+                // Known article files
+                const articles = [
+                    'Attention-Is-All-You-Need.json',
+                    'The-Linear-Representation-Hypothesis.json'
+                ];
+
+                articles.forEach(file => {
+                    const option = document.createElement('option');
+                    option.value = file;
+                    option.textContent = file.replace('.json', '').replace(/-/g, ' ');
+                    articleSelect.appendChild(option);
+                });
+
+                articleSelect.disabled = false;
+            } catch (error) {
+                console.error('Error loading articles:', error);
+            }
+        }
+
+        async function loadResults(run, article) {
+            try {
+                const response = await fetch(`results/${run}/${article}`);
+                const data = await response.json();
+
+                const manifestResponse = await fetch(`results/${run}/manifest.json`);
+                const manifest = await manifestResponse.json();
+
+                let html = `
+                    <div class="metadata">
+                        <p><strong>Run:</strong> ${run}</p>
+                        <p><strong>Timestamp:</strong> ${manifest.timestamp}</p>
+                        <p><strong>Branch:</strong> ${manifest.branch}</p>
+                        <p><strong>Commit:</strong> ${manifest.commit}</p>
+                        <p><strong>Query:</strong> ${data.query}</p>
+                        <p><strong>Max Iterations:</strong> ${data.max_iterations}</p>
+                        <p><strong>Status:</strong> ${data.status}</p>
+                        <p><strong>Total Iterations:</strong> ${data.total_iterations}</p>
+                    </div>
+                    <h2>Final Summary</h2>
+                    <div class="summary">${data.final_summary}</div>
+                    <h2>Iterations</h2>
+                `;
+
+                data.iterations.forEach((iteration, index) => {
+                    html += `
+                        <div class="iteration" style="margin-bottom: 30px; padding: 20px; background-color: #f8f9fa; border-radius: 8px;">
+                            <h3>Iteration ${iteration.iteration_number}</h3>
+                            <div class="summary">${iteration.summary}</div>
+                            <h4>Q&A Pairs</h4>
+                            ${iteration.qa_pairs.map(([question, answer]) => `
+                                <div class="qa-pair">
+                                    <h4>Q: ${question}</h4>
+                                    <p>A: ${answer}</p>
+                                </div>
+                            `).join('')}
+                            ${iteration.missing_topics && iteration.missing_topics.length > 0 ? `
+                                <h4>Missing Topics</h4>
+                                <div class="missing-topics">
+                                    <ul>
+                                        ${iteration.missing_topics.map(topic => `<li>${topic}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                });
+
+                document.getElementById('results').innerHTML = html;
+            } catch (error) {
+                console.error('Error loading results:', error);
+                document.getElementById('results').innerHTML = '<p>Error loading results. Please try again.</p>';
+            }
+        }
+
+        document.getElementById('runSelect').addEventListener('change', (e) => {
+            const run = e.target.value;
+            if (run) {
+                loadArticles(run);
+            } else {
+                document.getElementById('articleSelect').disabled = true;
+                document.getElementById('articleSelect').innerHTML = '<option value="">Select an article...</option>';
+                document.getElementById('results').innerHTML = '<p>Select a run and article to view results.</p>';
+            }
+        });
+
+        document.getElementById('articleSelect').addEventListener('change', (e) => {
+            const run = document.getElementById('runSelect').value;
+            const article = e.target.value;
+            if (run && article) {
+                loadResults(run, article);
+            }
+        });
+
+        // Load runs when the page loads
+        loadRuns();
+    </script>
+</body>
+
+</html>

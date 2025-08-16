@@ -1,56 +1,79 @@
 # QFS-evaluation
 
-Batch evaluator for the sibling Query-Focused-Summarization (QFS) repo.
+## Purpose
 
-What it does
-- Stashes local changes in QFS (if any), checks out a target branch, and runs the QFS CLI across per-article requests.
-- Saves one JSON output per article under results/<run-name>/ plus manifest.json and meta.json.
-- Appends a CSV log (results/runs.csv) with branch, commit, run name, article, query, and run metadata.
-- Restores your original branch when finished and leaves a stash reference if one was created.
+This project provides a batch evaluation tool for the Query-Focused-Summarization (QFS) system. It automates running the QFS tool against multiple articles and queries, across different code versions (Git branches). The primary goal is to enable systematic testing and comparison of summarization outputs.
 
-Assumptions
-- Folder layout: this project and the QFS repo are siblings under the same parent directory.
-  - Default QFS path: ../Query-Focused-Summarization
-  - Override with --qfs-path if needed.
+## Structure
 
-Requirements
-- QFS repo has its dependencies installed (preferably a .venv inside QFS). The runner will use QFS/.venv/bin/python if found, else fall back to python3/python.
-- Environment variable GOOGLE_API_KEY must be set for the QFS LLM.
+The project is centered around the `main.py` script, which orchestrates the evaluation workflow. It interacts with a sibling `Query-Focused-Summarization` Git repository to run different versions of the summarization tool. The evaluator handles Git operations (stashing local changes, checking out branches), invokes the QFS command-line interface for each input, and saves the structured JSON output and logs.
 
-Input format (required)
-- Provide --input-json pointing to a JSON array of objects with per-article queries:
+### File Structure
 
-Example `examples/requests.sample.json`:
-```
+- `main.py`: The main evaluation script.
+- `ui`: A simple web interface to view the results.
+- `requests/requests.sample.json`: An example of the input JSON file format.
+- `results/`: The default directory where all evaluation outputs are stored, organized by run name.
+- `README.md`: This file.
+
+### Special Files
+
+The evaluation process is driven by an input JSON file specified with the `--input-json` argument. This file contains an array of objects, where each object defines an `article` to be processed and a `query` for summarization.
+
+Example `requests/requests.sample.json`:
+```json
 [
   {
-    "article": "articals/Attention-Is-All-You-Need.pdf",
+    "article": "articles/Attention-Is-All-You-Need.pdf",
     "query": "What are the core innovations of the Transformer architecture and how do they replace recurrence?"
   },
   {
-    "article": "articals/The Linear Representation Hypothesis.pdf",
+    "article": "articles/The Linear Representation Hypothesis.pdf",
     "query": "Summarize the linear representation hypothesis and its implications for neural network interpretability."
   }
 ]
 ```
 
-Usage (examples)
-- Minimal:
-  python QFS-evaluation/main.py --branch my-branch --run-name exp-001 --input-json QFS-evaluation/examples/requests.sample.json
-- With metadata:
-  python QFS-evaluation/main.py --branch my-branch --run-name exp-002 --input-json ./requests.json --meta '{"seed": 1, "notes": "baseline"}'
-- Control iterations:
-  python QFS-evaluation/main.py --branch my-branch --run-name exp-003 --input-json ./requests.json --max-iterations 3
-- Custom locations:
-  python QFS-evaluation/main.py --branch my-branch --run-name exp-004 --input-json ./requests.json --qfs-path ../Query-Focused-Summarization --output-root ./results
+For each article and query pair, the evaluation generates detailed JSON output in the results directory. The output includes:
+- A comprehensive summary
+- A set of automatically generated QA pairs to validate the summary
+- Multiple iterations of refinement if needed
+- Metadata about the evaluation run
 
-Output structure
-- results/<run-name>/
-  - <article-name>.json  (structured JSON from QFS --output_format json)
-  - manifest.json        (summary of run parameters)
-  - meta.json            (the metadata object you passed)
-- results/runs.csv       (appended per-article rows)
+## Usage
 
-Notes
-- The runner tolerates extra prints in QFS stdout and extracts the last JSON object.
-- If local changes exist in QFS, they are stashed with a unique message; the stash is not auto-applied at the end.
+### Quick Start
+
+1.  **Prerequisites:**
+    *   Ensure you have a sibling directory named `Query-Focused-Summarization` containing the QFS project.
+    *   The QFS project should have its dependencies installed (either in a `.venv` or `venv` directory).
+    *   Set up the required environment variables for the LLM service.
+
+2.  **Run an evaluation:**
+
+    ```bash
+    python main.py --branch <your-qfs-branch> --run-name <your-run-name> --input-json requests/requests.sample.json
+    ```
+
+    *   `--branch`: The Git branch in the QFS repository to evaluate.
+    *   `--run-name`: A unique name for this evaluation run. Outputs will be saved in `results/<run-name>/`.
+    *   `--input-json`: Path to the JSON file with articles and queries. Each run will create output files in the results directory, preserving the article's name but with a .json extension.
+
+### Other Usage Modes
+
+You can customize the evaluation with additional arguments:
+
+*   **Add metadata to a run:**
+    ```bash
+    python main.py --branch my-branch --run-name exp-002 --input-json ./requests.json --meta '{"seed": 1, "notes": "baseline"}'
+    ```
+
+*   **Limit the number of articles to process:**
+    ```bash
+    python main.py --branch my-branch --run-name exp-003 --input-json ./requests.json --max-iterations 3
+    ```
+
+*   **Specify custom paths for the QFS repo and output directory:**
+    ```bash
+    python main.py --branch my-branch --run-name exp-004 --input-json ./requests.json --qfs-path ../My-QFS-Fork --output-root ./custom-results
+    ```
