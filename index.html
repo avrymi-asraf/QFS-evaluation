@@ -106,38 +106,84 @@
     </div>
 
     <script>
-        async function loadRuns() {
-            const runs = ['exp-001', 'exp-002'];
-            const runSelect = document.getElementById('runSelect');
-            runs.forEach(run => {
-                const option = document.createElement('option');
-                option.value = run;
-                option.textContent = run;
-                runSelect.appendChild(option);
+        // Directory-based discovery (no CSV dependency)
+        const RUN_CACHE = {}; // run_name -> { articles: [{file, display}] }
+
+        function parseDirListing(htmlText) {
+            // Parses a simple directory listing (like Python's http.server) and returns {files, dirs}
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(htmlText, 'text/html');
+            const anchors = Array.from(doc.querySelectorAll('a'));
+            const files = [];
+            const dirs = [];
+            anchors.forEach(a => {
+                const href = a.getAttribute('href');
+                if (!href || href.startsWith('?') || href === '../') return;
+                if (href.endsWith('/')) {
+                    dirs.push(href.replace(/\/$/, ''));
+                } else {
+                    files.push(href);
+                }
             });
+            return { files, dirs };
+        }
+
+        async function fetchDir(url) {
+            const resp = await fetch(url + '?_=' + Date.now());
+            if (!resp.ok) throw new Error('Failed to list ' + url);
+            return parseDirListing(await resp.text());
+        }
+
+        async function loadRuns() {
+            const runSelect = document.getElementById('runSelect');
+            runSelect.innerHTML = '<option value="">Select a run...</option>';
+            try {
+                const listing = await fetchDir('results/');
+                const candidates = listing.dirs.filter(d => !['raw'].includes(d));
+                // Verify each has manifest.json (optional, ignore failures)
+                const verified = [];
+                await Promise.all(candidates.map(async d => {
+                    try {
+                        const m = await fetch('results/' + d + '/manifest.json');
+                        if (m.ok) verified.push(d);
+                    } catch (_) { /* ignore */ }
+                }));
+                verified.sort().forEach(run => {
+                    RUN_CACHE[run] = { articles: [] }; // fill on demand
+                    const option = document.createElement('option');
+                    option.value = run;
+                    option.textContent = run;
+                    runSelect.appendChild(option);
+                });
+                if (!verified.length) {
+                    document.getElementById('results').innerHTML = '<p>No run directories found under results/.</p>';
+                }
+            } catch (e) {
+                console.error(e);
+                document.getElementById('results').innerHTML = '<p>Unable to load run directories (directory listing may be disabled).</p>';
+            }
         }
 
         async function loadArticles(run) {
+            const articleSelect = document.getElementById('articleSelect');
+            articleSelect.innerHTML = '<option value="">Select an article...</option>';
+            articleSelect.disabled = true;
+            if (!run) return;
             try {
-                const articleSelect = document.getElementById('articleSelect');
-                articleSelect.innerHTML = '<option value="">Select an article...</option>';
-
-                // Known article files
-                const articles = [
-                    'Attention-Is-All-You-Need.json',
-                    'The-Linear-Representation-Hypothesis.json'
-                ];
-
-                articles.forEach(file => {
-                    const option = document.createElement('option');
-                    option.value = file;
-                    option.textContent = file.replace('.json', '').replace(/-/g, ' ');
-                    articleSelect.appendChild(option);
-                });
-
-                articleSelect.disabled = false;
-            } catch (error) {
-                console.error('Error loading articles:', error);
+                const listing = await fetchDir('results/' + run + '/');
+                const jsonFiles = listing.files.filter(f => f.endsWith('.json') && !['manifest.json', 'meta.json'].includes(f));
+                const articles = jsonFiles.map(f => ({ file: f, display: f.replace(/\.json$/, '').replace(/-/g, ' ') }));
+                RUN_CACHE[run].articles = articles;
+                articles.sort((a, b) => a.display.localeCompare(b.display))
+                    .forEach(a => {
+                        const option = document.createElement('option');
+                        option.value = a.file;
+                        option.textContent = a.display;
+                        articleSelect.appendChild(option);
+                    });
+                if (articles.length) articleSelect.disabled = false;
+            } catch (e) {
+                console.error('Failed to load articles for run', run, e);
             }
         }
 
