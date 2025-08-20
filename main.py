@@ -12,6 +12,8 @@ import time
 from datetime import datetime, UTC
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import hashlib
 
 logger = logging.getLogger("qfs-evaluation")
 
@@ -202,7 +204,6 @@ def run_qfs_for_file(qfs_root: Path, py: List[str], file_path: Path, query: str,
         str(qfs_root / "src/main.py"),
         "--file", str(file_path),
         "--query", query,
-        "--output_format", "json",
         "--json_path", str(output_json_path),
     ]
     if max_iterations is not None:
@@ -212,7 +213,7 @@ def run_qfs_for_file(qfs_root: Path, py: List[str], file_path: Path, query: str,
     if code != 0:
         raise RuntimeError(f"QFS run failed for {file_path.name}: {err or out}")
 
-    # Ensure file was written and load it
+    # Ensure file was written and load it (QFS now always emits JSON when --json_path supplied)
     if not output_json_path.exists():
         raise RuntimeError(f"Expected JSON output not found at {output_json_path}. Stdout snippet:\n{out[:500]}")
     try:
@@ -281,6 +282,7 @@ def main():
     parser.add_argument("--output-root", default="results", help="Where to store results relative to current directory")
     parser.add_argument("--max-iterations", type=int, help="Max iterations for QFS workflow")
     parser.add_argument("--meta", help="Optional metadata as JSON string or file relative to current directory")
+    parser.add_argument("--concurrency", type=int, default=1, help="Number of concurrent requests to process (default: 1)")
 
     args = parser.parse_args()
 
@@ -358,42 +360,59 @@ def main():
         py = detect_python_interpreter(qfs_root)
         logger.info("Using Python interpreter: %s", py[0])
 
-        # Execute per request
-        for article, query in requests:
-            logger.info("Processing %s", article.name)
-            started_at = datetime.now(UTC)
-            t0 = time.time()
-
-            name_slug = safe_slug(article.stem)
+        # Helper to process a single request (used for sequential + parallel)
+        def _process_single(article: Path, query: str):
+            qhash = hashlib.md5(query.encode("utf-8")).hexdigest()[:8]
+            base_slug = safe_slug(article.stem)
+            # Include a short, safe snippet of the query for readability
+            query_part = safe_slug(query[:40])
+            name_slug = f"{base_slug}--{query_part or qhash}--{qhash}"
             qfs_json_file = run_dir / f"{name_slug}.json"
-
-            # Run QFS which writes JSON directly to qfs_json_file
+            t0 = time.time()
             data, stdout_text, stderr_text = run_qfs_for_file(qfs_root, py, article, query, args.max_iterations, qfs_json_file)
             duration = time.time() - t0
-
-            logger.info("Saved QFS output to %s (%.1fs)", qfs_json_file, duration)
-
-            # Save raw stdout/stderr for debugging
+            # Save raw outputs
             raw_stdout = run_dir / "raw" / f"{name_slug}.stdout.txt"
             raw_stderr = run_dir / "raw" / f"{name_slug}.stderr.txt"
             raw_stdout.write_text(stdout_text, encoding="utf-8")
             raw_stderr.write_text(stderr_text, encoding="utf-8")
+            logger.info("Finished %s (%.1fs) -> %s", article.name, duration, qfs_json_file.name)
+            return {
+                "timestamp": timestamp,
+                "run_name": args.run_name,
+                "branch": args.branch,
+                "commit": target_commit,
+                "article": str(article),
+                "query": query,
+                "max_iterations": str(args.max_iterations or ""),
+                "meta_json": json.dumps(meta_obj, ensure_ascii=False),
+            }
 
-            # Append CSV row
-            append_run_csv(
-                csv_path,
-                {
-                    "timestamp": timestamp,
-                    "run_name": args.run_name,
-                    "branch": args.branch,
-                    "commit": target_commit,
-                    "article": str(article),
-                    "query": query,
-                    "max_iterations": str(args.max_iterations or ""),
-                    "meta_json": json.dumps(meta_obj, ensure_ascii=False),
-                },
-            )
-            logger.info("Appended CSV row")
+        conc = max(1, int(args.concurrency or 1))
+        logger.info("Processing %d requests with concurrency=%d", len(requests), conc)
+
+        rows_to_append: List[Dict[str, str]] = []
+        if conc == 1:
+            for article, query in requests:
+                logger.info("Processing %s", article.name)
+                rows_to_append.append(_process_single(article, query))
+        else:
+            # Use thread pool since work is dominated by subprocess + I/O
+            with ThreadPoolExecutor(max_workers=conc) as pool:
+                future_map = {pool.submit(_process_single, a, q): (a, q) for a, q in requests}
+                for fut in as_completed(future_map):
+                    article, query = future_map[fut]
+                    try:
+                        row = fut.result()
+                        rows_to_append.append(row)
+                    except Exception as e:
+                        logger.error("Request failed for %s (%s): %s", article.name, query[:60], e)
+                        raise
+
+        # Append all CSV rows at the end to avoid interleaving writes in concurrency
+        for row in rows_to_append:
+            append_run_csv(csv_path, row)
+        logger.info("Appended %d CSV rows", len(rows_to_append))
 
         # Save a manifest
         manifest = {

@@ -62,6 +62,25 @@
             line-height: 1.5;
         }
 
+        .qa-result {
+            margin-top: 8px;
+            font-weight: bold;
+        }
+
+        .qa-result.pass {
+            color: #2f855a;
+        }
+
+        .qa-result.fail {
+            color: #c53030;
+        }
+
+        .qa-issue {
+            margin-top: 4px;
+            color: #b7791f;
+            font-size: 0.9em;
+        }
+
         .missing-topics {
             color: #c53030;
             margin-top: 15px;
@@ -212,17 +231,47 @@
                 `;
 
                 data.iterations.forEach((iteration, index) => {
+                    // Build evaluation map (question -> {result, issue}) from either iteration.qa_evaluations or nested judge.evaluations
+                    const evals = {};
+                    if (Array.isArray(iteration.qa_evaluations)) {
+                        iteration.qa_evaluations.forEach(ev => {
+                            if (ev && ev.qa && ev.qa.question) {
+                                evals[ev.qa.question] = { result: ev.result, issue: ev.issue };
+                            }
+                        });
+                    }
+                    // Fallback: look into judge.evaluations if needed
+                    if (iteration.judge && Array.isArray(iteration.judge.evaluations)) {
+                        iteration.judge.evaluations.forEach(ev => {
+                            if (ev && ev.qa && ev.qa.question && !(ev.qa.question in evals)) {
+                                evals[ev.qa.question] = { result: ev.result, issue: ev.issue };
+                            }
+                        });
+                    }
+
+                    const qaHtml = (iteration.qa_pairs || []).map(qa => {
+                        // New format: each qa is an object {question, answer}
+                        const question = qa.question || '';
+                        const answer = qa.answer || '';
+                        const evaluation = evals[question];
+                        const passed = evaluation ? evaluation.result : null;
+                        const issue = evaluation ? evaluation.issue : null;
+                        return `
+                            <div class="qa-pair">
+                                <h4>Q: ${question}</h4>
+                                <p>A: ${answer}</p>
+                                ${passed !== null ? `<div class="qa-result ${passed ? 'pass' : 'fail'}">Result: ${passed ? 'PASS' : 'FAIL'}</div>` : ''}
+                                ${issue ? `<div class="qa-issue">Reason: ${issue}</div>` : ''}
+                            </div>
+                        `;
+                    }).join('');
+
                     html += `
                         <div class="iteration" style="margin-bottom: 30px; padding: 20px; background-color: #f8f9fa; border-radius: 8px;">
                             <h3>Iteration ${iteration.iteration_number}</h3>
                             <div class="summary">${iteration.summary}</div>
                             <h4>Q&A Pairs</h4>
-                            ${iteration.qa_pairs.map(([question, answer]) => `
-                                <div class="qa-pair">
-                                    <h4>Q: ${question}</h4>
-                                    <p>A: ${answer}</p>
-                                </div>
-                            `).join('')}
+                            ${qaHtml || '<p>No Q&A pairs.</p>'}
                             ${iteration.missing_topics && iteration.missing_topics.length > 0 ? `
                                 <h4>Missing Topics</h4>
                                 <div class="missing-topics">

@@ -77,3 +77,13 @@ You can customize the evaluation with additional arguments:
     ```bash
     python main.py --branch my-branch --run-name exp-004 --input-json ./requests.json --qfs-path ../My-QFS-Fork --output-root ./custom-results
     ```
+
+*   **Process requests concurrently (parallel execution):**
+  ```bash
+  python main.py --branch my-branch --run-name exp-005 --input-json ./requests.json --concurrency 4
+  ```
+  Set `--concurrency` to the number of simultaneous article/query executions you want. Each output file name now includes a short hash and snippet of the query to avoid collisions when the same article appears with different queries. Example pattern:
+  ```
+  <article-stem>--<query-snippet>--<hash>.json
+  ```
+  Raw stdout/stderr for each run are stored under `results/<run-name>/raw/` with the same slug and `.stdout.txt` / `.stderr.txt` suffixes.
