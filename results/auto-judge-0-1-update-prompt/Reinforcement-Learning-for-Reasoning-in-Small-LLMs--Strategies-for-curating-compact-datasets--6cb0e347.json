@@ -1,0 +1,2365 @@
+{
+  "query": "Strategies for curating compact datasets by balancing problem difficulty to enhance RL training efficiency under resource constraints.",
+  "max_iterations": 10,
+  "iterations": [
+    {
+      "iteration_number": 1,
+      "summary": "1. SUMMARY:\nThis study investigates strategies for curating compact, high-quality datasets to enhance reinforcement learning (RL) training efficiency for small LLMs under resource constraints. The researchers focused on a 1.5-billion-parameter model, DeepSeek-R1-Distill-Qwen-1.5B, and adapted the GRPO algorithm. They found that using a curated dataset of 7,000 samples, balancing problem difficulty, and employing a cosine reward function led to significant reasoning improvements (e.g., AMC23 accuracy from 63% to 80%, AIME24 to 46.7%) within strict resource limits (4 NVIDIA A40 GPUs, 24 hours, $42 cost). While initial gains were rapid, prolonged training led to instability. The research highlights the efficacy of RL for small LLMs, offering a cost-effective alternative to large-scale approaches, and emphasizes the importance of dataset curation and reward design for balancing problem difficulty and controlling output length to improve training efficiency.\n\n2. KEY HIGHLIGHTS:\n*   A compact dataset of 7,000 carefully curated mathematical reasoning problems, balancing difficulty, was used to train a small LLM (1.5B parameters) under strict resource constraints.\n*   The GRPO algorithm and a cosine reward function were employed to enhance training efficiency and control output length, achieving significant reasoning gains (e.g., AMC23 accuracy from 63% to 80%) with minimal cost ($42).\n*   Mixing easy and hard problems in the dataset stabilized early training and improved performance, demonstrating the benefit of a curriculum-like approach for balancing problem difficulty.\n*   The study demonstrates that RL-based fine-tuning can be a cost-effective and data-efficient strategy for improving reasoning in small LLMs, even under significant computational limitations.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+            "answer": "The summary does not provide information on the specific filtering process for the 's1' and 'DeepScaleR' datasets."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+            "answer": "The summary states that the 7,000-sample dataset was curated to balance problem difficulty, but it does not specify the exact composition of easier versus harder problems within that dataset."
+          },
+          "result": false,
+          "issue": "partial information"
+        },
+        {
+          "qa": {
+            "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+            "answer": "The summary mentions that prolonged training on a curated dataset led to instability, but it does not specifically address why a high-quality but complex dataset caused performance degradation after initial rapid improvement in Experiment 1."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+            "answer": "The summary indicates that mixing easier problems with challenging ones stabilized early training and improved performance, but it does not provide a direct comparison to Experiment 1 regarding initial performance and completion lengths."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+            "answer": "The Group Relative Policy Optimization (GRPO) algorithm was employed to enhance training efficiency and control output length, contributing to the overall effectiveness of the training process under resource constraints."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+            "answer": "The compact dataset created for Experiment 2 to balance problem difficulty contained 7,000 samples."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+            "answer": "The summary does not specify the exact number of 'easier problems' that were added to the dataset in Experiment 2."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+            "answer": "The summary does not provide the final number of high-quality examples in the curated 'open-s1' dataset."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+            "answer": "The summary does not provide the final number of examples in the 'open-deepscaler' dataset after filtering."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+            "answer": "The estimated training cost for the Open-RS models was $42, highlighting their efficiency under resource constraints."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+          "answer": "The summary does not provide information on the specific filtering process for the 's1' and 'DeepScaleR' datasets."
+        },
+        {
+          "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+          "answer": "The summary states that the 7,000-sample dataset was curated to balance problem difficulty, but it does not specify the exact composition of easier versus harder problems within that dataset."
+        },
+        {
+          "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+          "answer": "The summary mentions that prolonged training on a curated dataset led to instability, but it does not specifically address why a high-quality but complex dataset caused performance degradation after initial rapid improvement in Experiment 1."
+        },
+        {
+          "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+          "answer": "The summary indicates that mixing easier problems with challenging ones stabilized early training and improved performance, but it does not provide a direct comparison to Experiment 1 regarding initial performance and completion lengths."
+        },
+        {
+          "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+          "answer": "The Group Relative Policy Optimization (GRPO) algorithm was employed to enhance training efficiency and control output length, contributing to the overall effectiveness of the training process under resource constraints."
+        },
+        {
+          "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+          "answer": "The compact dataset created for Experiment 2 to balance problem difficulty contained 7,000 samples."
+        },
+        {
+          "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+          "answer": "The summary does not specify the exact number of 'easier problems' that were added to the dataset in Experiment 2."
+        },
+        {
+          "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+          "answer": "The summary does not provide the final number of high-quality examples in the curated 'open-s1' dataset."
+        },
+        {
+          "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+          "answer": "The summary does not provide the final number of examples in the 'open-deepscaler' dataset after filtering."
+        },
+        {
+          "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+          "answer": "The estimated training cost for the Open-RS models was $42, highlighting their efficiency under resource constraints."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+              "answer": "The summary does not provide information on the specific filtering process for the 's1' and 'DeepScaleR' datasets."
+            },
+            "result": false,
+            "issue": "The article details the filtering process for both the s1 and DeepScaleR datasets in Section 2.1."
+          },
+          {
+            "qa": {
+              "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+              "answer": "The summary states that the 7,000-sample dataset was curated to balance problem difficulty, but it does not specify the exact composition of easier versus harder problems within that dataset."
+            },
+            "result": false,
+            "issue": "The article specifies the composition of the 7,000-sample dataset in Section 3.5.2: '3000 from open-s1, 3000 from open-deepscaler, and 1000 easier problems from the raw DeepScaleR dataset'."
+          },
+          {
+            "qa": {
+              "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+              "answer": "The summary mentions that prolonged training on a curated dataset led to instability, but it does not specifically address why a high-quality but complex dataset caused performance degradation after initial rapid improvement in Experiment 1."
+            },
+            "result": false,
+            "issue": "The article explains in Section 3.5.1 that degradation occurred because the model 'struggles with the complexity of open-s1, often exceeding the 4096-token limit before producing a final answer.' It also mentions 'language drift indicate reward misalignment.'"
+          },
+          {
+            "qa": {
+              "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+              "answer": "The summary indicates that mixing easier problems with challenging ones stabilized early training and improved performance, but it does not provide a direct comparison to Experiment 1 regarding initial performance and completion lengths."
+            },
+            "result": false,
+            "issue": "The article, in Section 3.5.2, states that 'Initial completion lengths drop to approximately 2800 tokens, and performance improves significantly: AMC23 rises from 63% to 80%, and MATH-500 from 83% to 85% within 50–100 steps (Figure 2)'. This implicitly compares to Experiment 1's results."
+          },
+          {
+            "qa": {
+              "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+              "answer": "The Group Relative Policy Optimization (GRPO) algorithm was employed to enhance training efficiency and control output length, contributing to the overall effectiveness of the training process under resource constraints."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+              "answer": "The compact dataset created for Experiment 2 to balance problem difficulty contained 7,000 samples."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+              "answer": "The summary does not specify the exact number of 'easier problems' that were added to the dataset in Experiment 2."
+            },
+            "result": false,
+            "issue": "The article specifies in Section 3.5.2 that '1000 easier problems from the raw DeepScaleR dataset' were added."
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+              "answer": "The summary does not provide the final number of high-quality examples in the curated 'open-s1' dataset."
+            },
+            "result": false,
+            "issue": "The article states in Section 2.1 that the 'open-s1 dataset' contains '18,615 high-quality mathematical reasoning examples'."
+          },
+          {
+            "qa": {
+              "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+              "answer": "The summary does not provide the final number of examples in the 'open-deepscaler' dataset after filtering."
+            },
+            "result": false,
+            "issue": "The article states in Section 2.1 that the 'open-deepscaler dataset' contains '21,044 examples' after filtering."
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+              "answer": "The estimated training cost for the Open-RS models was $42, highlighting their efficiency under resource constraints."
+            },
+            "result": true,
+            "issue": ""
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "2 Methodology",
+          "2.1 High-Quality Dataset Curation",
+          "3.5 Process and Results",
+          "3.5.1 Experiment 1: Impact of High-Quality Data",
+          "3.5.2 Experiment 2: Balancing Easy and Hard Problems",
+          "3.5.3 Experiment 3: Controlling Length with Cosine Reward",
+          "B.1 Limitations"
+        ]
+      },
+      "correct_count_all": 3,
+      "correct_count_acu": 2,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "2 Methodology",
+        "2.1 High-Quality Dataset Curation",
+        "3.5 Process and Results",
+        "3.5.1 Experiment 1: Impact of High-Quality Data",
+        "3.5.2 Experiment 2: Balancing Easy and Hard Problems",
+        "3.5.3 Experiment 3: Controlling Length with Cosine Reward",
+        "B.1 Limitations"
+      ],
+      "sections_to_highlight_size": 7,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 2,
+      "summary": "1. SUMMARY:\nThis research explores strategies for curating compact, high-quality datasets to enhance reinforcement learning (RL) training efficiency for small LLMs under resource constraints. The study focuses on a 1.5B parameter model, DeepSeek-R1-Distill-Qwen-1.5B, trained on 4 NVIDIA A40 GPUs within 24 hours. The methodology involves adapting the GRPO algorithm and carefully curating mathematical reasoning datasets. Experiment 1 showed that small LLMs can achieve rapid reasoning gains (e.g., AMC23 from 63% to 70%) with limited high-quality data, but prolonged training leads to degradation. Experiment 2 demonstrated that balancing easy and hard problems with reduced length constraints (7000 samples) improved early performance and stabilized reasoning, with AMC23 reaching 80%. Experiment 3 utilized a cosine reward to control output length, stabilizing completion lengths but yielding slightly lower peak performance. The overall findings highlight the efficacy of RL for small LLMs, achieving competitive results with minimal data and cost ($42), but also reveal limitations such as optimization instability and length constraints, especially with multilingual base models.\n\n2. KEY HIGHLIGHTS:\n*   A compact dataset of 7,000 carefully curated mathematical reasoning samples, balancing problem difficulty, was used to train a small LLM (1.5B parameters) efficiently.\n*   RL-based fine-tuning, specifically using GRPO, enabled significant reasoning improvements in small LLMs, with AMC23 accuracy rising from 63% to 80% and AIME24 reaching 46.7% within a 24-hour training window on limited hardware.\n*   Mixing easier problems with harder ones and employing a cosine reward function proved effective in stabilizing training and controlling output length, mitigating performance degradation seen with prolonged training on complex datasets.\n*   The study achieved these gains with a training cost of approximately $42 and minimal data, significantly outperforming larger models in terms of resource efficiency and demonstrating a viable strategy for resource-constrained environments.\n*   Limitations include optimization instability and the need for extended length constraints for extremely difficult problems, particularly when using multilingual base models, suggesting further research into data curation and reward design.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+            "answer": "The summary does not provide details on the specific filtering process for the 's1' and 'DeepScaleR' datasets."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+            "answer": "The summary mentions that the 7,000-sample dataset used in Experiment 2 balanced easy and hard problems, but it does not specify the exact composition or ratio of easy to hard problems."
+          },
+          "result": false,
+          "issue": "partial information"
+        },
+        {
+          "qa": {
+            "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+            "answer": "The summary states that prolonged training on high-quality but complex datasets leads to performance degradation after an initial period of rapid improvement, but it does not explain the underlying reasons why this degradation occurs."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+            "answer": "In Experiment 2, mixing easier problems with challenging ones improved early performance and stabilized reasoning, with reduced length constraints. The summary does not directly compare the completion lengths to Experiment 1, but implies stabilization."
+          },
+          "result": false,
+          "issue": "partial information"
+        },
+        {
+          "qa": {
+            "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+            "answer": "The Group Relative Policy Optimization (GRPO) algorithm was adapted and played a role in achieving training efficiency for small LLMs under resource constraints, enabling significant reasoning improvements within a limited training window on limited hardware."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+            "answer": "A compact dataset of 7,000 carefully curated mathematical reasoning samples was used."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+            "answer": "The summary mentions that the dataset balanced easy and hard problems but does not specify the number of 'easier problems' added."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+            "answer": "The summary does not provide the final number of high-quality examples in the curated 'open-s1' dataset."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+            "answer": "The summary does not provide the final number of examples in the 'open-deepscaler' dataset after filtering."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+            "answer": "The study achieved significant gains with a training cost of approximately $42, highlighting their efficiency under resource constraints."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+          "answer": "The summary does not provide details on the specific filtering process for the 's1' and 'DeepScaleR' datasets."
+        },
+        {
+          "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+          "answer": "The summary mentions that the 7,000-sample dataset used in Experiment 2 balanced easy and hard problems, but it does not specify the exact composition or ratio of easy to hard problems."
+        },
+        {
+          "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+          "answer": "The summary states that prolonged training on high-quality but complex datasets leads to performance degradation after an initial period of rapid improvement, but it does not explain the underlying reasons why this degradation occurs."
+        },
+        {
+          "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+          "answer": "In Experiment 2, mixing easier problems with challenging ones improved early performance and stabilized reasoning, with reduced length constraints. The summary does not directly compare the completion lengths to Experiment 1, but implies stabilization."
+        },
+        {
+          "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+          "answer": "The Group Relative Policy Optimization (GRPO) algorithm was adapted and played a role in achieving training efficiency for small LLMs under resource constraints, enabling significant reasoning improvements within a limited training window on limited hardware."
+        },
+        {
+          "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+          "answer": "A compact dataset of 7,000 carefully curated mathematical reasoning samples was used."
+        },
+        {
+          "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+          "answer": "The summary mentions that the dataset balanced easy and hard problems but does not specify the number of 'easier problems' added."
+        },
+        {
+          "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+          "answer": "The summary does not provide the final number of high-quality examples in the curated 'open-s1' dataset."
+        },
+        {
+          "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+          "answer": "The summary does not provide the final number of examples in the 'open-deepscaler' dataset after filtering."
+        },
+        {
+          "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+          "answer": "The study achieved significant gains with a training cost of approximately $42, highlighting their efficiency under resource constraints."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+              "answer": "The summary does not provide details on the specific filtering process for the 's1' and 'DeepScaleR' datasets."
+            },
+            "result": false,
+            "issue": "The article provides detailed filtering steps for both s1 and DeepScaleR datasets in Section 2.1."
+          },
+          {
+            "qa": {
+              "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+              "answer": "The summary mentions that the 7,000-sample dataset used in Experiment 2 balanced easy and hard problems, but it does not specify the exact composition or ratio of easy to hard problems."
+            },
+            "result": false,
+            "issue": "The article specifies the composition in Section 3.5.2: '3000 from open-s1, 3000 from open-deepscaler, and 1000 easier problems from the raw DeepScaleR dataset'."
+          },
+          {
+            "qa": {
+              "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+              "answer": "The summary states that prolonged training on high-quality but complex datasets leads to performance degradation after an initial period of rapid improvement, but it does not explain the underlying reasons why this degradation occurs."
+            },
+            "result": false,
+            "issue": "The article explains the degradation in Section 3.5.1: 'model struggles with the complexity of open-s1, often exceeding the 4096-token limit before producing a final answer. The initial length reduction reflects adaptation to the format reward, but the subsequent increase and language drift indicate reward misalignment.'"
+          },
+          {
+            "qa": {
+              "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+              "answer": "In Experiment 2, mixing easier problems with challenging ones improved early performance and stabilized reasoning, with reduced length constraints. The summary does not directly compare the completion lengths to Experiment 1, but implies stabilization."
+            },
+            "result": false,
+            "issue": "The article implicitly compares completion lengths in Section 3.5.2 by stating initial lengths dropped to ~2800 tokens, whereas Experiment 1 had lengths fluctuating near 4000 tokens initially, then decreasing to ~3000. This shows a reduction and stabilization."
+          },
+          {
+            "qa": {
+              "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+              "answer": "The Group Relative Policy Optimization (GRPO) algorithm was adapted and played a role in achieving training efficiency for small LLMs under resource constraints, enabling significant reasoning improvements within a limited training window on limited hardware."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+              "answer": "A compact dataset of 7,000 carefully curated mathematical reasoning samples was used."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+              "answer": "The summary mentions that the dataset balanced easy and hard problems but does not specify the number of 'easier problems' added."
+            },
+            "result": false,
+            "issue": "The article specifies in Section 3.5.2 that '1000 easier problems from the raw DeepScaleR dataset' were added."
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+              "answer": "The summary does not provide the final number of high-quality examples in the curated 'open-s1' dataset."
+            },
+            "result": false,
+            "issue": "The article states in Section 2.1 that the 'open-s1' dataset has 'a final set of 18,615 high-quality mathematical reasoning examples'."
+          },
+          {
+            "qa": {
+              "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+              "answer": "The summary does not provide the final number of examples in the 'open-deepscaler' dataset after filtering."
+            },
+            "result": false,
+            "issue": "The article states in Section 2.1 that the 'open-deepscaler' dataset has 'a final set to 21,044 examples'."
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+              "answer": "The study achieved significant gains with a training cost of approximately $42, highlighting their efficiency under resource constraints."
+            },
+            "result": true,
+            "issue": ""
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": []
+      },
+      "correct_count_all": 3,
+      "correct_count_acu": 2,
+      "num_of_questions": 5,
+      "sections_to_highlight": [],
+      "sections_to_highlight_size": 0,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 3,
+      "summary": "1. SUMMARY:\nThis study investigates the efficacy of reinforcement learning (RL) for enhancing the reasoning capabilities of small Large Language Models (LLMs) under strict resource constraints, specifically a 1.5 billion parameter model trained on 4 NVIDIA A40 GPUs within 24 hours. The researchers adapted the Group Relative Policy Optimization (GRPO) algorithm and curated a compact, high-quality mathematical reasoning dataset. They found that by balancing problem difficulty (mixing easy and hard problems) and employing a cosine reward to control output length, they could achieve rapid reasoning gains. For instance, AMC23 accuracy improved from 63% to 80%, and AIME24 reached 46.7%, surpassing a baseline model. This was achieved with only 7,000 samples and a minimal training cost of $42. The study highlights that while RL can significantly boost small LLMs' reasoning with limited resources, challenges like optimization instability and length constraints require careful dataset curation and reward design.\n\n2. KEY HIGHLIGHTS:\n*   Small LLMs can achieve significant reasoning improvements (e.g., AMC23 accuracy from 63% to 80%) using RL under strict resource constraints (4x A40 GPUs, 24 hours).\n*   Curating a compact dataset (7,000 samples) that balances problem difficulty (easy and hard) and using a cosine reward for length control are key strategies for efficient training.\n*   This approach is highly cost-effective, with training costs around $42, significantly lower than thousands of dollars for larger models or more extensive datasets.\n*   While RL shows promise, challenges like optimization instability and length limitations necessitate careful tuning of dataset composition and reward functions.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+            "answer": "The Group Relative Policy Optimization (GRPO) algorithm was adapted to achieve rapid reasoning gains in small LLMs under strict resource constraints."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+            "answer": "The compact dataset created for Experiment 2 to balance problem difficulty contained 7,000 samples."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+            "answer": "The estimated training cost for the Open-RS models was around $42, highlighting their efficiency under resource constraints."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+          "answer": "The Group Relative Policy Optimization (GRPO) algorithm was adapted to achieve rapid reasoning gains in small LLMs under strict resource constraints."
+        },
+        {
+          "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+          "answer": "The compact dataset created for Experiment 2 to balance problem difficulty contained 7,000 samples."
+        },
+        {
+          "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+          "answer": "The estimated training cost for the Open-RS models was around $42, highlighting their efficiency under resource constraints."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+              "answer": "The 's1' dataset was filtered by retaining questions with \\boxed{} solutions, then using DeepSeek-R1-Distill-Qwen-1.5B to remove trivial questions, and finally Qwen2.5-7B-Instruct to remove noisy or multi-part questions, resulting in 18,615 examples. The DeepScaleR dataset was filtered using Qwen2.5-Math-7B-Instruct to exclude easy questions, reducing it to 21,044 examples."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+              "answer": "The 7,000-sample dataset used in Experiment 2 consisted of 3000 samples from the refined open-s1 dataset, 3000 samples from the open-deepscaler dataset, and 1000 easier problems from the raw DeepScaleR dataset."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+              "answer": "In Experiment 1, performance degradation after initial improvement was attributed to the model struggling with the complexity of the dataset, often exceeding the token limit and indicating reward misalignment, leading to unstable accuracy rewards and fluctuating completion lengths."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+              "answer": "In Experiment 2, mixing easier problems with challenging ones led to initial completion lengths dropping to approximately 2800 tokens and significantly improved performance (AMC23 rising from 63% to 80%, MATH-500 from 83% to 85%) within 50-100 steps, compared to Experiment 1 where performance degraded after initial gains."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+              "answer": "The Group Relative Policy Optimization (GRPO) algorithm was adapted to achieve rapid reasoning gains in small LLMs under strict resource constraints by eliminating the need for a separate critic model, thereby reducing computational overhead."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+              "answer": "The compact dataset created for Experiment 2 to balance problem difficulty contained 7,000 samples."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+              "answer": "1000 easier problems were specifically added to the dataset in Experiment 2 to balance against harder problems."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+              "answer": "The final number of high-quality examples in the curated 'open-s1' dataset was 18,615."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+              "answer": "After filtering, the final number of examples in the 'open-deepscaler' dataset was 21,044."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+              "answer": "The estimated training cost for the Open-RS models was around $42, highlighting their efficiency under resource constraints."
+            },
+            "result": true,
+            "issue": ""
+          }
+        ],
+        "judgment": true,
+        "sections_to_highlight": [
+          "Dataset Filtering and Curation",
+          "GRPO Algorithm Efficiency",
+          "Experiment 1: High-Quality Data Impact",
+          "Experiment 2: Mixed Difficulty Balancing",
+          "Experiment 3: Cosine Reward for Length Control",
+          "Overall Performance Comparison",
+          "Training Cost Efficiency"
+        ]
+      },
+      "correct_count_all": 10,
+      "correct_count_acu": 5,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Dataset Filtering and Curation",
+        "GRPO Algorithm Efficiency",
+        "Experiment 1: High-Quality Data Impact",
+        "Experiment 2: Mixed Difficulty Balancing",
+        "Experiment 3: Cosine Reward for Length Control",
+        "Overall Performance Comparison",
+        "Training Cost Efficiency"
+      ],
+      "sections_to_highlight_size": 7,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 4,
+      "summary": "1. SUMMARY:\nThis study investigates enhancing the reasoning capabilities of small Large Language Models (LLMs) under strict resource constraints using Reinforcement Learning (RL). The researchers adapted the Group Relative Policy Optimization (GRPO) algorithm and curated a compact, high-quality mathematical reasoning dataset. Three experiments were conducted on a 1.5-billion-parameter model, DeepSeek-R1-Distill-Qwen-1.5B, within a 24-hour timeframe using 4 NVIDIA A40 GPUs. The results demonstrate significant reasoning gains, with AMC23 accuracy increasing from 63% to 80% and AIME24 reaching 46.7%, surpassing baseline models like o1-preview. This was achieved using only 7,000 samples and a training cost of approximately $42, a stark contrast to the thousands of dollars typically required. Challenges included optimization instability and length constraints with prolonged training. The study highlights the effectiveness of RL for small LLMs, offering a cost-efficient and data-efficient alternative to large-scale approaches, with released code and datasets for reproducibility.\n\n2. KEY HIGHLIGHTS:\n*   Small LLMs can achieve substantial reasoning improvements (e.g., AMC23 from 63% to 80%) using RL and a compact dataset (7,000 samples) under severe resource constraints (4x A40 GPUs, 24 hours).\n*   The GRPO algorithm and a carefully curated dataset, balancing easy and hard problems with cosine rewards for length control, were key to achieving efficient training and competitive performance.\n*   The training cost was remarkably low ($42), significantly outperforming resource-intensive methods for larger models.\n*   Early training stages (50-100 steps) showed rapid gains, but prolonged training led to performance degradation and instability, indicating trade-offs with length constraints.\n*   The curated dataset, refined from existing sources and filtered for quality and difficulty, was crucial for maximizing learning efficiency within limited training budgets.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+            "answer": "The summary states that the dataset was curated and filtered for quality and difficulty, but it does not provide specific details on the filtering process for the 's1' and 'DeepScaleR' datasets."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+            "answer": "The summary mentions that the dataset was curated to balance easy and hard problems, but it does not specify the exact composition or the number of easy versus hard problems within the 7,000 samples."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+            "answer": "The summary states that prolonged training with a high-quality but complex dataset led to performance degradation and instability, indicating trade-offs with length constraints, but does not specifically detail findings from Experiment 1 or the reasons for degradation with complex datasets."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+            "answer": "The summary mentions that the curated dataset balanced easy and hard problems and that early training stages showed rapid gains, but it does not provide a comparison of initial performance and completion lengths between Experiment 1 and Experiment 2 based on this strategy."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+            "answer": "The GRPO algorithm was adapted and was key to achieving efficient training and competitive performance under severe resource constraints, alongside the curated dataset."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+            "answer": "The compact dataset used contained 7,000 samples."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+            "answer": "The summary states that the dataset was curated to balance easy and hard problems but does not specify the number of 'easier problems' added."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+            "answer": "The summary mentions the curation of a high-quality dataset but does not provide the specific number of examples in the 'open-s1' dataset."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+            "answer": "The summary does not provide the final number of examples in the 'open-deepscaler' dataset after filtering."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+            "answer": "The estimated training cost for the Open-RS models was approximately $42, highlighting their efficiency under resource constraints."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+          "answer": "The summary states that the dataset was curated and filtered for quality and difficulty, but it does not provide specific details on the filtering process for the 's1' and 'DeepScaleR' datasets."
+        },
+        {
+          "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+          "answer": "The summary mentions that the dataset was curated to balance easy and hard problems, but it does not specify the exact composition or the number of easy versus hard problems within the 7,000 samples."
+        },
+        {
+          "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+          "answer": "The summary states that prolonged training with a high-quality but complex dataset led to performance degradation and instability, indicating trade-offs with length constraints, but does not specifically detail findings from Experiment 1 or the reasons for degradation with complex datasets."
+        },
+        {
+          "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+          "answer": "The summary mentions that the curated dataset balanced easy and hard problems and that early training stages showed rapid gains, but it does not provide a comparison of initial performance and completion lengths between Experiment 1 and Experiment 2 based on this strategy."
+        },
+        {
+          "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+          "answer": "The GRPO algorithm was adapted and was key to achieving efficient training and competitive performance under severe resource constraints, alongside the curated dataset."
+        },
+        {
+          "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+          "answer": "The compact dataset used contained 7,000 samples."
+        },
+        {
+          "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+          "answer": "The summary states that the dataset was curated to balance easy and hard problems but does not specify the number of 'easier problems' added."
+        },
+        {
+          "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+          "answer": "The summary mentions the curation of a high-quality dataset but does not provide the specific number of examples in the 'open-s1' dataset."
+        },
+        {
+          "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+          "answer": "The summary does not provide the final number of examples in the 'open-deepscaler' dataset after filtering."
+        },
+        {
+          "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+          "answer": "The estimated training cost for the Open-RS models was approximately $42, highlighting their efficiency under resource constraints."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+              "answer": "The filtering process involved retaining questions with \\boxed{} answers, using DeepSeek-R1-Distill-Qwen-1.5B to remove trivial questions, and employing Qwen2.5-7B-Instruct to eliminate noisy or multi-part questions, resulting in 18,615 examples for open-s1 and 21,044 for open-deepscaler."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+              "answer": "The 7,000-sample dataset for Experiment 2 consisted of 3000 samples from open-s1, 3000 samples from open-deepscaler, and 1000 easier problems from the raw DeepScaleR dataset."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+              "answer": "In Experiment 1, performance degradation after initial improvement was attributed to the model exceeding the token limit and reward misalignment, leading to unstable accuracy rewards and increased completion lengths."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+              "answer": "In Experiment 2, mixing easier and harder problems reduced initial completion lengths to approximately 2800 tokens and significantly improved performance (AMC23 to 80%), compared to Experiment 1 where lengths fluctuated and performance degraded more severely."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+              "answer": "The GRPO algorithm was adapted for its computational efficiency, eliminating the need for a separate critic model and allowing for effective training of small LLMs under resource constraints."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+              "answer": "The compact dataset created for Experiment 2 contained 7,000 samples."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+              "answer": "1000 easier problems were added to the dataset in Experiment 2."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+              "answer": "The final set of high-quality mathematical reasoning examples for the open-s1 dataset was 18,615."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+              "answer": "After filtering, the open-deepscaler dataset had 21,044 examples."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+              "answer": "The estimated training cost for the Open-RS models was approximately $42."
+            },
+            "result": true,
+            "issue": ""
+          }
+        ],
+        "judgment": true,
+        "sections_to_highlight": [
+          "2.1 High-Quality Dataset Curation",
+          "2.2 Reinforcement Learning Algorithm",
+          "3.5.1 Experiment 1: Impact of High-Quality Data",
+          "3.5.2 Experiment 2: Balancing Easy and Hard Problems",
+          "3.5.3 Experiment 3: Controlling Length with Cosine Reward",
+          "3.5.4 Overall Comparison",
+          "B.1 Limitations"
+        ]
+      },
+      "correct_count_all": 10,
+      "correct_count_acu": 5,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "2.1 High-Quality Dataset Curation",
+        "2.2 Reinforcement Learning Algorithm",
+        "3.5.1 Experiment 1: Impact of High-Quality Data",
+        "3.5.2 Experiment 2: Balancing Easy and Hard Problems",
+        "3.5.3 Experiment 3: Controlling Length with Cosine Reward",
+        "3.5.4 Overall Comparison",
+        "B.1 Limitations"
+      ],
+      "sections_to_highlight_size": 7,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 5,
+      "summary": "1. SUMMARY:\nThis research explores strategies for enhancing the reasoning capabilities of small LLMs (1.5B parameters) under strict resource constraints, using Reinforcement Learning (RL) with the Group Relative Policy Optimization (GRPO) algorithm. The study focuses on curating a compact, high-quality mathematical reasoning dataset to balance problem difficulty and improve training efficiency. Experiments revealed that small LLMs can achieve rapid reasoning gains (e.g., AMC23 accuracy from 63% to 80%) with minimal data (7,000 samples) and low cost ($42), significantly outperforming larger models and previous small LLM approaches. However, challenges such as optimization instability and length constraints emerged with prolonged training. Specifically, mixing easy and hard problems (Experiment 2) and using a cosine reward for length control (Experiment 3) showed promising results, stabilizing training and improving performance. The study highlights the efficacy of RL-based fine-tuning for small LLMs in resource-limited settings, offering a cost-effective alternative to large-scale methods, while also pointing out limitations like insufficient length limits for complex problems and potential language drift in multilingual base models.\n\n2. KEY HIGHLIGHTS:\n*   Small LLMs can achieve significant reasoning improvements with a compact, high-quality dataset (7,000 samples) and RL, demonstrating high efficiency and low cost ($42).\n*   Balancing easy and hard problems in the dataset enhances early performance and stabilizes reasoning behavior, though long-term stability remains a challenge.\n*   Cosine rewards effectively stabilize output lengths, improving training consistency, but longer completion limits are needed for extremely complex tasks.\n*   The research highlights trade-offs between computational constraints, data curation strategies, and model performance, offering a scalable approach for resource-limited environments.\n*   Limitations include insufficient length constraints for very difficult problems and potential language drift in multilingual base models, indicating areas for future work.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+            "answer": "Mixing easy and hard problems (Experiment 2) showed promising results, stabilizing training and improving performance compared to Experiment 1."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+            "answer": "The Group Relative Policy Optimization (GRPO) algorithm was used with the curated dataset to enhance the reasoning capabilities of small LLMs under strict resource constraints, contributing to training efficiency."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+            "answer": "The compact dataset used had 7,000 samples."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+            "answer": "The estimated training cost for the Open-RS models was $42, demonstrating high efficiency under resource constraints."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+          "answer": "Mixing easy and hard problems (Experiment 2) showed promising results, stabilizing training and improving performance compared to Experiment 1."
+        },
+        {
+          "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+          "answer": "The Group Relative Policy Optimization (GRPO) algorithm was used with the curated dataset to enhance the reasoning capabilities of small LLMs under strict resource constraints, contributing to training efficiency."
+        },
+        {
+          "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+          "answer": "The compact dataset used had 7,000 samples."
+        },
+        {
+          "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+          "answer": "The estimated training cost for the Open-RS models was $42, demonstrating high efficiency under resource constraints."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The article provides details on the filtering process for both datasets."
+          },
+          {
+            "qa": {
+              "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The article states that the dataset consisted of 3000 samples from open-s1, 3000 from open-deepscaler, and 1000 easier problems from the raw DeepScaleR dataset."
+          },
+          {
+            "qa": {
+              "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The article explains that the degradation was due to the model struggling with complexity, exceeding token limits, and reward misalignment."
+          },
+          {
+            "qa": {
+              "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+              "answer": "Mixing easy and hard problems (Experiment 2) showed promising results, stabilizing training and improving performance compared to Experiment 1."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+              "answer": "The Group Relative Policy Optimization (GRPO) algorithm was used with the curated dataset to enhance the reasoning capabilities of small LLMs under strict resource constraints, contributing to training efficiency."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+              "answer": "The compact dataset used had 7,000 samples."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The article states that 1000 easier problems were added to the dataset in Experiment 2."
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The article states that the final set of high-quality mathematical reasoning examples for the open-s1 dataset was 18,615."
+          },
+          {
+            "qa": {
+              "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The article states that after filtering, the open-deepscaler dataset had 21,044 examples."
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+              "answer": "The estimated training cost for the Open-RS models was $42, demonstrating high efficiency under resource constraints."
+            },
+            "result": true,
+            "issue": null
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Methodology: Dataset Curation",
+          "Experiment 1: Impact of High-Quality Data",
+          "Experiment 2: Balancing Easy and Hard Problems",
+          "Experiment 3: Controlling Length with Cosine Reward",
+          "Overall Comparison: Performance and Cost",
+          "Limitations and Discussion",
+          "Future Directions"
+        ]
+      },
+      "correct_count_all": 4,
+      "correct_count_acu": 2,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Methodology: Dataset Curation",
+        "Experiment 1: Impact of High-Quality Data",
+        "Experiment 2: Balancing Easy and Hard Problems",
+        "Experiment 3: Controlling Length with Cosine Reward",
+        "Overall Comparison: Performance and Cost",
+        "Limitations and Discussion",
+        "Future Directions"
+      ],
+      "sections_to_highlight_size": 7,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 6,
+      "summary": "1. SUMMARY:\nThis study explores strategies for enhancing the reasoning capabilities of small LLMs (1.5B parameters) under severe resource constraints (4 NVIDIA A40 GPUs, 24 hours). The core methodology involves adapting the GRPO algorithm and curating a compact, high-quality mathematical reasoning dataset. Three experiments were conducted: the first showed rapid gains from high-quality data but degraded with prolonged training due to length constraints; the second improved initial performance and stability by mixing easy and hard problems with reduced length limits, though long-term stability remained an issue; the third demonstrated that cosine rewards effectively stabilize completion lengths but require extended limits for complex tasks. In an overall comparison, the developed \"Open-RS\" models achieved competitive performance on benchmarks like AMC23 and AIME24, even surpassing o1-preview on AIME24, using only 7,000 samples and costing $42. This contrasts sharply with the thousands of dollars and much larger datasets required by baseline models. The work highlights the efficacy of RL for small LLMs in resource-constrained settings, while also noting limitations such as optimization instability and length constraints, and suggesting future directions like multi-stage length schedules and language-specific optimizations.\n\n2. KEY HIGHLIGHTS:\n*   Small LLMs can achieve significant reasoning improvements (e.g., AMC23 from 63% to 80%, AIME24 to 46.7%) using RL and a curated dataset of 7,000 samples under strict resource constraints (4x A40 GPUs, 24 hours).\n*   The proposed method achieved this with a training cost of approximately $42, drastically lower than thousands of dollars for baseline models, demonstrating high data and computational efficiency.\n*   Mixing easy and hard problems in the dataset enhanced initial performance and stabilized reasoning behavior, while cosine rewards effectively controlled output length.\n*   Limitations include optimization instability and performance degradation with prolonged training, particularly due to strict length constraints on complex problems.\n*   Future work should focus on multi-stage length schedules and language-specific optimizations to further improve performance and stability in resource-constrained environments.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+            "answer": "The summary does not provide details on the specific filtering process for the 's1' and 'DeepScaleR' datasets."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+            "answer": "The summary mentions that Experiment 2 involved mixing easy and hard problems with reduced length limits, but it does not specify the exact composition of the 7,000-sample dataset in terms of the ratio of easy to hard problems."
+          },
+          "result": false,
+          "issue": "partial information"
+        },
+        {
+          "qa": {
+            "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+            "answer": "In Experiment 1, using a high-quality but complex dataset led to performance degradation after an initial period of rapid improvement due to length constraints."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+            "answer": "In Experiment 2, the strategy of mixing easier problems with challenging ones improved initial performance and stabilized reasoning behavior, and also led to reduced length limits compared to Experiment 1."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+            "answer": "The summary states that the core methodology involves adapting the GRPO algorithm for training efficiency under severe resource constraints, but it does not detail the specific role GRPO played beyond this adaptation."
+          },
+          "result": false,
+          "issue": "partial information"
+        },
+        {
+          "qa": {
+            "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+            "answer": "The compact dataset created for Experiment 2 to balance problem difficulty contained 7,000 samples."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+            "answer": "The summary does not specify the exact number of 'easier problems' added to the dataset in Experiment 2."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+            "answer": "The summary does not provide the final number of high-quality examples in the curated 'open-s1' dataset."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+            "answer": "The summary does not provide the final number of examples in the 'open-deepscaler' dataset after filtering."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+            "answer": "The estimated training cost in dollars for the Open-RS models was approximately $42, highlighting their efficiency under resource constraints."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+          "answer": "The summary does not provide details on the specific filtering process for the 's1' and 'DeepScaleR' datasets."
+        },
+        {
+          "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+          "answer": "The summary mentions that Experiment 2 involved mixing easy and hard problems with reduced length limits, but it does not specify the exact composition of the 7,000-sample dataset in terms of the ratio of easy to hard problems."
+        },
+        {
+          "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+          "answer": "In Experiment 1, using a high-quality but complex dataset led to performance degradation after an initial period of rapid improvement due to length constraints."
+        },
+        {
+          "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+          "answer": "In Experiment 2, the strategy of mixing easier problems with challenging ones improved initial performance and stabilized reasoning behavior, and also led to reduced length limits compared to Experiment 1."
+        },
+        {
+          "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+          "answer": "The summary states that the core methodology involves adapting the GRPO algorithm for training efficiency under severe resource constraints, but it does not detail the specific role GRPO played beyond this adaptation."
+        },
+        {
+          "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+          "answer": "The compact dataset created for Experiment 2 to balance problem difficulty contained 7,000 samples."
+        },
+        {
+          "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+          "answer": "The summary does not specify the exact number of 'easier problems' added to the dataset in Experiment 2."
+        },
+        {
+          "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+          "answer": "The summary does not provide the final number of high-quality examples in the curated 'open-s1' dataset."
+        },
+        {
+          "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+          "answer": "The summary does not provide the final number of examples in the 'open-deepscaler' dataset after filtering."
+        },
+        {
+          "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+          "answer": "The estimated training cost in dollars for the Open-RS models was approximately $42, highlighting their efficiency under resource constraints."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+              "answer": "The summary does not provide details on the specific filtering process for the 's1' and 'DeepScaleR' datasets."
+            },
+            "result": false,
+            "issue": "The article details the filtering process for both datasets in section 2.1. For the s1 dataset, it involved retaining questions with \\boxed{} answers, then using DeepSeek-R1-Distill-Qwen-1.5B to remove trivial questions, and finally Qwen2.5-7B-Instruct to remove noisy or multi-part questions. For the DeepScaleR dataset, it involved using Qwen2.5-Math-7B-Instruct to exclude easy questions."
+          },
+          {
+            "qa": {
+              "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+              "answer": "The summary mentions that Experiment 2 involved mixing easy and hard problems with reduced length limits, but it does not specify the exact composition of the 7,000-sample dataset in terms of the ratio of easy to hard problems."
+            },
+            "result": false,
+            "issue": "The article states in section 3.5.2 that the 7,000-sample dataset consisted of 3000 from open-s1, 3000 from open-deepscaler, and 1000 easier problems from the raw DeepScaleR dataset."
+          },
+          {
+            "qa": {
+              "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+              "answer": "In Experiment 1, using a high-quality but complex dataset led to performance degradation after an initial period of rapid improvement due to length constraints."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+              "answer": "In Experiment 2, the strategy of mixing easier problems with challenging ones improved initial performance and stabilized reasoning behavior, and also led to reduced length limits compared to Experiment 1."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+              "answer": "The summary states that the core methodology involves adapting the GRPO algorithm for training efficiency under severe resource constraints, but it does not detail the specific role GRPO played beyond this adaptation."
+            },
+            "result": false,
+            "issue": "The article, in section 2.2, explains that GRPO eliminates the need for a separate critic model, thereby reducing computational overhead, which contributes to training efficiency."
+          },
+          {
+            "qa": {
+              "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+              "answer": "The compact dataset created for Experiment 2 to balance problem difficulty contained 7,000 samples."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+              "answer": "The summary does not specify the exact number of 'easier problems' added to the dataset in Experiment 2."
+            },
+            "result": false,
+            "issue": "The article states in section 3.5.2 that 1000 easier problems were added to the dataset in Experiment 2."
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+              "answer": "The summary does not provide the final number of high-quality examples in the curated 'open-s1' dataset."
+            },
+            "result": false,
+            "issue": "The article states in section 2.1 that the final set of high-quality mathematical reasoning examples for the open-s1 dataset was 18,615."
+          },
+          {
+            "qa": {
+              "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+              "answer": "The summary does not provide the final number of examples in the 'open-deepscaler' dataset after filtering."
+            },
+            "result": false,
+            "issue": "The article states in section 2.1 that after filtering, the open-deepscaler dataset had 21,044 examples."
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+              "answer": "The estimated training cost in dollars for the Open-RS models was approximately $42, highlighting their efficiency under resource constraints."
+            },
+            "result": true,
+            "issue": ""
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "2.1 High-Quality Dataset Curation",
+          "3.5.1 Experiment 1: Impact of High-Quality Data",
+          "3.5.2 Experiment 2: Balancing Easy and Hard Problems",
+          "3.5.3 Experiment 3: Controlling Length with Cosine Reward",
+          "Table 1: Zero-shot pass@1 performance",
+          "Table 3: Comparison of data usage and training costs",
+          "B.1 Limitations",
+          "B.3 Future Directions"
+        ]
+      },
+      "correct_count_all": 4,
+      "correct_count_acu": 2,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "2.1 High-Quality Dataset Curation",
+        "3.5.1 Experiment 1: Impact of High-Quality Data",
+        "3.5.2 Experiment 2: Balancing Easy and Hard Problems",
+        "3.5.3 Experiment 3: Controlling Length with Cosine Reward",
+        "Table 1: Zero-shot pass@1 performance",
+        "Table 3: Comparison of data usage and training costs",
+        "B.1 Limitations",
+        "B.3 Future Directions"
+      ],
+      "sections_to_highlight_size": 8,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 7,
+      "summary": "1. SUMMARY:\nThis research investigates enhancing the reasoning capabilities of small Large Language Models (LLMs) under strict resource constraints using Reinforcement Learning (RL). The study focuses on a 1.5B parameter model, DeepSeek-R1-Distill-Qwen-1.5B, trained on 4 NVIDIA A40 GPUs within 24 hours, costing only $42. The methodology adapted the Group Relative Policy Optimization (GRPO) algorithm and involved curating a compact, high-quality mathematical reasoning dataset. Experiment 1 showed rapid initial gains with high-quality data but performance degradation with prolonged training due to length constraints. Experiment 2 improved early performance and stability by balancing easy and hard problems, though long-term stability remained an issue. Experiment 3 utilized a cosine reward to stabilize completion lengths, enhancing consistency at the cost of peak accuracy. The resulting models, Open-RS variants, achieved competitive performance, with Open-RS3 notably surpassing o1-preview on AIME24. The study emphasizes the efficacy of RL for small LLMs with minimal data, offering a cost-effective alternative to larger models, but highlights limitations such as optimization instability and length constraints for complex tasks. Future work includes extending training duration and exploring hybrid methods.\n\n2. KEY HIGHLIGHTS:\n*   Small LLMs can achieve significant reasoning improvements (e.g., AMC23 from 63% to 80%) using RL with a compact dataset (7,000 samples) and minimal resources ($42 cost, 24 hours on 4x A40 GPUs).\n*   Balancing easy and hard problems in the dataset improved initial performance and stability, while using a cosine reward helped stabilize completion lengths.\n*   Despite resource constraints, the fine-tuned 1.5B models achieved competitive performance, with Open-RS3 reaching 46.7% on AIME24, outperforming o1-preview (44.6%).\n*   Limitations include optimization instability and performance degradation with prolonged training under strict length constraints, especially for complex problems requiring extended reasoning.\n*   Future directions involve extending training duration, incorporating explicit language constraints, and exploring hybrid RL and search methods to further enhance reasoning capabilities.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+            "answer": "The summary states that the methodology involved curating a compact, high-quality mathematical reasoning dataset, but it does not specify the filtering process for the 's1' and 'DeepScaleR' datasets."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+            "answer": "The summary mentions that Experiment 2 involved balancing easy and hard problems using a compact dataset of 7,000 samples, but it does not provide the specific composition of this dataset."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+            "answer": "Experiment 1 showed rapid initial gains with high-quality data but performance degradation with prolonged training due to length constraints."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+            "answer": "Experiment 2 improved early performance and stability by balancing easy and hard problems, compared to Experiment 1. The summary does not specify the effect on completion lengths."
+          },
+          "result": false,
+          "issue": "partial information"
+        },
+        {
+          "qa": {
+            "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+            "answer": "The research methodology adapted the Group Relative Policy Optimization (GRPO) algorithm, which contributed to achieving training efficiency under the specified resource constraints."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+            "answer": "The compact dataset used in Experiment 2 to balance problem difficulty contained 7,000 samples."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+            "answer": "The summary states that Experiment 2 balanced easy and hard problems but does not specify the exact number of 'easier problems' added to the dataset."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+            "answer": "The summary does not provide the final number of high-quality examples in the curated 'open-s1' dataset."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+            "answer": "The summary does not provide the final number of examples in the 'open-deepscaler' dataset after filtering."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+            "answer": "The estimated training cost for the 1.5B parameter model, DeepSeek-R1-Distill-Qwen-1.5B (an Open-RS variant), was $42, highlighting its efficiency under resource constraints."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+          "answer": "The summary states that the methodology involved curating a compact, high-quality mathematical reasoning dataset, but it does not specify the filtering process for the 's1' and 'DeepScaleR' datasets."
+        },
+        {
+          "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+          "answer": "The summary mentions that Experiment 2 involved balancing easy and hard problems using a compact dataset of 7,000 samples, but it does not provide the specific composition of this dataset."
+        },
+        {
+          "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+          "answer": "Experiment 1 showed rapid initial gains with high-quality data but performance degradation with prolonged training due to length constraints."
+        },
+        {
+          "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+          "answer": "Experiment 2 improved early performance and stability by balancing easy and hard problems, compared to Experiment 1. The summary does not specify the effect on completion lengths."
+        },
+        {
+          "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+          "answer": "The research methodology adapted the Group Relative Policy Optimization (GRPO) algorithm, which contributed to achieving training efficiency under the specified resource constraints."
+        },
+        {
+          "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+          "answer": "The compact dataset used in Experiment 2 to balance problem difficulty contained 7,000 samples."
+        },
+        {
+          "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+          "answer": "The summary states that Experiment 2 balanced easy and hard problems but does not specify the exact number of 'easier problems' added to the dataset."
+        },
+        {
+          "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+          "answer": "The summary does not provide the final number of high-quality examples in the curated 'open-s1' dataset."
+        },
+        {
+          "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+          "answer": "The summary does not provide the final number of examples in the 'open-deepscaler' dataset after filtering."
+        },
+        {
+          "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+          "answer": "The estimated training cost for the 1.5B parameter model, DeepSeek-R1-Distill-Qwen-1.5B (an Open-RS variant), was $42, highlighting its efficiency under resource constraints."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+              "answer": "The summary states that the methodology involved curating a compact, high-quality mathematical reasoning dataset, but it does not specify the filtering process for the 's1' and 'DeepScaleR' datasets."
+            },
+            "result": false,
+            "issue": "The article details the filtering process for both 's1' and 'DeepScaleR' datasets in Section 2.1."
+          },
+          {
+            "qa": {
+              "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+              "answer": "The summary mentions that Experiment 2 involved balancing easy and hard problems using a compact dataset of 7,000 samples, but it does not provide the specific composition of this dataset."
+            },
+            "result": false,
+            "issue": "The article specifies the composition in Section 3.5.2: '3000 from open-s1, 3000 from open-deepscaler, and 1000 easier problems from the raw DeepScaleR dataset'."
+          },
+          {
+            "qa": {
+              "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+              "answer": "Experiment 1 showed rapid initial gains with high-quality data but performance degradation with prolonged training due to length constraints."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+              "answer": "Experiment 2 improved early performance and stability by balancing easy and hard problems, compared to Experiment 1. The summary does not specify the effect on completion lengths."
+            },
+            "result": false,
+            "issue": "The article states in Section 3.5.2 that 'Initial completion lengths drop to approximately 2800 tokens' in Experiment 2, which is a specific effect on completion lengths compared to Experiment 1."
+          },
+          {
+            "qa": {
+              "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+              "answer": "The research methodology adapted the Group Relative Policy Optimization (GRPO) algorithm, which contributed to achieving training efficiency under the specified resource constraints."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+              "answer": "The compact dataset used in Experiment 2 to balance problem difficulty contained 7,000 samples."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+              "answer": "The summary states that Experiment 2 balanced easy and hard problems but does not specify the exact number of 'easier problems' added to the dataset."
+            },
+            "result": false,
+            "issue": "The article specifies in Section 3.5.2 that '1000 easier problems from the raw DeepScaleR dataset' were used."
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+              "answer": "The summary does not provide the final number of high-quality examples in the curated 'open-s1' dataset."
+            },
+            "result": false,
+            "issue": "The article states in Section 2.1 that the 'open-s1' dataset has 'a final set of 18,615 high-quality mathematical reasoning examples'."
+          },
+          {
+            "qa": {
+              "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+              "answer": "The summary does not provide the final number of examples in the 'open-deepscaler' dataset after filtering."
+            },
+            "result": false,
+            "issue": "The article states in Section 2.1 that the 'open-deepscaler' dataset has 'a final set to 21,044 examples'."
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+              "answer": "The estimated training cost for the 1.5B parameter model, DeepSeek-R1-Distill-Qwen-1.5B (an Open-RS variant), was $42, highlighting its efficiency under resource constraints."
+            },
+            "result": true,
+            "issue": ""
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Dataset Curation Details",
+          "Experiment 1 Findings",
+          "Experiment 2 Findings",
+          "Experiment 3 Findings",
+          "Overall Performance Comparison",
+          "Training Costs and Efficiency",
+          "Limitations and Future Directions"
+        ]
+      },
+      "correct_count_all": 4,
+      "correct_count_acu": 2,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Dataset Curation Details",
+        "Experiment 1 Findings",
+        "Experiment 2 Findings",
+        "Experiment 3 Findings",
+        "Overall Performance Comparison",
+        "Training Costs and Efficiency",
+        "Limitations and Future Directions"
+      ],
+      "sections_to_highlight_size": 7,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 8,
+      "summary": "1. SUMMARY:\nThis study investigates the efficacy of reinforcement learning (RL) for enhancing the reasoning capabilities of small LLMs (1.5B parameters) under strict resource constraints (4 NVIDIA A40 GPUs, 24 hours). The research team adapted the Group Relative Policy Optimization (GRPO) algorithm and curated compact, high-quality mathematical reasoning datasets. Three experiments were conducted to explore the impact of data composition and reward functions on training. The findings demonstrate that small LLMs can achieve significant reasoning improvements with minimal data and cost, with one variant (Open-RS3) achieving 46.7% on AIME24, surpassing even larger models like o1-preview. The research highlights that while initial gains are rapid (50-100 steps), prolonged training can lead to performance degradation and instability, particularly due to length constraints and multilingual base models. Balancing dataset difficulty and using cosine rewards for length control were found to improve stability and efficiency. The study concludes that RL-based fine-tuning is a viable and cost-effective strategy for developing reasoning-capable small LLMs, offering a scalable alternative to resource-intensive approaches.\n\n2. KEY HIGHLIGHTS:\n*   Small LLMs can achieve significant reasoning gains (e.g., AMC23 from 63% to 80%) using RL with a compact dataset (7,000 samples) and minimal resources ($42 cost, 4x A40 GPUs, 24h).\n*   Mixing easy and hard problems in the dataset and using cosine rewards for length control improved training stability and efficiency, although longer training could still lead to degradation.\n*   The curated approach demonstrated strong performance, with one model variant (Open-RS3) achieving the highest AIME24 score (46.7%), outperforming o1-preview and other 1.5B models.\n*   The study successfully demonstrated a cost-effective method for enhancing LLM reasoning, challenging the need for massive datasets and computational resources typical in the field.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+            "answer": "The summary does not provide information on how the researchers initially filtered the 's1' and 'DeepScaleR' datasets."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+            "answer": "The summary mentions that a compact dataset of 7,000 samples was used in Experiment 2 to test the hypothesis of balancing easy and hard problems, but it does not specify the exact composition of this dataset."
+          },
+          "result": false,
+          "issue": "partial information"
+        },
+        {
+          "qa": {
+            "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+            "answer": "The summary states that prolonged training on a high-quality but complex dataset can lead to performance degradation and instability, particularly due to length constraints and multilingual base models, but it does not specifically attribute this to Experiment 1 or provide a detailed explanation for the degradation."
+          },
+          "result": false,
+          "issue": "partial information"
+        },
+        {
+          "qa": {
+            "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+            "answer": "The summary indicates that mixing easier problems with challenging ones improved training stability and efficiency, but it does not provide a comparative analysis of the effect on initial performance and completion lengths compared to Experiment 1."
+          },
+          "result": false,
+          "issue": "partial information"
+        },
+        {
+          "qa": {
+            "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+            "answer": "The summary mentions that the researchers adapted the Group Relative Policy Optimization (GRPO) algorithm, which contributed to achieving training efficiency under the specified resource constraints, but it does not detail the specific role or mechanisms beyond adaptation."
+          },
+          "result": false,
+          "issue": "partial information"
+        },
+        {
+          "qa": {
+            "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+            "answer": "The compact dataset created for Experiment 2 to balance problem difficulty contained 7,000 samples."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+            "answer": "The summary does not specify the number of 'easier problems' that were added to the dataset in Experiment 2."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+            "answer": "The summary does not provide the final number of high-quality examples in the curated 'open-s1' dataset."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+            "answer": "The summary does not provide the final number of examples in the 'open-deepscaler' dataset after filtering."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+            "answer": "The estimated training cost for the Open-RS models was $42, highlighting their efficiency under resource constraints."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+          "answer": "The summary does not provide information on how the researchers initially filtered the 's1' and 'DeepScaleR' datasets."
+        },
+        {
+          "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+          "answer": "The summary mentions that a compact dataset of 7,000 samples was used in Experiment 2 to test the hypothesis of balancing easy and hard problems, but it does not specify the exact composition of this dataset."
+        },
+        {
+          "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+          "answer": "The summary states that prolonged training on a high-quality but complex dataset can lead to performance degradation and instability, particularly due to length constraints and multilingual base models, but it does not specifically attribute this to Experiment 1 or provide a detailed explanation for the degradation."
+        },
+        {
+          "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+          "answer": "The summary indicates that mixing easier problems with challenging ones improved training stability and efficiency, but it does not provide a comparative analysis of the effect on initial performance and completion lengths compared to Experiment 1."
+        },
+        {
+          "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+          "answer": "The summary mentions that the researchers adapted the Group Relative Policy Optimization (GRPO) algorithm, which contributed to achieving training efficiency under the specified resource constraints, but it does not detail the specific role or mechanisms beyond adaptation."
+        },
+        {
+          "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+          "answer": "The compact dataset created for Experiment 2 to balance problem difficulty contained 7,000 samples."
+        },
+        {
+          "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+          "answer": "The summary does not specify the number of 'easier problems' that were added to the dataset in Experiment 2."
+        },
+        {
+          "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+          "answer": "The summary does not provide the final number of high-quality examples in the curated 'open-s1' dataset."
+        },
+        {
+          "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+          "answer": "The summary does not provide the final number of examples in the 'open-deepscaler' dataset after filtering."
+        },
+        {
+          "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+          "answer": "The estimated training cost for the Open-RS models was $42, highlighting their efficiency under resource constraints."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+              "answer": "The summary does not provide information on how the researchers initially filtered the 's1' and 'DeepScaleR' datasets."
+            },
+            "result": false,
+            "issue": "The article details the filtering process for both 's1' and 'DeepScaleR' datasets in Section 2.1."
+          },
+          {
+            "qa": {
+              "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+              "answer": "The summary mentions that a compact dataset of 7,000 samples was used in Experiment 2 to test the hypothesis of balancing easy and hard problems, but it does not specify the exact composition of this dataset."
+            },
+            "result": false,
+            "issue": "The article specifies the composition in Section 3.5.2: '3000 from open-s1, 3000 from open-deepscaler, and 1000 easier problems from the raw DeepScaleR dataset'."
+          },
+          {
+            "qa": {
+              "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+              "answer": "The summary states that prolonged training on a high-quality but complex dataset can lead to performance degradation and instability, particularly due to length constraints and multilingual base models, but it does not specifically attribute this to Experiment 1 or provide a detailed explanation for the degradation."
+            },
+            "result": false,
+            "issue": "The article, in Section 3.5.1, attributes the degradation to the model struggling with complexity, exceeding token limits, and reward misalignment, which are detailed explanations."
+          },
+          {
+            "qa": {
+              "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+              "answer": "The summary indicates that mixing easier problems with challenging ones improved training stability and efficiency, but it does not provide a comparative analysis of the effect on initial performance and completion lengths compared to Experiment 1."
+            },
+            "result": false,
+            "issue": "The article, in Section 3.5.2, states that 'Initial completion lengths drop to approximately 2800 tokens, and performance improves significantly: AMC23 rises from 63% to 80%, and MATH-500 from 83% to 85% within 50–100 steps (Figure 2).' This implies a comparison to Experiment 1's results."
+          },
+          {
+            "qa": {
+              "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+              "answer": "The summary mentions that the researchers adapted the Group Relative Policy Optimization (GRPO) algorithm, which contributed to achieving training efficiency under the specified resource constraints, but it does not detail the specific role or mechanisms beyond adaptation."
+            },
+            "result": false,
+            "issue": "The article, in Section 2.2, explains that GRPO 'eliminates the need for a separate critic model—typically as large as the policy model—by estimating baselines from group scores, thereby reducing computational overhead,' which is a specific mechanism for efficiency."
+          },
+          {
+            "qa": {
+              "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+              "answer": "The compact dataset created for Experiment 2 to balance problem difficulty contained 7,000 samples."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+              "answer": "The summary does not specify the number of 'easier problems' that were added to the dataset in Experiment 2."
+            },
+            "result": false,
+            "issue": "The article, in Section 3.5.2, states that 1000 easier problems were added."
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+              "answer": "The summary does not provide the final number of high-quality examples in the curated 'open-s1' dataset."
+            },
+            "result": false,
+            "issue": "The article, in Section 2.1, states that the final set of high-quality mathematical reasoning examples for open-s1 is 18,615."
+          },
+          {
+            "qa": {
+              "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+              "answer": "The summary does not provide the final number of examples in the 'open-deepscaler' dataset after filtering."
+            },
+            "result": false,
+            "issue": "The article, in Section 2.1, states that the final set for open-deepscaler is 21,044 examples."
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+              "answer": "The estimated training cost for the Open-RS models was $42, highlighting their efficiency under resource constraints."
+            },
+            "result": true,
+            "issue": ""
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "2.1 High-Quality Dataset Curation",
+          "3.5.1 Experiment 1: Impact of High-Quality Data",
+          "3.5.2 Experiment 2: Balancing Easy and Hard Problems",
+          "3.5.3 Experiment 3: Controlling Length with Cosine Reward",
+          "3.5.4 Overall Comparison",
+          "B.1 Limitations"
+        ]
+      },
+      "correct_count_all": 2,
+      "correct_count_acu": 2,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "2.1 High-Quality Dataset Curation",
+        "3.5.1 Experiment 1: Impact of High-Quality Data",
+        "3.5.2 Experiment 2: Balancing Easy and Hard Problems",
+        "3.5.3 Experiment 3: Controlling Length with Cosine Reward",
+        "3.5.4 Overall Comparison",
+        "B.1 Limitations"
+      ],
+      "sections_to_highlight_size": 6,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 9,
+      "summary": "1. SUMMARY:\nThis research explores strategies for efficiently curating compact datasets to enhance the reasoning capabilities of small Large Language Models (LLMs) under resource constraints. The study focused on a 1.5B parameter model, DeepSeek-R1-Distill-Qwen-1.5B, using Reinforcement Learning (RL) with Group Relative Policy Optimization (GRPO) on limited hardware (4x A40 GPUs, 24 hours). The methodology involved curating high-quality mathematical reasoning datasets by filtering existing sources. Experiment 1 showed rapid initial gains with high-quality data but degraded performance with prolonged training due to length constraints. Experiment 2, by mixing easy and hard problems and reducing length limits, stabilized early performance but still faced long-term issues. Experiment 3, using a cosine reward to control length, improved consistency but highlighted the need for longer completion limits for complex tasks. Overall, the approach achieved competitive reasoning performance (e.g., 46.7% AIME24, surpassing o1-preview) with significantly lower cost ($42) and data usage (7,000 samples) compared to larger models. Key limitations included insufficient length constraints for very hard problems and multilingual drift from the base model.\n\n2. KEY HIGHLIGHTS:\n*   Small LLMs can achieve significant reasoning improvements with curated, compact datasets (7,000 samples) and RL under severe resource constraints (4x A40 GPUs, 24 hours, $42 cost).\n*   Initial reasoning gains are rapid (50-100 steps), but prolonged training can lead to performance degradation due to length constraints and optimization instability.\n*   Balancing easy and hard problems and using cosine rewards helps stabilize training and control output length, though longer completion limits are needed for extremely complex tasks.\n*   The proposed RL approach significantly outperforms baseline 1.5B models and is cost-effective compared to larger models, demonstrating a viable path for resource-constrained reasoning enhancement.\n*   Limitations include insufficient length constraints for complex problems and potential language drift from multilingual base models.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+            "answer": "The research focused on curating high-quality mathematical reasoning datasets by filtering existing sources. The summary does not specify the exact filtering methods used for the 's1' and 'DeepScaleR' datasets."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+            "answer": "The summary mentions that Experiment 2 involved mixing easy and hard problems and reducing length limits, using a 7,000-sample dataset. However, it does not provide the specific composition of this dataset in terms of the ratio or number of easy versus hard problems."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+            "answer": "Experiment 1 showed that using a high-quality dataset led to performance degradation after an initial period of rapid improvement due to length constraints."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+            "answer": "In Experiment 2, the strategy of mixing easier problems with challenging ones and reducing length limits stabilized initial performance but still faced long-term issues, compared to Experiment 1 where high-quality data caused performance degradation."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+            "answer": "The Group Relative Policy Optimization (GRPO) algorithm was used with Reinforcement Learning (RL) to achieve training efficiency under the specified resource constraints (4x A40 GPUs, 24 hours)."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+            "answer": "The compact dataset created for Experiment 2 to balance problem difficulty had 7,000 samples."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+            "answer": "The summary mentions that Experiment 2 involved mixing easy and hard problems but does not specify the exact number of 'easier problems' added to the dataset."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+            "answer": "The summary does not explicitly state the final number of high-quality examples in the curated 'open-s1' dataset."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+            "answer": "The summary does not explicitly state the final number of examples in the 'open-deepscaler' dataset after filtering."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+            "answer": "The estimated training cost in dollars for the Open-RS models was $42, highlighting their efficiency under resource constraints."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+          "answer": "The research focused on curating high-quality mathematical reasoning datasets by filtering existing sources. The summary does not specify the exact filtering methods used for the 's1' and 'DeepScaleR' datasets."
+        },
+        {
+          "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+          "answer": "The summary mentions that Experiment 2 involved mixing easy and hard problems and reducing length limits, using a 7,000-sample dataset. However, it does not provide the specific composition of this dataset in terms of the ratio or number of easy versus hard problems."
+        },
+        {
+          "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+          "answer": "Experiment 1 showed that using a high-quality dataset led to performance degradation after an initial period of rapid improvement due to length constraints."
+        },
+        {
+          "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+          "answer": "In Experiment 2, the strategy of mixing easier problems with challenging ones and reducing length limits stabilized initial performance but still faced long-term issues, compared to Experiment 1 where high-quality data caused performance degradation."
+        },
+        {
+          "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+          "answer": "The Group Relative Policy Optimization (GRPO) algorithm was used with Reinforcement Learning (RL) to achieve training efficiency under the specified resource constraints (4x A40 GPUs, 24 hours)."
+        },
+        {
+          "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+          "answer": "The compact dataset created for Experiment 2 to balance problem difficulty had 7,000 samples."
+        },
+        {
+          "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+          "answer": "The summary mentions that Experiment 2 involved mixing easy and hard problems but does not specify the exact number of 'easier problems' added to the dataset."
+        },
+        {
+          "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+          "answer": "The summary does not explicitly state the final number of high-quality examples in the curated 'open-s1' dataset."
+        },
+        {
+          "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+          "answer": "The summary does not explicitly state the final number of examples in the 'open-deepscaler' dataset after filtering."
+        },
+        {
+          "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+          "answer": "The estimated training cost in dollars for the Open-RS models was $42, highlighting their efficiency under resource constraints."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+              "answer": "The research focused on curating high-quality mathematical reasoning datasets by filtering existing sources. The summary does not specify the exact filtering methods used for the 's1' and 'DeepScaleR' datasets."
+            },
+            "result": false,
+            "issue": "The article details the filtering process for both 's1' and 'DeepScaleR' datasets, including using \\boxed{} to identify mathematical answers, employing distilled models to remove trivial questions, and using Qwen2.5-7B-Instruct to remove noisy or multi-part questions. The summary incorrectly states this information is not specified."
+          },
+          {
+            "qa": {
+              "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+              "answer": "The summary mentions that Experiment 2 involved mixing easy and hard problems and reducing length limits, using a 7,000-sample dataset. However, it does not provide the specific composition of this dataset in terms of the ratio or number of easy versus hard problems."
+            },
+            "result": false,
+            "issue": "The article states that the 7,000-sample dataset for Experiment 2 was composed of 3000 from open-s1, 3000 from open-deepscaler, and 1000 easier problems from the raw DeepScaleR dataset. The summary incorrectly states this composition is not provided."
+          },
+          {
+            "qa": {
+              "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+              "answer": "Experiment 1 showed that using a high-quality dataset led to performance degradation after an initial period of rapid improvement due to length constraints."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+              "answer": "In Experiment 2, the strategy of mixing easier problems with challenging ones and reducing length limits stabilized initial performance but still faced long-term issues, compared to Experiment 1 where high-quality data caused performance degradation."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+              "answer": "The Group Relative Policy Optimization (GRPO) algorithm was used with Reinforcement Learning (RL) to achieve training efficiency under the specified resource constraints (4x A40 GPUs, 24 hours)."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+              "answer": "The compact dataset created for Experiment 2 to balance problem difficulty had 7,000 samples."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+              "answer": "The summary mentions that Experiment 2 involved mixing easy and hard problems but does not specify the exact number of 'easier problems' added to the dataset."
+            },
+            "result": false,
+            "issue": "The article states that 1000 easier problems from the raw DeepScaleR dataset were added to the dataset in Experiment 2."
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+              "answer": "The summary does not explicitly state the final number of high-quality examples in the curated 'open-s1' dataset."
+            },
+            "result": false,
+            "issue": "The article states that the final set of high-quality mathematical reasoning examples for the open-s1 dataset was 18,615."
+          },
+          {
+            "qa": {
+              "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+              "answer": "The summary does not explicitly state the final number of examples in the 'open-deepscaler' dataset after filtering."
+            },
+            "result": false,
+            "issue": "The article states that after filtering, the open-deepscaler dataset had 21,044 examples."
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+              "answer": "The estimated training cost in dollars for the Open-RS models was $42, highlighting their efficiency under resource constraints."
+            },
+            "result": true,
+            "issue": ""
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "2.1 High-Quality Dataset Curation",
+          "3.5.1 Experiment 1: Impact of High-Quality Data",
+          "3.5.2 Experiment 2: Balancing Easy and Hard Problems",
+          "3.5.3 Experiment 3: Controlling Length with Cosine Reward",
+          "3.5.4 Overall Comparison",
+          "B.1 Limitations",
+          "B.2 Discussion"
+        ]
+      },
+      "correct_count_all": 5,
+      "correct_count_acu": 2,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "2.1 High-Quality Dataset Curation",
+        "3.5.1 Experiment 1: Impact of High-Quality Data",
+        "3.5.2 Experiment 2: Balancing Easy and Hard Problems",
+        "3.5.3 Experiment 3: Controlling Length with Cosine Reward",
+        "3.5.4 Overall Comparison",
+        "B.1 Limitations",
+        "B.2 Discussion"
+      ],
+      "sections_to_highlight_size": 7,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 10,
+      "summary": "1. SUMMARY:\nThis study investigates strategies for curating compact datasets to enhance reinforcement learning (RL) training efficiency for small LLMs under resource constraints. The researchers adapted the GRPO algorithm and developed a high-quality, compact mathematical reasoning dataset. Experiment 1 showed that small LLMs can achieve rapid reasoning gains with limited high-quality data but suffer performance degradation with prolonged training and strict length constraints. Experiment 2 demonstrated that mixing easy and hard problems, along with reduced length constraints, improves early performance and stabilizes reasoning. Experiment 3 utilized a cosine reward to control output length, enhancing consistency but requiring longer completion limits for complex tasks. Overall, their approach, using a 7,000-sample dataset and costing $42, achieved competitive reasoning performance (e.g., AIME24 accuracy of 46.7%) with significantly less data and cost than larger models. Limitations include truncation due to insufficient length limits for complex problems and potential multilingual drift. The findings highlight the viability of RL for small LLMs in resource-constrained environments by carefully balancing problem difficulty and utilizing efficient reward mechanisms.\n\n2. KEY HIGHLIGHTS:\n*   Small LLMs can achieve significant reasoning improvements with compact, high-quality datasets and RL under strict resource constraints (e.g., 4x A40 GPUs, 24 hours).\n*   Mixing easy and hard problems in the curated dataset enhances early reasoning performance and stabilizes training for small LLMs.\n*   Cosine rewards effectively control output length, improving training consistency, but may require longer completion limits for complex tasks.\n*   The proposed method achieved competitive reasoning scores (e.g., 46.7% on AIME24) with minimal data (7,000 samples) and a low training cost ($42), outperforming many larger models in efficiency.\n*   Limitations include performance degradation with prolonged training under strict length constraints and potential multilingual drift from the base model.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+            "answer": "The summary states that Experiment 1 showed that small LLMs can achieve rapid reasoning gains with limited high-quality data but suffer performance degradation with prolonged training and strict length constraints. The reason for this degradation is not explicitly detailed beyond the mention of prolonged training and strict length constraints."
+          },
+          "result": false,
+          "issue": "partial information"
+        },
+        {
+          "qa": {
+            "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+            "answer": "Experiment 2 demonstrated that mixing easy and hard problems, along with reduced length constraints, improves early performance and stabilizes reasoning compared to Experiment 1. The specific impact on completion lengths is not detailed."
+          },
+          "result": false,
+          "issue": "partial information"
+        },
+        {
+          "qa": {
+            "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+            "answer": "The summary mentions that the researchers adapted the GRPO algorithm as part of their strategy for enhancing RL training efficiency for small LLMs under resource constraints, but it does not specify the exact role or mechanism by which GRPO contributed to this efficiency beyond being an adapted algorithm."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+            "answer": "The compact dataset created for Experiment 2 to balance problem difficulty had 7,000 samples."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+            "answer": "The estimated training cost for the Open-RS models was $42, highlighting their efficiency under resource constraints."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+          "answer": "The summary states that Experiment 1 showed that small LLMs can achieve rapid reasoning gains with limited high-quality data but suffer performance degradation with prolonged training and strict length constraints. The reason for this degradation is not explicitly detailed beyond the mention of prolonged training and strict length constraints."
+        },
+        {
+          "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+          "answer": "Experiment 2 demonstrated that mixing easy and hard problems, along with reduced length constraints, improves early performance and stabilizes reasoning compared to Experiment 1. The specific impact on completion lengths is not detailed."
+        },
+        {
+          "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+          "answer": "The summary mentions that the researchers adapted the GRPO algorithm as part of their strategy for enhancing RL training efficiency for small LLMs under resource constraints, but it does not specify the exact role or mechanism by which GRPO contributed to this efficiency beyond being an adapted algorithm."
+        },
+        {
+          "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+          "answer": "The compact dataset created for Experiment 2 to balance problem difficulty had 7,000 samples."
+        },
+        {
+          "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+          "answer": "The estimated training cost for the Open-RS models was $42, highlighting their efficiency under resource constraints."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+              "answer": "The 's1' dataset was filtered by retaining questions with \\boxed{} solutions, then using DeepSeek-R1-Distill-Qwen-1.5B to remove trivial questions, and finally using Qwen2.5-7B-Instruct to remove noisy or multi-part questions, resulting in 18,615 examples. The DeepScaleR dataset was refined by using Qwen2.5-Math-7B-Instruct to exclude easy questions, reducing it to 21,044 examples."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+              "answer": "The 7,000-sample dataset used in Experiment 2 consisted of 3,000 samples from open-s1, 3,000 samples from open-deepscaler, and 1,000 easier problems from the raw DeepScaleR dataset."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+              "answer": "The degradation in Experiment 1 was attributed to the model struggling with the complexity of the open-s1 dataset, often exceeding the token limit, and reward misalignment, indicated by an increase in completion lengths and language drift after initial adaptation to the format reward."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+              "answer": "In Experiment 2, mixing easier and harder problems led to initial completion lengths dropping to approximately 2800 tokens (compared to ~3000-4000 in Experiment 1) and improved performance on AMC23 (63% to 80%) and MATH-500 (83% to 85%) within 50-100 steps, stabilizing reasoning behavior."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?",
+              "answer": "GRPO was utilized because it eliminates the need for a separate critic model, thereby reducing computational overhead, making it suitable for the resource-constrained training environment."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+              "answer": "The compact dataset created for Experiment 2 had 7,000 samples."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+              "answer": "1,000 easier problems from the raw DeepScaleR dataset were added to the dataset in Experiment 2."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+              "answer": "The final set of high-quality mathematical reasoning examples in the curated 'open-s1' dataset was 18,615."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+              "answer": "After filtering, the final number of examples in the 'open-deepscaler' dataset was 21,044."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?",
+              "answer": "The estimated training cost for the Open-RS models was $42."
+            },
+            "result": true,
+            "issue": ""
+          }
+        ],
+        "judgment": true,
+        "sections_to_highlight": [
+          "Experiment 1: Impact of High-Quality Data",
+          "Experiment 2: Balancing Easy and Hard Problems",
+          "Experiment 3: Controlling Length with Cosine Reward",
+          "Overall Comparison",
+          "Limitations & Discussion",
+          "Future Directions"
+        ]
+      },
+      "correct_count_all": 10,
+      "correct_count_acu": 5,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Experiment 1: Impact of High-Quality Data",
+        "Experiment 2: Balancing Easy and Hard Problems",
+        "Experiment 3: Controlling Length with Cosine Reward",
+        "Overall Comparison",
+        "Limitations & Discussion",
+        "Future Directions"
+      ],
+      "sections_to_highlight_size": 6,
+      "qa_failures_present": true
+    }
+  ],
+  "final_summary": "1. SUMMARY:\nThis study investigates strategies for curating compact datasets to enhance reinforcement learning (RL) training efficiency for small LLMs under resource constraints. The researchers adapted the GRPO algorithm and developed a high-quality, compact mathematical reasoning dataset. Experiment 1 showed that small LLMs can achieve rapid reasoning gains with limited high-quality data but suffer performance degradation with prolonged training and strict length constraints. Experiment 2 demonstrated that mixing easy and hard problems, along with reduced length constraints, improves early performance and stabilizes reasoning. Experiment 3 utilized a cosine reward to control output length, enhancing consistency but requiring longer completion limits for complex tasks. Overall, their approach, using a 7,000-sample dataset and costing $42, achieved competitive reasoning performance (e.g., AIME24 accuracy of 46.7%) with significantly less data and cost than larger models. Limitations include truncation due to insufficient length limits for complex problems and potential multilingual drift. The findings highlight the viability of RL for small LLMs in resource-constrained environments by carefully balancing problem difficulty and utilizing efficient reward mechanisms.\n\n2. KEY HIGHLIGHTS:\n*   Small LLMs can achieve significant reasoning improvements with compact, high-quality datasets and RL under strict resource constraints (e.g., 4x A40 GPUs, 24 hours).\n*   Mixing easy and hard problems in the curated dataset enhances early reasoning performance and stabilizes training for small LLMs.\n*   Cosine rewards effectively control output length, improving training consistency, but may require longer completion limits for complex tasks.\n*   The proposed method achieved competitive reasoning scores (e.g., 46.7% on AIME24) with minimal data (7,000 samples) and a low training cost ($42), outperforming many larger models in efficiency.\n*   Limitations include performance degradation with prolonged training under strict length constraints and potential multilingual drift from the base model.",
+  "total_iterations": 10,
+  "status": "max_iterations_reached",
+  "questions": [
+    "How did the researchers initially filter the 's1' and 'DeepScaleR' datasets to curate a more compact, high-quality corpus for mathematical reasoning?",
+    "What was the specific composition of the 7,000-sample dataset used in Experiment 2 to test the hypothesis of balancing easy and hard problems?",
+    "According to the findings in Experiment 1, why did using a high-quality but complex dataset lead to performance degradation after an initial period of rapid improvement?",
+    "In Experiment 2, how did the strategy of mixing easier problems with challenging ones affect the model's initial performance and completion lengths compared to Experiment 1?",
+    "Besides curating the dataset, what role did the Group Relative Policy Optimization (GRPO) algorithm play in achieving training efficiency under the specified resource constraints?"
+  ],
+  "acu_questions": [
+    "ACU. How many total samples were in the compact dataset created for Experiment 2 to balance problem difficulty?",
+    "ACU. How many 'easier problems' were specifically added to the dataset in Experiment 2 to balance against harder problems?",
+    "ACU. What was the final number of high-quality examples in the curated 'open-s1' dataset?",
+    "ACU. After filtering, what was the final number of examples in the 'open-deepscaler' dataset?",
+    "ACU. What was the estimated training cost in dollars for the Open-RS models, highlighting their efficiency under resource constraints?"
+  ]
+}

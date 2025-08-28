@@ -1,0 +1,2333 @@
+{
+  "query": "An analysis of how superficial interventions, such as prompting or rewarding simple syntactic patterns, can elicit complex reasoning behaviors in certain models.",
+  "max_iterations": 10,
+  "iterations": [
+    {
+      "iteration_number": 1,
+      "summary": "1. SUMMARY:\nThis paper investigates how Reinforcement Learning from Verifiable Rewards (RLVR) can improve mathematical reasoning in language models, particularly Qwen2.5-Math. Counterintuitively, the study finds that even \"spurious\" rewards—those with little, no, or even negative correlation with the correct answer (e.g., random rewards, incorrect labels, format adherence)—can elicit significant performance gains. This effect is highly model-dependent, with Qwen models showing substantial improvements while other families like Llama and OLMo exhibit minimal gains or even degradation. The research hypothesizes that RLVR, especially with spurious rewards, works by surfacing and upweighting latent reasoning capabilities acquired during pretraining. For Qwen2.5-Math, a key observed behavior is \"code reasoning\" (generating Python code to aid in problem-solving), which becomes significantly more prevalent and strongly correlates with improved accuracy after RLVR, even with spurious rewards. This suggests that superficial interventions can indeed elicit complex reasoning if they tap into pre-existing, beneficial patterns within the model.\n\n2. KEY HIGHLIGHTS:\n*   Spurious rewards (random, incorrect labels, format adherence) can significantly improve mathematical reasoning in Qwen2.5-Math models via RLVR, sometimes matching ground truth rewards.\n*   The effectiveness of spurious rewards is highly model-dependent; Qwen models benefit greatly, while Llama and OLMo models show little to no improvement.\n*   RLVR with spurious rewards appears to elicit and amplify pre-existing reasoning capabilities, such as \"code reasoning\" (using Python for problem-solving) in Qwen2.5-Math.\n*   Increased \"code reasoning\" frequency strongly correlates with improved accuracy in Qwen2.5-Math models after RLVR, even with uninformative reward signals.\n*   These findings suggest that superficial interventions can unlock complex reasoning by leveraging latent pre-trained abilities, but this phenomenon is specific to certain model architectures and pretraining data.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+            "answer": "The study used spurious rewards such as random rewards, incorrect labels, and format adherence. The summary states that these spurious rewards can elicit significant performance gains in Qwen2.5-Math models, sometimes matching ground-truth rewards on the MATH-500 benchmark."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+            "answer": "The summary indicates that increased \"code reasoning\" frequency strongly correlates with improved accuracy in Qwen2.5-Math models after RLVR, even with uninformative reward signals. It also states that \"code reasoning\" becomes significantly more prevalent after RLVR with spurious rewards."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+            "answer": "The research hypothesizes that RLVR with spurious rewards works by surfacing and upweighting latent reasoning capabilities acquired during pretraining, and this effect is highly model-dependent, with Qwen models benefiting greatly while other families like Llama and OLMo show little to no improvement."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+            "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+          "answer": "The study used spurious rewards such as random rewards, incorrect labels, and format adherence. The summary states that these spurious rewards can elicit significant performance gains in Qwen2.5-Math models, sometimes matching ground-truth rewards on the MATH-500 benchmark."
+        },
+        {
+          "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+          "answer": "The summary indicates that increased \"code reasoning\" frequency strongly correlates with improved accuracy in Qwen2.5-Math models after RLVR, even with uninformative reward signals. It also states that \"code reasoning\" becomes significantly more prevalent after RLVR with spurious rewards."
+        },
+        {
+          "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+          "answer": "The research hypothesizes that RLVR with spurious rewards works by surfacing and upweighting latent reasoning capabilities acquired during pretraining, and this effect is highly model-dependent, with Qwen models benefiting greatly while other families like Llama and OLMo show little to no improvement."
+        },
+        {
+          "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+          "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+        },
+        {
+          "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+          "answer": "Not enough information in summary"
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+              "answer": "The study used spurious rewards such as random rewards, incorrect labels, and format adherence. The summary states that these spurious rewards can elicit significant performance gains in Qwen2.5-Math models, sometimes matching ground-truth rewards on the MATH-500 benchmark."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+              "answer": "The summary indicates that increased \"code reasoning\" frequency strongly correlates with improved accuracy in Qwen2.5-Math models after RLVR, even with uninformative reward signals. It also states that \"code reasoning\" becomes significantly more prevalent after RLVR with spurious rewards."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+              "answer": "The research hypothesizes that RLVR with spurious rewards works by surfacing and upweighting latent reasoning capabilities acquired during pretraining, and this effect is highly model-dependent, with Qwen models benefiting greatly while other families like Llama and OLMo show little to no improvement."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not explain how the researchers tested the causal relationship between code reasoning frequency and performance."
+          },
+          {
+            "qa": {
+              "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not mention the GRPO optimization algorithm or any specific mechanism within it that explains the performance improvements with random rewards."
+          },
+          {
+            "qa": {
+              "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not provide the specific percentage accuracy gain for 'random reward' on the MATH-500 benchmark for the Qwen2.5-Math-7B model."
+          },
+          {
+            "qa": {
+              "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not state the percentage of Qwen2.5-Math-7B's responses that contained 'code reasoning' before RLVR training."
+          },
+          {
+            "qa": {
+              "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not specify the approximate percentage to which the frequency of code reasoning increased after RLVR training with spurious rewards."
+          },
+          {
+            "qa": {
+              "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+              "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not mention any RL algorithm or its clipping mechanism in relation to random rewards."
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Spurious Rewards — examples and comparison to ground truth",
+          "Code Reasoning — accuracy and frequency changes",
+          "Model Dependency — Qwen vs. Llama/OLMo",
+          "Causal Analysis — testing code reasoning impact",
+          "GRPO Mechanism — random reward signal origin",
+          "Random Reward Gains — specific percentage for Qwen2.5-Math-7B",
+          "Pre-RLVR Code Reasoning Frequency — Qwen2.5-Math-7B percentage",
+          "Post-RLVR Code Reasoning Frequency — Qwen2.5-Math-7B approximate percentage"
+        ]
+      },
+      "correct_count_all": 4,
+      "correct_count_acu": 1,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Spurious Rewards — examples and comparison to ground truth",
+        "Code Reasoning — accuracy and frequency changes",
+        "Model Dependency — Qwen vs. Llama/OLMo",
+        "Causal Analysis — testing code reasoning impact",
+        "GRPO Mechanism — random reward signal origin",
+        "Random Reward Gains — specific percentage for Qwen2.5-Math-7B",
+        "Pre-RLVR Code Reasoning Frequency — Qwen2.5-Math-7B percentage",
+        "Post-RLVR Code Reasoning Frequency — Qwen2.5-Math-7B approximate percentage"
+      ],
+      "sections_to_highlight_size": 8,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 2,
+      "summary": "1. SUMMARY:\nThis paper investigates how Reinforcement Learning with Verifiable Rewards (RLVR) can elicit complex reasoning behaviors in language models, even when using \"spurious\" or weak reward signals (e.g., rewarding incorrect labels, random rewards, or specific formatting). The research highlights that while these weak signals can significantly improve mathematical reasoning performance on models like Qwen2.5-Math (achieving gains comparable to ground truth rewards), this effect is highly model-dependent. For instance, Qwen2.5-Math models demonstrate a notable increase in \"code reasoning\" (generating Python code to aid problem-solving), from an initial 65% frequency to over 90% after RLVR, even with spurious rewards. This code reasoning behavior strongly correlates with improved accuracy. Conversely, other model families like Llama and OLMo show minimal or no gains with spurious rewards, suggesting that RLVR primarily surfaces pre-existing reasoning capabilities learned during pretraining. The study emphasizes the need to validate RLVR findings across diverse models rather than relying solely on Qwen-based experiments, as spurious interventions can easily yield significant performance improvements on Qwen models by leveraging their specific pre-existing reasoning strategies.\n\n2. KEY HIGHLIGHTS:\n*   Weak and spurious reward signals (e.g., incorrect labels, random rewards) can significantly improve mathematical reasoning in Qwen2.5-Math models, often matching gains from ground truth rewards.\n*   RLVR with spurious rewards dramatically increases \"code reasoning\" (using Python for problem-solving) in Qwen2.5-Math-7B from 65% to over 90%, which strongly correlates with performance gains.\n*   The effectiveness of spurious rewards is highly model-dependent; these gains are observed in Qwen models but not in families like Llama or OLMo, indicating reliance on pre-existing model behaviors.\n*   Directly inducing code reasoning through prompting or specific rewards significantly boosts Qwen2.5-Math model performance, validating its role in spurious reward gains.\n*   Researchers should validate RLVR findings across diverse models, as conclusions drawn solely from Qwen models may not generalize due to their unique pre-existing reasoning capabilities.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+            "answer": "Examples of spurious rewards include rewarding incorrect labels and random rewards. The study found that these weak signals could significantly improve mathematical reasoning performance on Qwen2.5-Math models, achieving gains comparable to ground truth rewards on the MATH-500 benchmark."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+            "answer": "Code reasoning strongly correlates with improved accuracy. The frequency of code reasoning in Qwen2.5-Math-7B increased from an initial 65% to over 90% after RLVR with spurious rewards."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+            "answer": "The authors hypothesize that RLVR primarily surfaces pre-existing reasoning capabilities learned during pretraining, and that Qwen models have specific pre-existing reasoning strategies that spurious interventions can leverage, unlike Llama and OLMo models."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+            "answer": "Before RLVR training, 65% of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+            "answer": "After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to over 90%."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+            "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+          "answer": "Examples of spurious rewards include rewarding incorrect labels and random rewards. The study found that these weak signals could significantly improve mathematical reasoning performance on Qwen2.5-Math models, achieving gains comparable to ground truth rewards on the MATH-500 benchmark."
+        },
+        {
+          "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+          "answer": "Code reasoning strongly correlates with improved accuracy. The frequency of code reasoning in Qwen2.5-Math-7B increased from an initial 65% to over 90% after RLVR with spurious rewards."
+        },
+        {
+          "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+          "answer": "The authors hypothesize that RLVR primarily surfaces pre-existing reasoning capabilities learned during pretraining, and that Qwen models have specific pre-existing reasoning strategies that spurious interventions can leverage, unlike Llama and OLMo models."
+        },
+        {
+          "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+          "answer": "Before RLVR training, 65% of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"."
+        },
+        {
+          "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+          "answer": "After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to over 90%."
+        },
+        {
+          "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+          "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+        },
+        {
+          "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+          "answer": "Not enough information in summary"
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+              "answer": "Examples of spurious rewards include rewarding incorrect labels and random rewards. The study found that these weak signals could significantly improve mathematical reasoning performance on Qwen2.5-Math models, achieving gains comparable to ground truth rewards on the MATH-500 benchmark."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+              "answer": "Code reasoning strongly correlates with improved accuracy. The frequency of code reasoning in Qwen2.5-Math-7B increased from an initial 65% to over 90% after RLVR with spurious rewards."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+              "answer": "The authors hypothesize that RLVR primarily surfaces pre-existing reasoning capabilities learned during pretraining, and that Qwen models have specific pre-existing reasoning strategies that spurious interventions can leverage, unlike Llama and OLMo models."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not contain information on how the researchers tested the causal relationship between code reasoning frequency and performance."
+          },
+          {
+            "qa": {
+              "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not mention the GRPO optimization algorithm or its mechanisms related to random rewards."
+          },
+          {
+            "qa": {
+              "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not provide the specific percentage accuracy gain for \"random reward\" on the MATH-500 benchmark for the Qwen2.5-Math-7B model."
+          },
+          {
+            "qa": {
+              "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+              "answer": "Before RLVR training, 65% of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+              "answer": "After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to over 90%."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+              "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not mention any RL algorithm's clipping mechanism in relation to random rewards."
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Code Reasoning — causal relationship with performance",
+          "GRPO Clipping Bias — signal from random rewards",
+          "Spurious Rewards — specific percentage gains",
+          "Model Generalization — limitations of findings beyond Qwen models"
+        ]
+      },
+      "correct_count_all": 6,
+      "correct_count_acu": 3,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Code Reasoning — causal relationship with performance",
+        "GRPO Clipping Bias — signal from random rewards",
+        "Spurious Rewards — specific percentage gains",
+        "Model Generalization — limitations of findings beyond Qwen models"
+      ],
+      "sections_to_highlight_size": 4,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 3,
+      "summary": "1. SUMMARY:\nThis paper investigates how Reinforcement Learning from Verifiable Rewards (RLVR) can improve mathematical reasoning in language models, even with \"spurious\" or weak reward signals (e.g., random rewards, incorrect labels, or format adherence). The study found that for the Qwen2.5-Math models, RLVR with these weak signals can yield significant performance gains, often comparable to using ground truth rewards. This improvement is largely attributed to the models' pre-existing reasoning capabilities, particularly a tendency to use \"code reasoning\" (generating Python code to aid problem-solving). For Qwen2.5-Math-7B, pre-RLVR code reasoning frequency was 65%, increasing to over 90% after RLVR with spurious rewards, strongly correlating with performance gains. However, these spurious rewards did not generalize to other model families like Llama3 or OLMo2, highlighting model dependency. The research suggests that RLVR might be eliciting latent reasoning representations learned during pre-training, and that the GRPO optimization algorithm's clipping bias can even create training signals from random rewards by favoring existing model behaviors.\n\n2. KEY HIGHLIGHTS:\n*   RLVR with spurious rewards (random, incorrect labels, format) significantly improves Qwen2.5-Math models' reasoning, achieving gains comparable to ground truth rewards.\n*   Qwen2.5-Math models exhibit high pre-RLVR \"code reasoning\" (65% frequency), which increases to over 90% post-RLVR and strongly correlates with performance gains.\n*   Spurious rewards are model-dependent, showing significant gains on Qwen models but failing to generalize to Llama3 or OLMo2.\n*   The study hypothesizes that RLVR elicits latent reasoning representations from pre-training, with GRPO's clipping bias potentially creating signals from random rewards by favoring existing behaviors.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+            "answer": "The study used spurious rewards such as random rewards, incorrect labels, or format adherence. The effectiveness of these spurious rewards on the Qwen2.5-Math-7B model was comparable to using ground-truth rewards on the MATH-500 benchmark."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+            "answer": "The summary states that the frequency of code reasoning in Qwen2.5-Math-7B increased from 65% before RLVR to over 90% after RLVR with spurious rewards, and this strongly correlates with performance gains. However, it does not provide a comparison of accuracy between answers with and without code reasoning."
+          },
+          "result": false,
+          "issue": "partial information"
+        },
+        {
+          "qa": {
+            "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+            "answer": "The authors hypothesize that RLVR might be eliciting latent reasoning representations learned during pre-training, and this improvement is model-dependent, as spurious rewards did not generalize to other model families like Llama3 or OLMo2. The summary does not elaborate further on the specific reasons for this difference in generalization."
+          },
+          "result": false,
+          "issue": "partial information"
+        },
+        {
+          "qa": {
+            "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+            "answer": "The GRPO optimization algorithm's clipping bias is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models by favoring existing model behaviors."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+            "answer": "Before RLVR training, 65% of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+            "answer": "After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to over 90%."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+            "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+            "answer": "The clipping mechanism within the GRPO optimization algorithm is hypothesized to provide a training signal from random rewards."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+          "answer": "The study used spurious rewards such as random rewards, incorrect labels, or format adherence. The effectiveness of these spurious rewards on the Qwen2.5-Math-7B model was comparable to using ground-truth rewards on the MATH-500 benchmark."
+        },
+        {
+          "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+          "answer": "The summary states that the frequency of code reasoning in Qwen2.5-Math-7B increased from 65% before RLVR to over 90% after RLVR with spurious rewards, and this strongly correlates with performance gains. However, it does not provide a comparison of accuracy between answers with and without code reasoning."
+        },
+        {
+          "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+          "answer": "The authors hypothesize that RLVR might be eliciting latent reasoning representations learned during pre-training, and this improvement is model-dependent, as spurious rewards did not generalize to other model families like Llama3 or OLMo2. The summary does not elaborate further on the specific reasons for this difference in generalization."
+        },
+        {
+          "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+          "answer": "The GRPO optimization algorithm's clipping bias is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models by favoring existing model behaviors."
+        },
+        {
+          "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+          "answer": "Before RLVR training, 65% of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"."
+        },
+        {
+          "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+          "answer": "After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to over 90%."
+        },
+        {
+          "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+          "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+        },
+        {
+          "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+          "answer": "The clipping mechanism within the GRPO optimization algorithm is hypothesized to provide a training signal from random rewards."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+              "answer": "The study used spurious rewards such as random rewards, incorrect labels, or format adherence. The effectiveness of these spurious rewards on the Qwen2.5-Math-7B model was comparable to using ground-truth rewards on the MATH-500 benchmark."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+              "answer": "The summary states that the frequency of code reasoning in Qwen2.5-Math-7B increased from 65% before RLVR to over 90% after RLVR with spurious rewards, and this strongly correlates with performance gains. However, it does not provide a comparison of accuracy between answers with and without code reasoning."
+            },
+            "result": false,
+            "issue": "The answer does not provide the comparison of accuracy between answers with and without code reasoning, which was part of the question."
+          },
+          {
+            "qa": {
+              "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+              "answer": "The authors hypothesize that RLVR might be eliciting latent reasoning representations learned during pre-training, and this improvement is model-dependent, as spurious rewards did not generalize to other model families like Llama3 or OLMo2. The summary does not elaborate further on the specific reasons for this difference in generalization."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The answer explicitly states that there is not enough information in the summary to answer the question."
+          },
+          {
+            "qa": {
+              "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+              "answer": "The GRPO optimization algorithm's clipping bias is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models by favoring existing model behaviors."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The answer explicitly states that there is not enough information in the summary to answer the question."
+          },
+          {
+            "qa": {
+              "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+              "answer": "Before RLVR training, 65% of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+              "answer": "After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to over 90%."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+              "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+              "answer": "The clipping mechanism within the GRPO optimization algorithm is hypothesized to provide a training signal from random rewards."
+            },
+            "result": true,
+            "issue": null
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Introduction — RLVR effectiveness and spurious rewards",
+          "Key Findings — Code reasoning and performance correlation",
+          "Cross-Model Analysis — Generalization of spurious rewards",
+          "Methodology — GRPO clipping bias and random rewards",
+          "Results — Spurious rewards vs. ground truth rewards comparison"
+        ]
+      },
+      "correct_count_all": 7,
+      "correct_count_acu": 4,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Introduction — RLVR effectiveness and spurious rewards",
+        "Key Findings — Code reasoning and performance correlation",
+        "Cross-Model Analysis — Generalization of spurious rewards",
+        "Methodology — GRPO clipping bias and random rewards",
+        "Results — Spurious rewards vs. ground truth rewards comparison"
+      ],
+      "sections_to_highlight_size": 5,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 4,
+      "summary": "1. SUMMARY:\nThis paper investigates how Reinforcement Learning with Verifiable Rewards (RLVR) can elicit complex reasoning behaviors, even with \"spurious\" rewards (e.g., random, incorrect labels, or format-based) that have little or no correlation with the correct answer. The study found that for Qwen2.5-Math models, RLVR significantly improves performance on mathematical reasoning tasks, with gains from spurious rewards often comparable to those from ground truth rewards. For instance, random rewards yielded a 21.4% absolute accuracy gain on MATH-500 for Qwen2.5-Math-7B. A key finding is that Qwen2.5-Math models exhibit a strong pre-existing tendency towards \"code reasoning\" (generating Python code for problem-solving), which is significantly amplified by RLVR, increasing its frequency from 65% to over 90%. This code reasoning behavior is strongly correlated with improved accuracy. Crucially, these gains from spurious rewards do not generalize to other model families like Llama3 or OLMo2, highlighting the importance of pre-training data and learned reasoning strategies. The paper suggests that RLVR, particularly with mechanisms like GRPO's clipping bias, may primarily surface and upweight these innate reasoning capabilities rather than teaching new ones.\n\n2. KEY HIGHLIGHTS:\n*   RLVR can significantly improve mathematical reasoning in Qwen2.5-Math models even with spurious rewards like random or incorrect labels, achieving gains comparable to ground truth rewards (e.g., +21.4% accuracy with random rewards for Qwen2.5-Math-7B).\n*   Qwen2.5-Math models exhibit a strong pre-existing \"code reasoning\" behavior (using Python for problem-solving), which RLVR amplifies from 65% to over 90% frequency, strongly correlating with performance improvements.\n*   The effectiveness of spurious rewards in RLVR is highly model-dependent; gains observed in Qwen models do not generalize to other families like Llama3 or OLMo2, indicating the influence of pre-training.\n*   The GRPO optimization mechanism, particularly its clipping bias, can create a training signal from random rewards by amplifying existing model behaviors, explaining why spurious rewards work for models with strong pre-existing reasoning patterns like Qwen2.5-Math.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+            "answer": "The study used spurious rewards such as random, incorrect labels, or format-based rewards. The effectiveness of these spurious rewards on the Qwen2.5-Math-7B model, particularly random rewards, yielded performance gains comparable to those from ground truth rewards on the MATH-500 benchmark, with random rewards providing a 21.4% absolute accuracy gain."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+            "answer": "The summary states that the \"code reasoning\" behavior is strongly correlated with improved accuracy. Before RLVR training, the frequency of code reasoning in Qwen2.5-Math-7B was 65%. After RLVR training with spurious rewards, this frequency increased to over 90%."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+            "answer": "The authors hypothesize that spurious rewards improve performance in Qwen models due to their strong pre-existing tendency towards \"code reasoning\" and learned reasoning strategies, which RLVR amplifies. These gains do not generalize to other models like Llama3 or OLMo2, indicating the influence of pre-training data and potentially different inherent reasoning strategies in those models."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+            "answer": "The specific mechanism within the GRPO optimization algorithm identified as a potential reason for performance improvements with random rewards is its clipping bias, which can create a training signal by amplifying existing model behaviors."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+            "answer": "Random rewards yielded a 21.4% absolute accuracy gain on the MATH-500 benchmark for the Qwen2.5-Math-7B model."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+            "answer": "Before RLVR training, 65% of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+            "answer": "After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to over 90%."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+            "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+            "answer": "The clipping mechanism of the GRPO optimization algorithm is hypothesized to provide a training signal from random rewards."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+          "answer": "The study used spurious rewards such as random, incorrect labels, or format-based rewards. The effectiveness of these spurious rewards on the Qwen2.5-Math-7B model, particularly random rewards, yielded performance gains comparable to those from ground truth rewards on the MATH-500 benchmark, with random rewards providing a 21.4% absolute accuracy gain."
+        },
+        {
+          "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+          "answer": "The summary states that the \"code reasoning\" behavior is strongly correlated with improved accuracy. Before RLVR training, the frequency of code reasoning in Qwen2.5-Math-7B was 65%. After RLVR training with spurious rewards, this frequency increased to over 90%."
+        },
+        {
+          "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+          "answer": "The authors hypothesize that spurious rewards improve performance in Qwen models due to their strong pre-existing tendency towards \"code reasoning\" and learned reasoning strategies, which RLVR amplifies. These gains do not generalize to other models like Llama3 or OLMo2, indicating the influence of pre-training data and potentially different inherent reasoning strategies in those models."
+        },
+        {
+          "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+          "answer": "The specific mechanism within the GRPO optimization algorithm identified as a potential reason for performance improvements with random rewards is its clipping bias, which can create a training signal by amplifying existing model behaviors."
+        },
+        {
+          "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+          "answer": "Random rewards yielded a 21.4% absolute accuracy gain on the MATH-500 benchmark for the Qwen2.5-Math-7B model."
+        },
+        {
+          "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+          "answer": "Before RLVR training, 65% of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"."
+        },
+        {
+          "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+          "answer": "After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to over 90%."
+        },
+        {
+          "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+          "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+        },
+        {
+          "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+          "answer": "The clipping mechanism of the GRPO optimization algorithm is hypothesized to provide a training signal from random rewards."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+              "answer": "The study used spurious rewards such as random, incorrect labels, or format-based rewards. The effectiveness of these spurious rewards on the Qwen2.5-Math-7B model, particularly random rewards, yielded performance gains comparable to those from ground truth rewards on the MATH-500 benchmark, with random rewards providing a 21.4% absolute accuracy gain."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+              "answer": "The summary states that the \"code reasoning\" behavior is strongly correlated with improved accuracy. Before RLVR training, the frequency of code reasoning in Qwen2.5-Math-7B was 65%. After RLVR training with spurious rewards, this frequency increased to over 90%."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+              "answer": "The authors hypothesize that spurious rewards improve performance in Qwen models due to their strong pre-existing tendency towards \"code reasoning\" and learned reasoning strategies, which RLVR amplifies. These gains do not generalize to other models like Llama3 or OLMo2, indicating the influence of pre-training data and potentially different inherent reasoning strategies in those models."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not provide information on how the researchers tested the causal relationship between code reasoning frequency and performance."
+          },
+          {
+            "qa": {
+              "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+              "answer": "The specific mechanism within the GRPO optimization algorithm identified as a potential reason for performance improvements with random rewards is its clipping bias, which can create a training signal by amplifying existing model behaviors."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+              "answer": "Random rewards yielded a 21.4% absolute accuracy gain on the MATH-500 benchmark for the Qwen2.5-Math-7B model."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+              "answer": "Before RLVR training, 65% of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+              "answer": "After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to over 90%."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+              "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+              "answer": "The clipping mechanism of the GRPO optimization algorithm is hypothesized to provide a training signal from random rewards."
+            },
+            "result": true,
+            "issue": null
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Methodology — causal relationship testing for code reasoning",
+          "Methodology — GRPO clipping bias mechanism",
+          "Results — generalization to other models",
+          "Results — spurious rewards effectiveness",
+          "Key Findings — pre-training impact on RLVR",
+          "Key Findings — code reasoning amplification"
+        ]
+      },
+      "correct_count_all": 9,
+      "correct_count_acu": 5,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Methodology — causal relationship testing for code reasoning",
+        "Methodology — GRPO clipping bias mechanism",
+        "Results — generalization to other models",
+        "Results — spurious rewards effectiveness",
+        "Key Findings — pre-training impact on RLVR",
+        "Key Findings — code reasoning amplification"
+      ],
+      "sections_to_highlight_size": 6,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 5,
+      "summary": "1. SUMMARY:\nThis paper investigates Reinforcement Learning with Verifiable Rewards (RLVR) and its effectiveness even with \"spurious\" reward signals, which have weak or no correlation with the correct answer. Surprisingly, for Qwen2.5-Math models, RLVR with random, format, or incorrect label rewards can lead to significant performance gains on mathematical reasoning tasks, often approaching gains from ground truth rewards. For instance, Qwen2.5-Math-7B saw gains of 21.4% (random), 13.8% (format), and 24.1% (incorrect label) on MATH-500. A key finding is that Qwen2.5-Math models exhibit strong \"code reasoning\" (using Python code to assist in solving problems) even without execution. RLVR, particularly with spurious rewards, significantly increases the frequency of this code reasoning (from 65% to over 90%), which is strongly correlated with improved accuracy. This suggests RLVR elicits latent reasoning capabilities from pre-training. However, these spurious rewards do not generalize to other model families like Llama3 or OLMo2, indicating a strong dependency on the model's pre-training data and learned behaviors. The paper hypothesizes that RLVR algorithms like GRPO, through mechanisms like clipping bias, can amplify these pre-existing reasoning strategies, even when the reward signal is noisy.\n\n2. KEY HIGHLIGHTS:\n*   RLVR with spurious rewards (random, format, incorrect labels) significantly improves Qwen2.5-Math model performance, achieving gains comparable to ground truth rewards.\n*   Qwen2.5-Math models exhibit strong \"code reasoning\" (using Python for math), which RLVR amplifies, leading to a substantial increase in its frequency and a strong correlation with improved accuracy.\n*   The effectiveness of spurious rewards is highly model-dependent, with gains observed in Qwen2.5 models but not in Llama3 or OLMo2, suggesting pre-training influences RLVR outcomes.\n*   The study suggests RLVR primarily elicits pre-existing reasoning capabilities rather than teaching new ones, with code reasoning being a prominent example of an elicited strategy.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+            "answer": "Examples of spurious rewards used in the study include random, format, or incorrect label rewards. On the MATH-500 benchmark, RLVR with these spurious rewards led to significant performance gains for Qwen2.5-Math-7B, often approaching the gains achieved with ground-truth rewards."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+            "answer": "The summary states that code reasoning is strongly correlated with improved accuracy, but it does not provide a direct comparison of accuracy between answers with and without code reasoning. The frequency of code reasoning in Qwen2.5-Math models increased from 65% to over 90% after RLVR with spurious rewards."
+          },
+          "result": false,
+          "issue": "Partial information. Accuracy comparison between answers with and without code reasoning is not directly provided."
+        },
+        {
+          "qa": {
+            "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+            "answer": "The authors hypothesize that the success of spurious rewards in Qwen models, but not in others like Llama3 or OLMo2, is due to a strong dependency on the model's pre-training data and learned behaviors. RLVR algorithms may amplify pre-existing reasoning strategies, and these strategies appear to be more prevalent or accessible in Qwen models."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+            "answer": "The specific mechanism within the GRPO optimization algorithm identified as a potential reason for performance improvements with random rewards is clipping bias, which can amplify pre-existing reasoning strategies."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+            "answer": "Random rewards yielded a 21.4% gain on the MATH-500 benchmark for the Qwen2.5-Math-7B model."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+            "answer": "Before RLVR training, 65% of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+            "answer": "After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately over 90%."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+            "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+            "answer": "The clipping mechanism of the GRPO optimization algorithm is hypothesized to provide a training signal from random rewards."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+          "answer": "Examples of spurious rewards used in the study include random, format, or incorrect label rewards. On the MATH-500 benchmark, RLVR with these spurious rewards led to significant performance gains for Qwen2.5-Math-7B, often approaching the gains achieved with ground-truth rewards."
+        },
+        {
+          "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+          "answer": "The summary states that code reasoning is strongly correlated with improved accuracy, but it does not provide a direct comparison of accuracy between answers with and without code reasoning. The frequency of code reasoning in Qwen2.5-Math models increased from 65% to over 90% after RLVR with spurious rewards."
+        },
+        {
+          "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+          "answer": "The authors hypothesize that the success of spurious rewards in Qwen models, but not in others like Llama3 or OLMo2, is due to a strong dependency on the model's pre-training data and learned behaviors. RLVR algorithms may amplify pre-existing reasoning strategies, and these strategies appear to be more prevalent or accessible in Qwen models."
+        },
+        {
+          "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+          "answer": "The specific mechanism within the GRPO optimization algorithm identified as a potential reason for performance improvements with random rewards is clipping bias, which can amplify pre-existing reasoning strategies."
+        },
+        {
+          "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+          "answer": "Random rewards yielded a 21.4% gain on the MATH-500 benchmark for the Qwen2.5-Math-7B model."
+        },
+        {
+          "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+          "answer": "Before RLVR training, 65% of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"."
+        },
+        {
+          "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+          "answer": "After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately over 90%."
+        },
+        {
+          "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+          "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+        },
+        {
+          "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+          "answer": "The clipping mechanism of the GRPO optimization algorithm is hypothesized to provide a training signal from random rewards."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+              "answer": "Examples of spurious rewards used in the study include random, format, or incorrect label rewards. On the MATH-500 benchmark, RLVR with these spurious rewards led to significant performance gains for Qwen2.5-Math-7B, often approaching the gains achieved with ground-truth rewards."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+              "answer": "The summary states that code reasoning is strongly correlated with improved accuracy, but it does not provide a direct comparison of accuracy between answers with and without code reasoning. The frequency of code reasoning in Qwen2.5-Math models increased from 65% to over 90% after RLVR with spurious rewards."
+            },
+            "result": false,
+            "issue": "The answer is incomplete as it does not provide the accuracy comparison between answers with and without code reasoning, which was asked in the question."
+          },
+          {
+            "qa": {
+              "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+              "answer": "The authors hypothesize that the success of spurious rewards in Qwen models, but not in others like Llama3 or OLMo2, is due to a strong dependency on the model's pre-training data and learned behaviors. RLVR algorithms may amplify pre-existing reasoning strategies, and these strategies appear to be more prevalent or accessible in Qwen models."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary lacks information on how the causal relationship was tested."
+          },
+          {
+            "qa": {
+              "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+              "answer": "The specific mechanism within the GRPO optimization algorithm identified as a potential reason for performance improvements with random rewards is clipping bias, which can amplify pre-existing reasoning strategies."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+              "answer": "Random rewards yielded a 21.4% gain on the MATH-500 benchmark for the Qwen2.5-Math-7B model."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+              "answer": "Before RLVR training, 65% of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+              "answer": "After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately over 90%."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+              "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+              "answer": "The clipping mechanism of the GRPO optimization algorithm is hypothesized to provide a training signal from random rewards."
+            },
+            "result": true,
+            "issue": null
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Code Reasoning — Accuracy comparison",
+          "Causal Relationship — Testing methodology",
+          "Generalization — Cross-model analysis details"
+        ]
+      },
+      "correct_count_all": 8,
+      "correct_count_acu": 5,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Code Reasoning — Accuracy comparison",
+        "Causal Relationship — Testing methodology",
+        "Generalization — Cross-model analysis details"
+      ],
+      "sections_to_highlight_size": 3,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 6,
+      "summary": "1. SUMMARY:\nThis paper investigates Reinforcement Learning from Verifiable Rewards (RLVR) and its surprising effectiveness even with \"spurious\" reward signals (e.g., random, incorrect labels, or format-based) for enhancing mathematical reasoning in certain language models. The research demonstrates that for Qwen2.5-Math models, these weak or flawed rewards can elicit significant performance gains, sometimes approaching those achieved with ground truth rewards. For instance, Qwen2.5-Math-7B saw gains of 21.4% (random reward) and 24.1% (incorrect label reward) on the MATH-500 benchmark. A key finding is that this phenomenon is highly model-dependent; spurious rewards largely fail to improve models like Llama3 or OLMo2. The study identifies \"code reasoning\"—using generated Python code to aid mathematical problem-solving—as a pre-existing behavior in Qwen2.5-Math models that RLVR effectively amplifies, increasing its frequency from 65% to over 90% even with spurious rewards. This amplification of code reasoning is shown to be causally linked to performance improvements. The research also explores the role of optimization algorithm mechanisms, like GRPO's clipping bias, in generating training signals from random rewards, suggesting that RLVR often surfaces latent capabilities from pre-training rather than teaching new ones.\n\n2. KEY HIGHLIGHTS:\n*   Spurious rewards (random, incorrect labels, format) significantly improve Qwen2.5-Math models' reasoning, achieving gains comparable to ground truth rewards (e.g., 21.4% with random rewards for Qwen2.5-Math-7B).\n*   This effect is highly model-dependent, with Llama3 and OLMo2 models showing little to no improvement from spurious rewards.\n*   RLVR amplifies pre-existing \"code reasoning\" (using generated Python code) in Qwen2.5-Math models, increasing its frequency from 65% to over 90% and causally linking it to performance gains.\n*   The GRPO algorithm's clipping bias is hypothesized to create training signals from random rewards by favoring pre-existing model behaviors.\n*   Findings underscore that pre-training heavily influences RLVR outcomes, and observed benefits may not generalize across different model architectures.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+            "answer": "Examples of spurious rewards include random rewards, incorrect labels, or format-based rewards. For the Qwen2.5-Math-7B model on the MATH-500 benchmark, random rewards yielded gains of 21.4% and incorrect label rewards yielded gains of 24.1%, sometimes approaching the effectiveness of ground-truth rewards."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+            "answer": "The summary states that RLVR amplifies \"code reasoning\", increasing its frequency from 65% to over 90% even with spurious rewards, and that this amplification is causally linked to performance improvements. However, it does not directly compare the accuracy of answers with code reasoning versus those without it."
+          },
+          "result": false,
+          "issue": "partial information"
+        },
+        {
+          "qa": {
+            "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+            "answer": "The summary does not provide a hypothesis for why spurious rewards improve Qwen models but not Llama3 or OLMo2. It only states that this effect is highly model-dependent and that spurious rewards largely fail to improve models like Llama3 or OLMo2."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+            "answer": "The summary mentions that the amplification of code reasoning is shown to be causally linked to performance improvements, but it does not detail the specific methods used to test this causal relationship."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+            "answer": "The GRPO algorithm's clipping bias is identified as a potential mechanism that can create training signals from random rewards, leading to performance improvements in certain models."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+            "answer": "Random reward yielded an accuracy gain of 21.4% on the MATH-500 benchmark for the Qwen2.5-Math-7B model."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+            "answer": "Before RLVR training, 65% of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+            "answer": "After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to over 90%."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+            "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+            "answer": "The clipping mechanism of the GRPO optimization algorithm is hypothesized to provide a training signal from random rewards."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+          "answer": "Examples of spurious rewards include random rewards, incorrect labels, or format-based rewards. For the Qwen2.5-Math-7B model on the MATH-500 benchmark, random rewards yielded gains of 21.4% and incorrect label rewards yielded gains of 24.1%, sometimes approaching the effectiveness of ground-truth rewards."
+        },
+        {
+          "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+          "answer": "The summary states that RLVR amplifies \"code reasoning\", increasing its frequency from 65% to over 90% even with spurious rewards, and that this amplification is causally linked to performance improvements. However, it does not directly compare the accuracy of answers with code reasoning versus those without it."
+        },
+        {
+          "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+          "answer": "The summary does not provide a hypothesis for why spurious rewards improve Qwen models but not Llama3 or OLMo2. It only states that this effect is highly model-dependent and that spurious rewards largely fail to improve models like Llama3 or OLMo2."
+        },
+        {
+          "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+          "answer": "The summary mentions that the amplification of code reasoning is shown to be causally linked to performance improvements, but it does not detail the specific methods used to test this causal relationship."
+        },
+        {
+          "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+          "answer": "The GRPO algorithm's clipping bias is identified as a potential mechanism that can create training signals from random rewards, leading to performance improvements in certain models."
+        },
+        {
+          "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+          "answer": "Random reward yielded an accuracy gain of 21.4% on the MATH-500 benchmark for the Qwen2.5-Math-7B model."
+        },
+        {
+          "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+          "answer": "Before RLVR training, 65% of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"."
+        },
+        {
+          "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+          "answer": "After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to over 90%."
+        },
+        {
+          "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+          "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+        },
+        {
+          "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+          "answer": "The clipping mechanism of the GRPO optimization algorithm is hypothesized to provide a training signal from random rewards."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+              "answer": "Examples of spurious rewards include random rewards, incorrect labels, or format-based rewards. For the Qwen2.5-Math-7B model on the MATH-500 benchmark, random rewards yielded gains of 21.4% and incorrect label rewards yielded gains of 24.1%, sometimes approaching the effectiveness of ground-truth rewards."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+              "answer": "The summary states that RLVR amplifies \"code reasoning\", increasing its frequency from 65% to over 90% even with spurious rewards, and that this amplification is causally linked to performance improvements. However, it does not directly compare the accuracy of answers with code reasoning versus those without it."
+            },
+            "result": false,
+            "issue": "The answer does not provide the comparative accuracy of answers with and without code reasoning."
+          },
+          {
+            "qa": {
+              "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+              "answer": "The summary does not provide a hypothesis for why spurious rewards improve Qwen models but not Llama3 or OLMo2. It only states that this effect is highly model-dependent and that spurious rewards largely fail to improve models like Llama3 or OLMo2."
+            },
+            "result": false,
+            "issue": "The answer does not explain the authors' hypothesis for the model-dependent effectiveness of spurious rewards."
+          },
+          {
+            "qa": {
+              "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+              "answer": "The summary mentions that the amplification of code reasoning is shown to be causally linked to performance improvements, but it does not detail the specific methods used to test this causal relationship."
+            },
+            "result": false,
+            "issue": "The answer does not detail the methods used to test the causal relationship between code reasoning and performance."
+          },
+          {
+            "qa": {
+              "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+              "answer": "The GRPO algorithm's clipping bias is identified as a potential mechanism that can create training signals from random rewards, leading to performance improvements in certain models."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+              "answer": "Random reward yielded an accuracy gain of 21.4% on the MATH-500 benchmark for the Qwen2.5-Math-7B model."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+              "answer": "Before RLVR training, 65% of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+              "answer": "After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to over 90%."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+              "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+              "answer": "The clipping mechanism of the GRPO optimization algorithm is hypothesized to provide a training signal from random rewards."
+            },
+            "result": true,
+            "issue": null
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Code Reasoning — accuracy comparison",
+          "Model Dependency — hypothesis for Qwen vs Llama/OLMo",
+          "Causal Link — methods for code reasoning impact",
+          "Spurious Rewards — explanation of effectiveness"
+        ]
+      },
+      "correct_count_all": 7,
+      "correct_count_acu": 5,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Code Reasoning — accuracy comparison",
+        "Model Dependency — hypothesis for Qwen vs Llama/OLMo",
+        "Causal Link — methods for code reasoning impact",
+        "Spurious Rewards — explanation of effectiveness"
+      ],
+      "sections_to_highlight_size": 4,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 7,
+      "summary": "1. SUMMARY:\nThis research investigates how Reinforcement Learning from Verifiable Rewards (RLVR) can improve language model reasoning, even with \"spurious\" or flawed reward signals. The study finds that for Qwen2.5-Math models, RLVR can elicit significant performance gains (e.g., +21.4% with random rewards, +24.1% with incorrect labels) that rival ground truth rewards (+29.1%). This improvement is largely attributed to the models' pre-existing reasoning capabilities, particularly \"code reasoning\" (using Python code to solve math problems), which is significantly amplified by RLVR. Qwen2.5-Math models exhibit high initial code reasoning frequency (65%) which increases to over 90% after RLVR, strongly correlating with performance gains. This effect is highly model-dependent; other models like Llama and OLMo show minimal or no improvement with spurious rewards, suggesting that the pre-training data distribution plays a crucial role. The study also explores the mechanism of GRPO clipping bias as a potential source of training signals from random rewards.\n\n2. KEY HIGHLIGHTS:\n*   RLVR with spurious rewards (random, incorrect labels, format) significantly improves Qwen2.5-Math model performance, approaching gains from ground truth rewards.\n*   These gains are largely driven by amplifying pre-existing \"code reasoning\" capabilities in Qwen2.5-Math models, increasing its frequency from 65% to over 90% post-RLVR.\n*   The effectiveness of spurious rewards is highly model-dependent, with Llama and OLMo models showing little to no improvement, indicating the importance of pre-training data.\n*   Explicitly inducing code reasoning through prompting or RL improves Qwen2.5-Math performance, supporting a causal link between code reasoning and performance gains.\n*   The GRPO optimization algorithm's clipping bias may provide a training signal from random rewards by favoring and amplifying existing model behaviors.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+            "answer": "The study used \"spurious\" or flawed reward signals, including random rewards, incorrect labels, and format rewards. On the MATH-500 benchmark, these spurious rewards achieved significant performance gains for Qwen2.5-Math models, rivaling the gains from ground-truth rewards. Specifically, random rewards yielded a +21.4% gain, incorrect labels yielded +24.1%, and ground-truth rewards yielded +29.1%."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+            "answer": "The summary states that \"code reasoning\" (using Python code to solve math problems) is significantly amplified by RLVR, with its frequency increasing from 65% to over 90% post-RLVR, and this strongly correlates with performance gains. However, the summary does not provide a direct comparison of accuracy between answers with and without code reasoning."
+          },
+          "result": false,
+          "issue": "partial information"
+        },
+        {
+          "qa": {
+            "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+            "answer": "The authors hypothesize that the success of spurious rewards in improving performance in Qwen models, but not in models like Llama3 and OLMo2, is due to the pre-training data distribution. The study suggests that Qwen models have pre-existing reasoning capabilities, particularly \"code reasoning,\" which are amplified by RLVR with spurious rewards. This effect is highly model-dependent, indicating the importance of the pre-training data distribution."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+            "answer": "The summary states that explicitly inducing code reasoning through prompting or RL improves Qwen2.5-Math performance, supporting a causal link between code reasoning and performance gains. However, the specific methods used to test this causal relationship are not detailed."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+            "answer": "The GRPO optimization algorithm's clipping bias is identified as a potential reason why purely random rewards can lead to performance improvements in certain models, as it may provide a training signal from random rewards by favoring and amplifying existing model behaviors."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+            "answer": "Random rewards yielded a +21.4% gain on the MATH-500 benchmark for the Qwen2.5-Math-7B model."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+            "answer": "Before RLVR training, 65% of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+            "answer": "After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to over 90%."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+            "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+            "answer": "The clipping mechanism within the GRPO optimization algorithm is hypothesized to provide a training signal from random rewards."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+          "answer": "The study used \"spurious\" or flawed reward signals, including random rewards, incorrect labels, and format rewards. On the MATH-500 benchmark, these spurious rewards achieved significant performance gains for Qwen2.5-Math models, rivaling the gains from ground-truth rewards. Specifically, random rewards yielded a +21.4% gain, incorrect labels yielded +24.1%, and ground-truth rewards yielded +29.1%."
+        },
+        {
+          "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+          "answer": "The summary states that \"code reasoning\" (using Python code to solve math problems) is significantly amplified by RLVR, with its frequency increasing from 65% to over 90% post-RLVR, and this strongly correlates with performance gains. However, the summary does not provide a direct comparison of accuracy between answers with and without code reasoning."
+        },
+        {
+          "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+          "answer": "The authors hypothesize that the success of spurious rewards in improving performance in Qwen models, but not in models like Llama3 and OLMo2, is due to the pre-training data distribution. The study suggests that Qwen models have pre-existing reasoning capabilities, particularly \"code reasoning,\" which are amplified by RLVR with spurious rewards. This effect is highly model-dependent, indicating the importance of the pre-training data distribution."
+        },
+        {
+          "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+          "answer": "The summary states that explicitly inducing code reasoning through prompting or RL improves Qwen2.5-Math performance, supporting a causal link between code reasoning and performance gains. However, the specific methods used to test this causal relationship are not detailed."
+        },
+        {
+          "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+          "answer": "The GRPO optimization algorithm's clipping bias is identified as a potential reason why purely random rewards can lead to performance improvements in certain models, as it may provide a training signal from random rewards by favoring and amplifying existing model behaviors."
+        },
+        {
+          "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+          "answer": "Random rewards yielded a +21.4% gain on the MATH-500 benchmark for the Qwen2.5-Math-7B model."
+        },
+        {
+          "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+          "answer": "Before RLVR training, 65% of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"."
+        },
+        {
+          "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+          "answer": "After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to over 90%."
+        },
+        {
+          "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+          "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+        },
+        {
+          "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+          "answer": "The clipping mechanism within the GRPO optimization algorithm is hypothesized to provide a training signal from random rewards."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+              "answer": "The study used \"spurious\" or flawed reward signals, including random rewards, incorrect labels, and format rewards. On the MATH-500 benchmark, these spurious rewards achieved significant performance gains for Qwen2.5-Math models, rivaling the gains from ground-truth rewards. Specifically, random rewards yielded a +21.4% gain, incorrect labels yielded +24.1%, and ground-truth rewards yielded +29.1%."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+              "answer": "The summary states that \"code reasoning\" (using Python code to solve math problems) is significantly amplified by RLVR, with its frequency increasing from 65% to over 90% post-RLVR, and this strongly correlates with performance gains. However, the summary does not provide a direct comparison of accuracy between answers with and without code reasoning."
+            },
+            "result": false,
+            "issue": "The answer accurately states the frequency change but fails to provide the accuracy comparison between answers with and without code reasoning, which was part of the question."
+          },
+          {
+            "qa": {
+              "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+              "answer": "The authors hypothesize that the success of spurious rewards in improving performance in Qwen models, but not in models like Llama3 and OLMo2, is due to the pre-training data distribution. The study suggests that Qwen models have pre-existing reasoning capabilities, particularly \"code reasoning,\" which are amplified by RLVR with spurious rewards. This effect is highly model-dependent, indicating the importance of the pre-training data distribution."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+              "answer": "The summary states that explicitly inducing code reasoning through prompting or RL improves Qwen2.5-Math performance, supporting a causal link between code reasoning and performance gains. However, the specific methods used to test this causal relationship are not detailed."
+            },
+            "result": false,
+            "issue": "The answer correctly identifies that the summary mentions inducing code reasoning to test causality but fails to elaborate on the specific methods used, which was requested."
+          },
+          {
+            "qa": {
+              "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+              "answer": "The GRPO optimization algorithm's clipping bias is identified as a potential reason why purely random rewards can lead to performance improvements in certain models, as it may provide a training signal from random rewards by favoring and amplifying existing model behaviors."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+              "answer": "Random rewards yielded a +21.4% gain on the MATH-500 benchmark for the Qwen2.5-Math-7B model."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+              "answer": "Before RLVR training, 65% of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+              "answer": "After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to over 90%."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+              "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+              "answer": "The clipping mechanism within the GRPO optimization algorithm is hypothesized to provide a training signal from random rewards."
+            },
+            "result": true,
+            "issue": null
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Code Reasoning — accuracy comparison",
+          "Causal Relationship Testing — methods",
+          "Cross-Model Generalization — limitations observed",
+          "GRPO Clipping Bias — impact on random rewards"
+        ]
+      },
+      "correct_count_all": 8,
+      "correct_count_acu": 5,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Code Reasoning — accuracy comparison",
+        "Causal Relationship Testing — methods",
+        "Cross-Model Generalization — limitations observed",
+        "GRPO Clipping Bias — impact on random rewards"
+      ],
+      "sections_to_highlight_size": 4,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 8,
+      "summary": "1. SUMMARY:\nThis research investigates Reinforcement Learning from Verifiable Rewards (RLVR) and its surprising effectiveness, even with \"spurious\" or flawed reward signals, on certain language models, particularly Qwen2.5-Math. Counterintuitively, rewards that are random, incorrect, or merely follow a format can elicit significant improvements in mathematical reasoning for these models. For instance, Qwen2.5-Math-7B saw absolute accuracy gains of up to 27.1% with spurious rewards, rivaling the 29.1% from ground truth rewards. A key finding is that these gains are largely attributed to RLVR's ability to surface and amplify pre-existing reasoning capabilities within the model. Specifically, Qwen2.5-Math models exhibit \"code reasoning\" (using Python to aid mathematical thinking), which is strongly correlated with performance. RLVR, even with spurious rewards, significantly increases the frequency of this code reasoning (from 65% to over 90%), directly boosting accuracy. This effect is highly model-dependent, with other model families like Llama and OLMo showing minimal or no improvement with spurious rewards, suggesting their pre-training data lacked similar readily elicitable reasoning patterns. The study also explores the role of GRPO's clipping bias in generating training signals from random rewards, reinforcing pre-existing behaviors.\n\n2. KEY HIGHLIGHTS:\n*   RLVR can significantly improve mathematical reasoning in models like Qwen2.5-Math even with spurious rewards (random, incorrect, format-based), achieving gains comparable to ground truth rewards.\n*   These gains are largely driven by RLVR amplifying pre-existing \"code reasoning\" behaviors in Qwen2.5-Math models, increasing its frequency from 65% to over 90% and directly correlating with improved accuracy.\n*   The effectiveness of spurious rewards is highly model-dependent; Qwen models benefit greatly, while Llama and OLMo models show little to no improvement, indicating the crucial role of pre-training data and learned reasoning strategies.\n*   GRPO's clipping bias mechanism is hypothesized to be a key factor in generating usable training signals from random rewards by reinforcing existing model behaviors.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+            "answer": "The study used \"spurious\" or flawed reward signals, including rewards that were random, incorrect, or merely followed a format. On the MATH-500 benchmark, Qwen2.5-Math-7B saw absolute accuracy gains of up to 27.1% with spurious rewards, which is comparable to the 29.1% gain achieved with ground-truth rewards."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+            "answer": "The summary states that \"code reasoning\" is strongly correlated with performance and that RLVR, even with spurious rewards, significantly increases the frequency of this behavior (from 65% to over 90%), directly boosting accuracy. However, it does not directly compare the accuracy of answers with code reasoning versus those without it."
+          },
+          "result": false,
+          "issue": "partial information"
+        },
+        {
+          "qa": {
+            "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+            "answer": "The authors hypothesize that spurious rewards successfully improve performance in Qwen models because these models exhibit \"code reasoning,\" which RLVR amplifies. Other model families like Llama and OLMo show minimal or no improvement with spurious rewards, suggesting their pre-training data lacked similar readily elicitable reasoning patterns."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+            "answer": "The clipping bias within the GRPO optimization algorithm is identified as a potential reason why purely random rewards can lead to performance improvements in certain models by reinforcing pre-existing behaviors."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+            "answer": "Qwen2.5-Math-7B saw absolute accuracy gains of up to 27.1% with spurious rewards on the MATH-500 benchmark."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+            "answer": "Before RLVR training, 65% of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+            "answer": "After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to over 90%."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+            "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+            "answer": "The clipping mechanism within the GRPO optimization algorithm is hypothesized to provide a training signal from random rewards."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+          "answer": "The study used \"spurious\" or flawed reward signals, including rewards that were random, incorrect, or merely followed a format. On the MATH-500 benchmark, Qwen2.5-Math-7B saw absolute accuracy gains of up to 27.1% with spurious rewards, which is comparable to the 29.1% gain achieved with ground-truth rewards."
+        },
+        {
+          "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+          "answer": "The summary states that \"code reasoning\" is strongly correlated with performance and that RLVR, even with spurious rewards, significantly increases the frequency of this behavior (from 65% to over 90%), directly boosting accuracy. However, it does not directly compare the accuracy of answers with code reasoning versus those without it."
+        },
+        {
+          "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+          "answer": "The authors hypothesize that spurious rewards successfully improve performance in Qwen models because these models exhibit \"code reasoning,\" which RLVR amplifies. Other model families like Llama and OLMo show minimal or no improvement with spurious rewards, suggesting their pre-training data lacked similar readily elicitable reasoning patterns."
+        },
+        {
+          "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+          "answer": "The clipping bias within the GRPO optimization algorithm is identified as a potential reason why purely random rewards can lead to performance improvements in certain models by reinforcing pre-existing behaviors."
+        },
+        {
+          "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+          "answer": "Qwen2.5-Math-7B saw absolute accuracy gains of up to 27.1% with spurious rewards on the MATH-500 benchmark."
+        },
+        {
+          "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+          "answer": "Before RLVR training, 65% of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"."
+        },
+        {
+          "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+          "answer": "After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to over 90%."
+        },
+        {
+          "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+          "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+        },
+        {
+          "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+          "answer": "The clipping mechanism within the GRPO optimization algorithm is hypothesized to provide a training signal from random rewards."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+              "answer": "The study used \"spurious\" or flawed reward signals, including rewards that were random, incorrect, or merely followed a format. On the MATH-500 benchmark, Qwen2.5-Math-7B saw absolute accuracy gains of up to 27.1% with spurious rewards, which is comparable to the 29.1% gain achieved with ground-truth rewards."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+              "answer": "The summary states that \"code reasoning\" is strongly correlated with performance and that RLVR, even with spurious rewards, significantly increases the frequency of this behavior (from 65% to over 90%), directly boosting accuracy. However, it does not directly compare the accuracy of answers with code reasoning versus those without it."
+            },
+            "result": false,
+            "issue": "The answer correctly identifies the increase in frequency but fails to provide the accuracy comparison between code reasoning and non-code reasoning answers."
+          },
+          {
+            "qa": {
+              "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+              "answer": "The authors hypothesize that spurious rewards successfully improve performance in Qwen models because these models exhibit \"code reasoning,\" which RLVR amplifies. Other model families like Llama and OLMo show minimal or no improvement with spurious rewards, suggesting their pre-training data lacked similar readily elicitable reasoning patterns."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not contain information on how the researchers tested the causal relationship between code reasoning frequency and performance."
+          },
+          {
+            "qa": {
+              "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+              "answer": "The clipping bias within the GRPO optimization algorithm is identified as a potential reason why purely random rewards can lead to performance improvements in certain models by reinforcing pre-existing behaviors."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+              "answer": "Qwen2.5-Math-7B saw absolute accuracy gains of up to 27.1% with spurious rewards on the MATH-500 benchmark."
+            },
+            "result": false,
+            "issue": "The answer mentions \"up to 27.1%\" but the article specifically states that random reward yielded 21.4% gain. The answer is not specific to 'random reward'."
+          },
+          {
+            "qa": {
+              "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+              "answer": "Before RLVR training, 65% of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+              "answer": "After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to over 90%."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+              "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+              "answer": "The clipping mechanism within the GRPO optimization algorithm is hypothesized to provide a training signal from random rewards."
+            },
+            "result": true,
+            "issue": null
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Code Reasoning — accuracy comparison",
+          "Random Reward — specific accuracy gain",
+          "Methodology — causal link testing"
+        ]
+      },
+      "correct_count_all": 7,
+      "correct_count_acu": 4,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Code Reasoning — accuracy comparison",
+        "Random Reward — specific accuracy gain",
+        "Methodology — causal link testing"
+      ],
+      "sections_to_highlight_size": 3,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 9,
+      "summary": "1. SUMMARY:\nThis paper investigates Reinforcement Learning with Verifiable Rewards (RLVR) and its effectiveness, particularly with \"spurious\" or weak reward signals. The study demonstrates that even rewards with little to no correlation with the correct answer, such as random, format-based, or incorrect labels, can significantly improve mathematical reasoning in certain models, notably Qwen2.5-Math. For Qwen2.5-Math-7B, these spurious rewards achieved performance gains comparable to ground truth rewards, with incorrect labels yielding a 24.1% absolute accuracy gain and random rewards a 21.4% gain on the MATH-500 benchmark. A key finding is that this effectiveness is highly model-dependent; other model families like Llama and OLMo showed minimal or no improvement with spurious rewards, suggesting that pre-training data and learned reasoning strategies play a crucial role. The research identifies \"code reasoning\" (generating Python code to aid problem-solving) as a pre-existing capability in Qwen2.5-Math models that RLVR, even with spurious rewards, amplifies, leading to increased accuracy. Explicitly encouraging code reasoning through prompting or specific rewards also boosted performance, confirming its causal link. The study also delves into the GRPO optimization mechanism, suggesting that clipping bias can create training signals from random rewards by favoring existing high-probability behaviors.\n\n2. KEY HIGHLIGHTS:\n*   Spurious rewards (random, format, incorrect) significantly improve mathematical reasoning in Qwen2.5-Math models, achieving gains comparable to ground truth rewards.\n*   The effectiveness of spurious rewards is highly model-dependent; Qwen2.5-Math models benefit, while Llama and OLMo models do not, highlighting the importance of pre-training and learned reasoning strategies.\n*   RLVR, even with spurious rewards, amplifies \"code reasoning\" (using Python for problem-solving) in Qwen2.5-Math models, which is strongly correlated with improved performance.\n*   Prompting or rewarding code reasoning directly causes performance improvements in Qwen2.5-Math models, demonstrating a causal link between this strategy and accuracy.\n*   The GRPO optimization algorithm's clipping bias can generate effective training signals from random rewards by favoring pre-existing model behaviors.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+            "answer": "The study used spurious rewards such as random, format-based, or incorrect labels. For Qwen2.5-Math-7B on the MATH-500 benchmark, these spurious rewards achieved performance gains comparable to ground truth rewards, with incorrect labels yielding a 24.1% absolute accuracy gain and random rewards a 21.4% gain."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+            "answer": "The summary states that RLVR, even with spurious rewards, amplifies \"code reasoning\" which is strongly correlated with improved performance. It also mentions that explicitly encouraging code reasoning boosts performance. However, it does not directly compare the accuracy of answers with code reasoning versus those without it, nor does it provide the specific frequency change after RLVR with spurious rewards."
+          },
+          "result": false,
+          "issue": "Information about the direct comparison of accuracy between answers with and without code reasoning is missing, and the specific frequency change after RLVR with spurious rewards is not detailed."
+        },
+        {
+          "qa": {
+            "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+            "answer": "The authors hypothesize that the effectiveness of spurious rewards is highly model-dependent, suggesting that pre-training data and learned reasoning strategies play a crucial role. Qwen2.5-Math models benefit, while Llama and OLMo models do not, highlighting the importance of these pre-existing factors."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+            "answer": "The researchers tested the causal relationship by explicitly encouraging code reasoning through prompting or specific rewards, which also boosted performance, confirming the causal link."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+            "answer": "The GRPO optimization algorithm's clipping bias is identified as a potential reason why random rewards can lead to performance improvements by generating effective training signals that favor pre-existing model behaviors."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+            "answer": "Random rewards yielded a 21.4% absolute accuracy gain on the MATH-500 benchmark for the Qwen2.5-Math-7B model."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+            "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+            "answer": "The clipping bias within the GRPO optimization algorithm is hypothesized to provide a training signal from random rewards."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+          "answer": "The study used spurious rewards such as random, format-based, or incorrect labels. For Qwen2.5-Math-7B on the MATH-500 benchmark, these spurious rewards achieved performance gains comparable to ground truth rewards, with incorrect labels yielding a 24.1% absolute accuracy gain and random rewards a 21.4% gain."
+        },
+        {
+          "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+          "answer": "The summary states that RLVR, even with spurious rewards, amplifies \"code reasoning\" which is strongly correlated with improved performance. It also mentions that explicitly encouraging code reasoning boosts performance. However, it does not directly compare the accuracy of answers with code reasoning versus those without it, nor does it provide the specific frequency change after RLVR with spurious rewards."
+        },
+        {
+          "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+          "answer": "The authors hypothesize that the effectiveness of spurious rewards is highly model-dependent, suggesting that pre-training data and learned reasoning strategies play a crucial role. Qwen2.5-Math models benefit, while Llama and OLMo models do not, highlighting the importance of these pre-existing factors."
+        },
+        {
+          "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+          "answer": "The researchers tested the causal relationship by explicitly encouraging code reasoning through prompting or specific rewards, which also boosted performance, confirming the causal link."
+        },
+        {
+          "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+          "answer": "The GRPO optimization algorithm's clipping bias is identified as a potential reason why random rewards can lead to performance improvements by generating effective training signals that favor pre-existing model behaviors."
+        },
+        {
+          "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+          "answer": "Random rewards yielded a 21.4% absolute accuracy gain on the MATH-500 benchmark for the Qwen2.5-Math-7B model."
+        },
+        {
+          "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+          "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+        },
+        {
+          "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+          "answer": "The clipping bias within the GRPO optimization algorithm is hypothesized to provide a training signal from random rewards."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+              "answer": "The study used spurious rewards such as random, format-based, or incorrect labels. For Qwen2.5-Math-7B on the MATH-500 benchmark, these spurious rewards achieved performance gains comparable to ground truth rewards, with incorrect labels yielding a 24.1% absolute accuracy gain and random rewards a 21.4% gain."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+              "answer": "The summary states that RLVR, even with spurious rewards, amplifies \"code reasoning\" which is strongly correlated with improved performance. It also mentions that explicitly encouraging code reasoning boosts performance. However, it does not directly compare the accuracy of answers with code reasoning versus those without it, nor does it provide the specific frequency change after RLVR with spurious rewards."
+            },
+            "result": false,
+            "issue": "The answer correctly identifies that the summary lacks specific details on the accuracy comparison and frequency change of code reasoning."
+          },
+          {
+            "qa": {
+              "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+              "answer": "The authors hypothesize that the effectiveness of spurious rewards is highly model-dependent, suggesting that pre-training data and learned reasoning strategies play a crucial role. Qwen2.5-Math models benefit, while Llama and OLMo models do not, highlighting the importance of these pre-existing factors."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+              "answer": "The researchers tested the causal relationship by explicitly encouraging code reasoning through prompting or specific rewards, which also boosted performance, confirming the causal link."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+              "answer": "The GRPO optimization algorithm's clipping bias is identified as a potential reason why random rewards can lead to performance improvements by generating effective training signals that favor pre-existing model behaviors."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+              "answer": "Random rewards yielded a 21.4% absolute accuracy gain on the MATH-500 benchmark for the Qwen2.5-Math-7B model."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not contain the specific percentage of responses that contained 'code reasoning' before RLVR training."
+          },
+          {
+            "qa": {
+              "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not contain the specific percentage of responses that contained 'code reasoning' after RLVR training."
+          },
+          {
+            "qa": {
+              "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+              "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+              "answer": "The clipping bias within the GRPO optimization algorithm is hypothesized to provide a training signal from random rewards."
+            },
+            "result": true,
+            "issue": null
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Code Reasoning — accuracy vs. no code",
+          "Code Reasoning — frequency change post-RLVR",
+          "Spurious Rewards — model generalization differences"
+        ]
+      },
+      "correct_count_all": 7,
+      "correct_count_acu": 3,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Code Reasoning — accuracy vs. no code",
+        "Code Reasoning — frequency change post-RLVR",
+        "Spurious Rewards — model generalization differences"
+      ],
+      "sections_to_highlight_size": 3,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 10,
+      "summary": "1. SUMMARY:\nThis paper investigates Reinforcement Learning with Verifiable Rewards (RLVR) and its effectiveness, particularly when using \"spurious\" or weak reward signals. Counterintuitively, the study finds that for specific models like Qwen2.5-Math, RLVR can significantly improve mathematical reasoning performance even with rewards that are random, incorrect, or merely follow a specific format (e.g., using `\\boxed{}`). These gains, often comparable to using ground truth rewards, are attributed to RLVR's ability to elicit and amplify pre-existing reasoning capabilities within the model. A key observation is the strong correlation between an increase in \"code reasoning\" (generating Python code to aid problem-solving) and performance gains in Qwen2.5-Math models, with code reasoning frequency jumping from 65% to over 90% after RLVR, even with spurious rewards. This effect is not generalizable; other model families like Llama and OLMo show minimal or no improvement with spurious rewards, highlighting the crucial role of pre-training data and learned behaviors. The study suggests that RLVR might be surfacing latent reasoning representations rather than teaching new skills, and that the GRPO algorithm's clipping bias may play a role in amplifying these pre-existing patterns, even with random rewards.\n\n2. KEY HIGHLIGHTS:\n*   RLVR can significantly improve mathematical reasoning in models like Qwen2.5-Math using weak or spurious reward signals (random, incorrect, format-based), achieving gains comparable to ground truth rewards.\n*   These performance gains are strongly linked to the amplification of pre-existing reasoning strategies, particularly \"code reasoning\" (using Python for problem-solving), which increases dramatically in Qwen2.5-Math models after RLVR.\n*   The effectiveness of spurious rewards is highly model-dependent; they work for Qwen2.5-Math but generally fail for other families like Llama and OLMo, indicating that pre-training data and learned behaviors are critical.\n*   The GRPO optimization algorithm's clipping bias is hypothesized to play a role in eliciting these gains from random rewards by amplifying existing high-probability behaviors, especially when those behaviors correlate with correctness.\n*   Directly inducing code reasoning through prompting or specific rewards also boosts Qwen2.5-Math performance, further supporting the idea that RLVR is leveraging existing capabilities.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+            "answer": "The study used \"spurious\" or weak reward signals such as rewards that are random, incorrect, or merely follow a specific format (e.g., using `\\boxed{}`). The effectiveness of these spurious rewards on the Qwen2.5-Math-7B model was comparable to using ground-truth rewards on the MATH-500 benchmark."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+            "answer": "The summary states that code reasoning frequency increased from 65% to over 90% after RLVR, even with spurious rewards, and that this increase is correlated with performance gains. However, it does not directly compare the accuracy of answers with code reasoning versus those without it."
+          },
+          "result": false,
+          "issue": "partial information"
+        },
+        {
+          "qa": {
+            "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+            "answer": "The authors hypothesize that spurious rewards work for Qwen models but not for others like Llama3 and OLMo2 because the effectiveness is highly model-dependent, indicating that pre-training data and learned behaviors are critical. RLVR might be surfacing latent reasoning representations rather than teaching new skills."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+            "answer": "The clipping bias within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models. This bias may play a role in amplifying existing high-probability behaviors, especially when those behaviors correlate with correctness."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+            "answer": "Before RLVR training, 65% of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+            "answer": "After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately over 90%."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+            "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+            "answer": "The clipping mechanism within the GRPO optimization algorithm is hypothesized to provide a training signal from random rewards."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+          "answer": "The study used \"spurious\" or weak reward signals such as rewards that are random, incorrect, or merely follow a specific format (e.g., using `\\boxed{}`). The effectiveness of these spurious rewards on the Qwen2.5-Math-7B model was comparable to using ground-truth rewards on the MATH-500 benchmark."
+        },
+        {
+          "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+          "answer": "The summary states that code reasoning frequency increased from 65% to over 90% after RLVR, even with spurious rewards, and that this increase is correlated with performance gains. However, it does not directly compare the accuracy of answers with code reasoning versus those without it."
+        },
+        {
+          "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+          "answer": "The authors hypothesize that spurious rewards work for Qwen models but not for others like Llama3 and OLMo2 because the effectiveness is highly model-dependent, indicating that pre-training data and learned behaviors are critical. RLVR might be surfacing latent reasoning representations rather than teaching new skills."
+        },
+        {
+          "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+          "answer": "The clipping bias within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models. This bias may play a role in amplifying existing high-probability behaviors, especially when those behaviors correlate with correctness."
+        },
+        {
+          "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+          "answer": "Before RLVR training, 65% of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"."
+        },
+        {
+          "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+          "answer": "After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately over 90%."
+        },
+        {
+          "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+          "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+        },
+        {
+          "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+          "answer": "The clipping mechanism within the GRPO optimization algorithm is hypothesized to provide a training signal from random rewards."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+              "answer": "The study used \"spurious\" or weak reward signals such as rewards that are random, incorrect, or merely follow a specific format (e.g., using `\\boxed{}`). The effectiveness of these spurious rewards on the Qwen2.5-Math-7B model was comparable to using ground-truth rewards on the MATH-500 benchmark."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+              "answer": "The summary states that code reasoning frequency increased from 65% to over 90% after RLVR, even with spurious rewards, and that this increase is correlated with performance gains. However, it does not directly compare the accuracy of answers with code reasoning versus those without it."
+            },
+            "result": false,
+            "issue": "The answer is incomplete as it does not provide the accuracy comparison between answers with and without code reasoning."
+          },
+          {
+            "qa": {
+              "question": "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+              "answer": "The authors hypothesize that spurious rewards work for Qwen models but not for others like Llama3 and OLMo2 because the effectiveness is highly model-dependent, indicating that pre-training data and learned behaviors are critical. RLVR might be surfacing latent reasoning representations rather than teaching new skills."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not contain information about how the researchers tested the causal relationship between code reasoning frequency and performance."
+          },
+          {
+            "qa": {
+              "question": "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?",
+              "answer": "The clipping bias within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models. This bias may play a role in amplifying existing high-probability behaviors, especially when those behaviors correlate with correctness."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not provide the specific percentage accuracy gain for the 'random reward'."
+          },
+          {
+            "qa": {
+              "question": "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+              "answer": "Before RLVR training, 65% of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+              "answer": "After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately over 90%."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+              "answer": "The specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards, is \"code reasoning\"."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?",
+              "answer": "The clipping mechanism within the GRPO optimization algorithm is hypothesized to provide a training signal from random rewards."
+            },
+            "result": true,
+            "issue": null
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Key Highlights — accuracy comparison for code reasoning",
+          "Results — specific accuracy gain for random reward",
+          "Methodology — causal testing of code reasoning",
+          "Related Work — comparison of RLVR with other methods",
+          "Discussion — implications for future RLVR research"
+        ]
+      },
+      "correct_count_all": 7,
+      "correct_count_acu": 4,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Key Highlights — accuracy comparison for code reasoning",
+        "Results — specific accuracy gain for random reward",
+        "Methodology — causal testing of code reasoning",
+        "Related Work — comparison of RLVR with other methods",
+        "Discussion — implications for future RLVR research"
+      ],
+      "sections_to_highlight_size": 5,
+      "qa_failures_present": true
+    }
+  ],
+  "final_summary": "1. SUMMARY:\nThis paper investigates Reinforcement Learning with Verifiable Rewards (RLVR) and its effectiveness, particularly when using \"spurious\" or weak reward signals. Counterintuitively, the study finds that for specific models like Qwen2.5-Math, RLVR can significantly improve mathematical reasoning performance even with rewards that are random, incorrect, or merely follow a specific format (e.g., using `\\boxed{}`). These gains, often comparable to using ground truth rewards, are attributed to RLVR's ability to elicit and amplify pre-existing reasoning capabilities within the model. A key observation is the strong correlation between an increase in \"code reasoning\" (generating Python code to aid problem-solving) and performance gains in Qwen2.5-Math models, with code reasoning frequency jumping from 65% to over 90% after RLVR, even with spurious rewards. This effect is not generalizable; other model families like Llama and OLMo show minimal or no improvement with spurious rewards, highlighting the crucial role of pre-training data and learned behaviors. The study suggests that RLVR might be surfacing latent reasoning representations rather than teaching new skills, and that the GRPO algorithm's clipping bias may play a role in amplifying these pre-existing patterns, even with random rewards.\n\n2. KEY HIGHLIGHTS:\n*   RLVR can significantly improve mathematical reasoning in models like Qwen2.5-Math using weak or spurious reward signals (random, incorrect, format-based), achieving gains comparable to ground truth rewards.\n*   These performance gains are strongly linked to the amplification of pre-existing reasoning strategies, particularly \"code reasoning\" (using Python for problem-solving), which increases dramatically in Qwen2.5-Math models after RLVR.\n*   The effectiveness of spurious rewards is highly model-dependent; they work for Qwen2.5-Math but generally fail for other families like Llama and OLMo, indicating that pre-training data and learned behaviors are critical.\n*   The GRPO optimization algorithm's clipping bias is hypothesized to play a role in eliciting these gains from random rewards by amplifying existing high-probability behaviors, especially when those behaviors correlate with correctness.\n*   Directly inducing code reasoning through prompting or specific rewards also boosts Qwen2.5-Math performance, further supporting the idea that RLVR is leveraging existing capabilities.",
+  "total_iterations": 10,
+  "status": "max_iterations_reached",
+  "questions": [
+    "What are some examples of \"spurious rewards\" the study used, and how did their effectiveness on the Qwen2.5-Math-7B model compare to using ground-truth rewards on the MATH-500 benchmark?",
+    "The article identifies \"code reasoning\" as a key behavior elicited in Qwen models. How does the accuracy of answers with code reasoning compare to those without it, and how does the frequency of this behavior change after RLVR with spurious rewards?",
+    "Why do the authors hypothesize that spurious rewards successfully improve performance in Qwen models but fail to do so in other models like Llama3 and OLMo2?",
+    "How did the researchers test the causal relationship between code reasoning frequency and performance, rather than just observing their correlation?",
+    "What specific mechanism within the GRPO optimization algorithm is identified as a potential reason why even purely random rewards can lead to performance improvements in certain models?"
+  ],
+  "acu_questions": [
+    "ACU. What percentage accuracy gain did \"random reward\" yield on the MATH-500 benchmark for the Qwen2.5-Math-7B model?",
+    "ACU. Before RLVR training, what percentage of Qwen2.5-Math-7B's responses on MATH-500 contained \"code reasoning\"?",
+    "ACU. After RLVR training with spurious rewards, the frequency of code reasoning in Qwen2.5-Math-7B increased to approximately what percentage?",
+    "ACU. What is the name of the specific reasoning behavior that becomes more frequent in Qwen models after RLVR, even with spurious rewards?",
+    "ACU. What RL algorithm's clipping mechanism is hypothesized to provide a training signal from random rewards?"
+  ]
+}

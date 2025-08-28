@@ -1,0 +1,2152 @@
+{
+  "query": "The divergent behaviors of different model families (Qwen, Llama, OLMo) under identical RLVR training, highlighting a fundamental lack of technique generalization.",
+  "max_iterations": 10,
+  "iterations": [
+    {
+      "iteration_number": 1,
+      "summary": "1. SUMMARY:\nThis paper investigates Reinforcement Learning from Verifiable Rewards (RLVR) and finds that while it can significantly improve mathematical reasoning in Qwen2.5-Math models, even with spurious reward signals (like random or incorrect labels), this effectiveness does not generalize to other model families such as Llama3 or OLMo2. The study highlights a fundamental lack of technique generalization in RLVR, as these spurious rewards either yield minimal gains or even degrade performance on non-Qwen models. This divergence is attributed to pre-training differences; Qwen2.5-Math models exhibit a distinct \"code reasoning\" behavior (generating Python code to assist in problem-solving) that is effectively amplified by RLVR, even with weak signals. In contrast, other models either lack this capability or use it in a way that correlates with worse performance. The research suggests that RLVR might be primarily surfacing and upweighting existing reasoning strategies rather than teaching new ones, underscoring the importance of evaluating RLVR techniques across diverse model architectures.\n\n2. KEY HIGHLIGHTS:\n*   RLVR with spurious rewards (e.g., random, incorrect labels) significantly boosts Qwen2.5-Math model performance, matching gains from ground truth rewards.\n*   These same spurious rewards fail to generalize, yielding minimal or negative performance gains on Llama3 and OLMo2 model families.\n*   The differing effectiveness is linked to pre-training: Qwen2.5-Math models exhibit strong \"code reasoning\" (using Python for thought processes) that RLVR amplifies.\n*   RLVR appears to primarily elicit and upweight existing reasoning capabilities rather than teaching new ones, a phenomenon that is highly model-dependent.\n*   The findings indicate a fundamental lack of technique generalization in current RLVR approaches, necessitating validation across diverse models.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+            "answer": "RLVR training with spurious rewards like \"random reward\" or \"incorrect label\" significantly improves Qwen2.5-Math models, while these same rewards yield minimal gains or degrade performance on Llama3 and OLMo2 model families."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+            "answer": "The article identifies \"code reasoning\" (generating Python code to assist in problem-solving) as a pre-existing strategy in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models. The summary does not specify how its frequency changes during RLVR training."
+          },
+          "result": false,
+          "issue": "partial information"
+        },
+        {
+          "qa": {
+            "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+            "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because the effectiveness of these techniques, particularly with spurious rewards, does not generalize to other model families like Llama3 or OLMo2, indicating a fundamental lack of technique generalization in current RLVR approaches."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+            "answer": "The summary does not contain information about \"reasoning strategy switching\" or the \"Lang→Code\" transition."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+            "answer": "The summary does not contain information about the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+            "answer": "The Qwen2.5-Math model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+            "answer": "RLVR with spurious rewards like \"incorrect label\" significantly boosts Qwen2.5-Math model performance, matching gains from ground truth rewards. The summary does not specify the exact percentage points of improvement for Qwen2.5-Math-7B's MATH-500 performance."
+          },
+          "result": false,
+          "issue": "partial information"
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+            "answer": "The summary does not provide information about the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+            "answer": "After training on the same spurious rewards that benefit Qwen models, Llama and OLMo models generally show minimal improvement or even worsen."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+          "answer": "RLVR training with spurious rewards like \"random reward\" or \"incorrect label\" significantly improves Qwen2.5-Math models, while these same rewards yield minimal gains or degrade performance on Llama3 and OLMo2 model families."
+        },
+        {
+          "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+          "answer": "The article identifies \"code reasoning\" (generating Python code to assist in problem-solving) as a pre-existing strategy in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models. The summary does not specify how its frequency changes during RLVR training."
+        },
+        {
+          "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+          "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because the effectiveness of these techniques, particularly with spurious rewards, does not generalize to other model families like Llama3 or OLMo2, indicating a fundamental lack of technique generalization in current RLVR approaches."
+        },
+        {
+          "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+          "answer": "The summary does not contain information about \"reasoning strategy switching\" or the \"Lang→Code\" transition."
+        },
+        {
+          "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+          "answer": "The summary does not contain information about the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training."
+        },
+        {
+          "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+          "answer": "The Qwen2.5-Math model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+        },
+        {
+          "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+          "answer": "RLVR with spurious rewards like \"incorrect label\" significantly boosts Qwen2.5-Math model performance, matching gains from ground truth rewards. The summary does not specify the exact percentage points of improvement for Qwen2.5-Math-7B's MATH-500 performance."
+        },
+        {
+          "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+          "answer": "The summary does not provide information about the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training."
+        },
+        {
+          "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+          "answer": "After training on the same spurious rewards that benefit Qwen models, Llama and OLMo models generally show minimal improvement or even worsen."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+              "answer": "RLVR training with spurious rewards like \"random reward\" or \"incorrect label\" significantly improves Qwen2.5-Math models, while these same rewards yield minimal gains or degrade performance on Llama3 and OLMo2 model families."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+              "answer": "The article identifies \"code reasoning\" (generating Python code to assist in problem-solving) as a pre-existing strategy in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models. The summary does not specify how its frequency changes during RLVR training."
+            },
+            "result": false,
+            "issue": "The summary does not mention the change in frequency of code reasoning during RLVR training."
+          },
+          {
+            "qa": {
+              "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+              "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because the effectiveness of these techniques, particularly with spurious rewards, does not generalize to other model families like Llama3 or OLMo2, indicating a fundamental lack of technique generalization in current RLVR approaches."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+              "answer": "The summary does not contain information about \"reasoning strategy switching\" or the \"Lang→Code\" transition."
+            },
+            "result": false,
+            "issue": "The summary does not contain information about 'reasoning strategy switching' or the 'Lang→Code' transition."
+          },
+          {
+            "qa": {
+              "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+              "answer": "The summary does not contain information about the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training."
+            },
+            "result": false,
+            "issue": "The summary does not contain information about the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training."
+          },
+          {
+            "qa": {
+              "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+              "answer": "The Qwen2.5-Math model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+              "answer": "RLVR with spurious rewards like \"incorrect label\" significantly boosts Qwen2.5-Math model performance, matching gains from ground truth rewards. The summary does not specify the exact percentage points of improvement for Qwen2.5-Math-7B's MATH-500 performance."
+            },
+            "result": false,
+            "issue": "The summary does not specify the exact percentage points of improvement for Qwen2.5-Math-7B's MATH-500 performance."
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+              "answer": "The summary does not provide information about the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training."
+            },
+            "result": false,
+            "issue": "The summary does not provide information about the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training."
+          },
+          {
+            "qa": {
+              "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+              "answer": "After training on the same spurious rewards that benefit Qwen models, Llama and OLMo models generally show minimal improvement or even worsen."
+            },
+            "result": true,
+            "issue": null
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Code Reasoning Behavior",
+          "Generalization to Other Models",
+          "RLVR with Spurious Rewards",
+          "Pre-training Differences",
+          "Model-Specific Effectiveness"
+        ]
+      },
+      "correct_count_all": 4,
+      "correct_count_acu": 2,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Code Reasoning Behavior",
+        "Generalization to Other Models",
+        "RLVR with Spurious Rewards",
+        "Pre-training Differences",
+        "Model-Specific Effectiveness"
+      ],
+      "sections_to_highlight_size": 5,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 2,
+      "summary": "1. SUMMARY:\nThis paper investigates Reinforcement Learning from Verifiable Rewards (RLVR) and finds that while it can significantly improve mathematical reasoning, its effectiveness is highly dependent on the model family. Specifically, RLVR training with \"spurious\" rewards (e.g., random, incorrect labels, or format-based) yields substantial performance gains on Qwen2.5-Math models, often approaching the improvements seen with ground truth rewards. This suggests RLVR might be eliciting latent reasoning abilities from pre-training. However, these same spurious rewards show minimal or even negative impact on other model families like Llama3 and OLMo2. This divergence highlights a fundamental lack of technique generalization in RLVR. The research further identifies \"code reasoning\"—generating Python code to aid mathematical thinking—as a distinctive behavior in Qwen2.5-Math models that RLVR effectively upweights, even with spurious signals. This pre-existing, performance-correlated reasoning strategy is less prevalent or absent in other model families, explaining their failure to benefit from the same RLVR techniques. The study concludes that pre-training data and learned reasoning strategies heavily influence RLVR outcomes, and validation should extend beyond commonly used models like Qwen.\n\n2. KEY HIGHLIGHTS:\n*   RLVR with spurious rewards (e.g., random, incorrect labels) significantly improves performance on Qwen2.5-Math models, but not on Llama3 or OLMo2 models.\n*   This disparity demonstrates a critical lack of generalization for RLVR techniques across different model families.\n*   Qwen2.5-Math models exhibit a unique \"code reasoning\" behavior (using Python for math) that RLVR effectively amplifies, contributing to performance gains even with weak signals.\n*   Differences in pre-training data and learned reasoning strategies are hypothesized to be the primary drivers for the model-specific effectiveness of RLVR.\n*   The findings suggest that conclusions drawn from RLVR research on Qwen models may not be universally applicable to other model architectures.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like ",
+            "answer": "RLVR training with spurious rewards yields substantial performance gains on Qwen2.5-Math models, while these same spurious rewards show minimal or even negative impact on Llama3 and OLMo2 models."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+            "answer": "The article identifies \"code reasoning\"—generating Python code to aid mathematical thinking—as a distinctive behavior in Qwen2.5-Math models that RLVR effectively upweights, even with spurious signals. This strategy is less prevalent or absent in other model families. The summary does not specify how its frequency changes during RLVR training, only that RLVR effectively upweights it."
+          },
+          "result": false,
+          "issue": "partial information"
+        },
+        {
+          "qa": {
+            "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+            "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because the effectiveness of RLVR is highly dependent on the model family, and the findings suggest that conclusions drawn from RLVR research on Qwen models may not be universally applicable to other model architectures due to differences in pre-training data and learned reasoning strategies."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+            "answer": "The summary does not mention \"reasoning strategy switching\" or a \"Lang→Code\" transition in relation to supporting the hypothesis that RLVR with spurious rewards surfaces latent abilities from pretraining. It only mentions that RLVR might be eliciting latent reasoning abilities from pre-training and that \"code reasoning\" is a distinctive behavior in Qwen2.5-Math models that RLVR effectively upweights."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+            "answer": "The Qwen2.5-Math model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+            "answer": "The summary states that \"code reasoning\" is less prevalent or absent in other model families compared to Qwen2.5-Math models, but it does not provide the specific frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+            "answer": "After training on the same spurious rewards that benefit Qwen models, Llama and OLMo models show minimal improvement or even worsen."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like ",
+          "answer": "RLVR training with spurious rewards yields substantial performance gains on Qwen2.5-Math models, while these same spurious rewards show minimal or even negative impact on Llama3 and OLMo2 models."
+        },
+        {
+          "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+          "answer": "The article identifies \"code reasoning\"—generating Python code to aid mathematical thinking—as a distinctive behavior in Qwen2.5-Math models that RLVR effectively upweights, even with spurious signals. This strategy is less prevalent or absent in other model families. The summary does not specify how its frequency changes during RLVR training, only that RLVR effectively upweights it."
+        },
+        {
+          "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+          "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because the effectiveness of RLVR is highly dependent on the model family, and the findings suggest that conclusions drawn from RLVR research on Qwen models may not be universally applicable to other model architectures due to differences in pre-training data and learned reasoning strategies."
+        },
+        {
+          "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+          "answer": "The summary does not mention \"reasoning strategy switching\" or a \"Lang→Code\" transition in relation to supporting the hypothesis that RLVR with spurious rewards surfaces latent abilities from pretraining. It only mentions that RLVR might be eliciting latent reasoning abilities from pre-training and that \"code reasoning\" is a distinctive behavior in Qwen2.5-Math models that RLVR effectively upweights."
+        },
+        {
+          "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+          "answer": "The Qwen2.5-Math model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+        },
+        {
+          "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+          "answer": "The summary states that \"code reasoning\" is less prevalent or absent in other model families compared to Qwen2.5-Math models, but it does not provide the specific frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training."
+        },
+        {
+          "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+          "answer": "After training on the same spurious rewards that benefit Qwen models, Llama and OLMo models show minimal improvement or even worsen."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like ",
+              "answer": "RLVR training with spurious rewards yields substantial performance gains on Qwen2.5-Math models, while these same spurious rewards show minimal or even negative impact on Llama3 and OLMo2 models."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+              "answer": "The article identifies \"code reasoning\"—generating Python code to aid mathematical thinking—as a distinctive behavior in Qwen2.5-Math models that RLVR effectively upweights, even with spurious signals. This strategy is less prevalent or absent in other model families. The summary does not specify how its frequency changes during RLVR training, only that RLVR effectively upweights it."
+            },
+            "result": false,
+            "issue": "The answer correctly identifies 'code reasoning' but incorrectly states that the summary does not mention changes in its frequency. The summary explicitly states 'from 65% to over 90%'."
+          },
+          {
+            "qa": {
+              "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+              "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because the effectiveness of RLVR is highly dependent on the model family, and the findings suggest that conclusions drawn from RLVR research on Qwen models may not be universally applicable to other model architectures due to differences in pre-training data and learned reasoning strategies."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+              "answer": "The summary does not mention \"reasoning strategy switching\" or a \"Lang→Code\" transition in relation to supporting the hypothesis that RLVR with spurious rewards surfaces latent abilities from pretraining. It only mentions that RLVR might be eliciting latent reasoning abilities from pre-training and that \"code reasoning\" is a distinctive behavior in Qwen2.5-Math models that RLVR effectively upweights."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+              "answer": "Not enough information in summary"
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+              "answer": "The Qwen2.5-Math model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The article explicitly states the improvement: '24.1% (incorrect label)'."
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+              "answer": "The summary states that \"code reasoning\" is less prevalent or absent in other model families compared to Qwen2.5-Math models, but it does not provide the specific frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training."
+            },
+            "result": false,
+            "issue": "The summary explicitly states the frequency: 'from 65% to over 90%'."
+          },
+          {
+            "qa": {
+              "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+              "answer": "After training on the same spurious rewards that benefit Qwen models, Llama and OLMo models show minimal improvement or even worsen."
+            },
+            "result": true,
+            "issue": null
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Spurious Rewards Impact on Qwen Models",
+          "Generalization to Other Models",
+          "Code Reasoning Behavior",
+          "RLVR Mechanism Hypotheses",
+          "Model-Specific RLVR Effectiveness"
+        ]
+      },
+      "correct_count_all": 6,
+      "correct_count_acu": 2,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Spurious Rewards Impact on Qwen Models",
+        "Generalization to Other Models",
+        "Code Reasoning Behavior",
+        "RLVR Mechanism Hypotheses",
+        "Model-Specific RLVR Effectiveness"
+      ],
+      "sections_to_highlight_size": 5,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 3,
+      "summary": "1. SUMMARY:\nThis research investigates Reinforcement Learning from Verifiable Rewards (RLVR) and its effectiveness across different model families. The study reveals a significant divergence in how models like Qwen, Llama, and OLMo respond to identical RLVR training, particularly with \"spurious rewards\" (e.g., random, incorrect, or format-based rewards). While Qwen models, especially Qwen2.5-Math, show substantial performance gains even with these flawed reward signals, Llama and OLMo models exhibit minimal or no improvement, and sometimes even degrade. This highlights a fundamental lack of technique generalization in RLVR. The researchers hypothesize that Qwen models leverage pre-existing reasoning capabilities, such as \"code reasoning\" (using Python to aid mathematical problem-solving without actual execution), which RLVR effectively amplifies. For other models, these underlying reasoning strategies are either absent or not easily elicited by RLVR, explaining their failure to benefit from spurious rewards. The study emphasizes the need to validate RLVR techniques on diverse model architectures to understand their true generalization capabilities.\n\n2. KEY HIGHLIGHTS:\n*   RLVR with spurious rewards yields significant performance gains on Qwen models but fails to generalize to Llama and OLMo models, indicating a lack of technique generalization.\n*   Qwen2.5-Math models demonstrate a unique ability to benefit from RLVR even with incorrect, random, or format-based rewards, suggesting they can leverage pre-existing reasoning patterns.\n*   \"Code reasoning,\" the use of Python for mathematical thinking without execution, is a key pre-existing behavior in Qwen models that RLVR effectively amplifies, leading to performance improvements.\n*   Other model families like Llama and OLMo do not show similar gains because they lack these easily elicitable, performance-correlated reasoning strategies, or their optimal strategies differ.\n*   The study strongly advises that future RLVR research should be validated on diverse model families, not just Qwen, to ensure generalizability and avoid drawing conclusions based on model-specific behaviors.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+            "answer": "While Qwen models show substantial performance gains even with spurious rewards, Llama and OLMo models exhibit minimal or no improvement, and sometimes even degrade."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+            "answer": "The article identifies \"code reasoning,\" the use of Python for mathematical thinking without execution, as a pre-existing behavior in Qwen models that RLVR effectively amplifies. The summary does not specify how its frequency changes during RLVR training for Qwen models or its presence in Llama and OLMo models."
+          },
+          "result": false,
+          "issue": "partial information"
+        },
+        {
+          "qa": {
+            "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+            "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because the observed benefits might be model-specific, and RLVR techniques need to be validated on diverse model architectures to understand their true generalization capabilities."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+            "answer": "The Qwen model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+            "answer": "Llama and OLMo models generally show minimal improvement or even worsen after training on the same spurious rewards that benefit Qwen models."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+          "answer": "While Qwen models show substantial performance gains even with spurious rewards, Llama and OLMo models exhibit minimal or no improvement, and sometimes even degrade."
+        },
+        {
+          "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+          "answer": "The article identifies \"code reasoning,\" the use of Python for mathematical thinking without execution, as a pre-existing behavior in Qwen models that RLVR effectively amplifies. The summary does not specify how its frequency changes during RLVR training for Qwen models or its presence in Llama and OLMo models."
+        },
+        {
+          "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+          "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because the observed benefits might be model-specific, and RLVR techniques need to be validated on diverse model architectures to understand their true generalization capabilities."
+        },
+        {
+          "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+          "answer": "The Qwen model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+        },
+        {
+          "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+          "answer": "Llama and OLMo models generally show minimal improvement or even worsen after training on the same spurious rewards that benefit Qwen models."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+              "answer": "While Qwen models show substantial performance gains even with spurious rewards, Llama and OLMo models exhibit minimal or no improvement, and sometimes even degrade."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+              "answer": "The article identifies \"code reasoning,\" the use of Python for mathematical thinking without execution, as a pre-existing behavior in Qwen models that RLVR effectively amplifies. The summary does not specify how its frequency changes during RLVR training for Qwen models or its presence in Llama and OLMo models."
+            },
+            "result": false,
+            "issue": "The summary should have included the frequency change of code reasoning during RLVR training for Qwen models and its presence in Llama and OLMo models, as this information is present in the article."
+          },
+          {
+            "qa": {
+              "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+              "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because the observed benefits might be model-specific, and RLVR techniques need to be validated on diverse model architectures to understand their true generalization capabilities."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary should have included information about how \"Lang->Code\" transition supports the hypothesis of surfacing latent abilities."
+          },
+          {
+            "qa": {
+              "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary should have included information about the performance of \"Bad-Code\" models when a compound reward is used to penalize Python code generation."
+          },
+          {
+            "qa": {
+              "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+              "answer": "The Qwen model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary should have included the specific percentage improvement for Qwen2.5-Math-7B's MATH-500 performance with an \"incorrect label\" reward."
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary should have included the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training."
+          },
+          {
+            "qa": {
+              "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+              "answer": "Llama and OLMo models generally show minimal improvement or even worsen after training on the same spurious rewards that benefit Qwen models."
+            },
+            "result": true,
+            "issue": null
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Code Reasoning as a Key Factor",
+          "Generalization Challenges in RLVR",
+          "Impact of Spurious Rewards",
+          "Model-Specific RLVR Performance",
+          "RLVR and Pre-training Strategies"
+        ]
+      },
+      "correct_count_all": 4,
+      "correct_count_acu": 2,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Code Reasoning as a Key Factor",
+        "Generalization Challenges in RLVR",
+        "Impact of Spurious Rewards",
+        "Model-Specific RLVR Performance",
+        "RLVR and Pre-training Strategies"
+      ],
+      "sections_to_highlight_size": 5,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 4,
+      "summary": "1. SUMMARY:\nThis research investigates Reinforcement Learning from Verifiable Rewards (RLVR) and its effectiveness across different model families, specifically highlighting the divergent behaviors of Qwen, Llama, and OLMo models. The study reveals that while RLVR can elicit significant mathematical reasoning improvements in Qwen models, even with spurious or weak reward signals (e.g., random rewards, incorrect labels), these gains do not generalize to Llama or OLMo models. These latter models either show minimal improvement or even degrade performance under similar spurious training conditions. The paper hypothesizes that this divergence stems from underlying pre-training strategies, identifying Qwen models' strong \"code reasoning\" (generating Python code for mathematical thought processes) as a key factor. RLVR appears to amplify this pre-existing capability in Qwen models, leading to performance boosts regardless of reward signal quality. In contrast, other models either lack this specific reasoning strategy or employ it ineffectively, rendering spurious rewards unhelpful. This underscores a fundamental lack of technique generalization in RLVR across different model architectures and pre-training regimes.\n\n2. KEY HIGHLIGHTS:\n*   Spurious rewards (e.g., random, incorrect labels) significantly improve Qwen model performance in RLVR, often matching ground truth reward gains.\n*   These same spurious rewards fail to yield performance improvements in Llama and OLMo models, indicating a lack of generalization for RLVR techniques.\n*   Qwen models exhibit a strong pre-existing \"code reasoning\" capability (using Python for math), which RLVR effectively amplifies, driving performance gains.\n*   Other model families (Llama, OLMo) either lack this code reasoning ability or use it suboptimally, explaining their failure to benefit from spurious RLVR training.\n*   The study suggests RLVR's effectiveness is heavily dependent on the model's pre-training strategies and existing reasoning patterns, not just the reward signal itself.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+            "answer": "While RLVR can elicit significant mathematical reasoning improvements in Qwen models, even with spurious or weak reward signals (e.g., random rewards, incorrect labels), these gains do not generalize to Llama or OLMo models. These latter models either show minimal improvement or even degrade performance under similar spurious training conditions."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+            "answer": "The article identifies Qwen models' strong \"code reasoning\" (generating Python code for mathematical thought processes) as a key factor. RLVR appears to amplify this pre-existing capability in Qwen models, leading to performance boosts regardless of reward signal quality. The summary does not specify how its frequency changes during RLVR training."
+          },
+          "result": false,
+          "issue": "partial information"
+        },
+        {
+          "qa": {
+            "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+            "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because the study suggests RLVR's effectiveness is heavily dependent on the model's pre-training strategies and existing reasoning patterns, not just the reward signal itself, and this effectiveness does not generalize to other model families like Llama and OLMo."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+            "answer": "The summary does not contain information about \"reasoning strategy switching\" or the \"Lang→Code\" transition. It mentions that RLVR amplifies Qwen models' pre-existing \"code reasoning\" capability, which supports the hypothesis that RLVR surfaces latent abilities from pretraining, but does not detail the specific transition."
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+            "answer": "The Qwen model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+            "answer": "According to the article, Llama and OLMo models generally show minimal improvement or even worsen after training on the same spurious rewards that benefit Qwen models."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+          "answer": "While RLVR can elicit significant mathematical reasoning improvements in Qwen models, even with spurious or weak reward signals (e.g., random rewards, incorrect labels), these gains do not generalize to Llama or OLMo models. These latter models either show minimal improvement or even degrade performance under similar spurious training conditions."
+        },
+        {
+          "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+          "answer": "The article identifies Qwen models' strong \"code reasoning\" (generating Python code for mathematical thought processes) as a key factor. RLVR appears to amplify this pre-existing capability in Qwen models, leading to performance boosts regardless of reward signal quality. The summary does not specify how its frequency changes during RLVR training."
+        },
+        {
+          "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+          "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because the study suggests RLVR's effectiveness is heavily dependent on the model's pre-training strategies and existing reasoning patterns, not just the reward signal itself, and this effectiveness does not generalize to other model families like Llama and OLMo."
+        },
+        {
+          "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+          "answer": "The summary does not contain information about \"reasoning strategy switching\" or the \"Lang→Code\" transition. It mentions that RLVR amplifies Qwen models' pre-existing \"code reasoning\" capability, which supports the hypothesis that RLVR surfaces latent abilities from pretraining, but does not detail the specific transition."
+        },
+        {
+          "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+          "answer": "The Qwen model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+        },
+        {
+          "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+          "answer": "According to the article, Llama and OLMo models generally show minimal improvement or even worsen after training on the same spurious rewards that benefit Qwen models."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+              "answer": "While RLVR can elicit significant mathematical reasoning improvements in Qwen models, even with spurious or weak reward signals (e.g., random rewards, incorrect labels), these gains do not generalize to Llama or OLMo models. These latter models either show minimal improvement or even degrade performance under similar spurious training conditions."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+              "answer": "The article identifies Qwen models' strong \"code reasoning\" (generating Python code for mathematical thought processes) as a key factor. RLVR appears to amplify this pre-existing capability in Qwen models, leading to performance boosts regardless of reward signal quality. The summary does not specify how its frequency changes during RLVR training."
+            },
+            "result": false,
+            "issue": "The summary states that the article does not specify how the frequency of code reasoning changes during RLVR training, but the article itself mentions that code reasoning frequency increases from 65% to over 90% after RLVR."
+          },
+          {
+            "qa": {
+              "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+              "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because the study suggests RLVR's effectiveness is heavily dependent on the model's pre-training strategies and existing reasoning patterns, not just the reward signal itself, and this effectiveness does not generalize to other model families like Llama and OLMo."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+              "answer": "The summary does not contain information about \"reasoning strategy switching\" or the \"Lang→Code\" transition. It mentions that RLVR amplifies Qwen models' pre-existing \"code reasoning\" capability, which supports the hypothesis that RLVR surfaces latent abilities from pretraining, but does not detail the specific transition."
+            },
+            "result": false,
+            "issue": "The summary claims there is no information about \"reasoning strategy switching\" or \"Lang->Code\" transition, but the article mentions these concepts in Section 4.2 and Figure 7, and relates them to the hypothesis."
+          },
+          {
+            "qa": {
+              "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary claims there is not enough information, but the article (Section 4.3) states that for Bad-Code models like OLMo2-7B-SFT, compound rewards often outperform the originals, and specifically that OLMo2-7B-SFT gains +8.9 and +5.5 points when the no-code reward is added."
+          },
+          {
+            "qa": {
+              "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+              "answer": "The Qwen model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary claims there is not enough information, but the article abstract states that RLVR improves MATH-500 performance for Qwen2.5-Math-7B by 24.1% with an \"incorrect label\" reward."
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary claims there is not enough information, but the article abstract states that code reasoning frequency was 65% before RLVR training."
+          },
+          {
+            "qa": {
+              "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+              "answer": "According to the article, Llama and OLMo models generally show minimal improvement or even worsen after training on the same spurious rewards that benefit Qwen models."
+            },
+            "result": true,
+            "issue": null
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Code Reasoning in Qwen Models",
+          "RLVR Generalization Across Models",
+          "Impact of Spurious Rewards",
+          "Pretraining Strategies and RLVR",
+          "Model-Specific RLVR Outcomes",
+          "RLVR Limitations and Future Work"
+        ]
+      },
+      "correct_count_all": 4,
+      "correct_count_acu": 2,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Code Reasoning in Qwen Models",
+        "RLVR Generalization Across Models",
+        "Impact of Spurious Rewards",
+        "Pretraining Strategies and RLVR",
+        "Model-Specific RLVR Outcomes",
+        "RLVR Limitations and Future Work"
+      ],
+      "sections_to_highlight_size": 6,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 5,
+      "summary": "1. SUMMARY:\nThis research investigates Reinforcement Learning from Verifiable Rewards (RLVR) and its efficacy across different model families, revealing a significant lack of technique generalization. While RLVR, even with spurious rewards (e.g., incorrect labels, random rewards, format adherence), dramatically improves the performance of Qwen2.5-Math models, these same spurious rewards largely fail to yield gains for other models like Llama3 and OLMo2. This divergence is attributed to differences in pretraining strategies. Specifically, Qwen2.5-Math models exhibit a unique \"code reasoning\" behavior—generating Python code to aid mathematical reasoning without execution—which RLVR effectively upweights, even with flawed reward signals. In contrast, other models either don't exhibit this behavior or their attempts at code reasoning are detrimental. The findings underscore that RLVR's success is heavily dependent on the base model's pre-existing reasoning capabilities, rather than the reward signal's inherent quality, and highlight the need for broader model validation in RLVR research.\n\n2. KEY HIGHLIGHTS:\n*   RLVR with spurious rewards significantly boosts Qwen2.5-Math model performance, but these rewards fail to generalize to other model families like Llama3 and OLMo2, indicating a fundamental lack of technique generalization.\n*   Qwen2.5-Math models exhibit a distinct \"code reasoning\" capability (generating code for math problems without execution), which RLVR effectively amplifies, driving performance gains even with non-informative or incorrect rewards.\n*   Other model families (Llama3, OLMo2) do not benefit from spurious RLVR rewards, either lacking effective code reasoning or showing performance degradation when attempting it, suggesting pretraining differences are key.\n*   The study suggests RLVR primarily elicits and upweights pre-existing reasoning patterns within a model rather than teaching new capabilities, making its effectiveness highly dependent on the base model's learned behaviors.\n*   Future RLVR research should be validated on diverse model architectures, not just Qwen models, to avoid drawing conclusions based on model-specific sensitivities to reward signals.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+            "answer": "RLVR training with spurious rewards like \"random reward\" or \"incorrect label\" dramatically improves the performance of Qwen2.5-Math models, but these same spurious rewards largely fail to yield gains for other models like Llama3 and OLMo2."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+            "answer": "The article identifies a unique \"code reasoning\" behavior in Qwen2.5-Math models, where they generate Python code to aid mathematical reasoning without execution. RLVR effectively upweights this behavior, driving performance gains. This behavior is largely absent or ineffective in other models like Llama and OLMo."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+            "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because RLVR's success is heavily dependent on the base model's pre-existing reasoning capabilities, and its effectiveness is not guaranteed to generalize across different model architectures. Validating RLVR on diverse model architectures is needed to avoid conclusions based on model-specific sensitivities to reward signals."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+            "answer": "The summary does not contain information about \"reasoning strategy switching\" or a \"Lang→Code\" transition. It states that RLVR effectively upweights the \"code reasoning\" behavior in Qwen2.5-Math models, which supports the hypothesis that RLVR surfaces latent abilities from pretraining by amplifying existing reasoning patterns."
+          },
+          "result": false,
+          "issue": "Not enough information about \"reasoning strategy switching\" or \"Lang→Code\" transition."
+        },
+        {
+          "qa": {
+            "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information."
+        },
+        {
+          "qa": {
+            "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+            "answer": "The Qwen2.5-Math model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information."
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information."
+        },
+        {
+          "qa": {
+            "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+            "answer": "According to the article, Llama and OLMo models generally show minimal improvement or even worsen after training on the same spurious rewards that benefit Qwen models."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+          "answer": "RLVR training with spurious rewards like \"random reward\" or \"incorrect label\" dramatically improves the performance of Qwen2.5-Math models, but these same spurious rewards largely fail to yield gains for other models like Llama3 and OLMo2."
+        },
+        {
+          "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+          "answer": "The article identifies a unique \"code reasoning\" behavior in Qwen2.5-Math models, where they generate Python code to aid mathematical reasoning without execution. RLVR effectively upweights this behavior, driving performance gains. This behavior is largely absent or ineffective in other models like Llama and OLMo."
+        },
+        {
+          "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+          "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because RLVR's success is heavily dependent on the base model's pre-existing reasoning capabilities, and its effectiveness is not guaranteed to generalize across different model architectures. Validating RLVR on diverse model architectures is needed to avoid conclusions based on model-specific sensitivities to reward signals."
+        },
+        {
+          "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+          "answer": "The summary does not contain information about \"reasoning strategy switching\" or a \"Lang→Code\" transition. It states that RLVR effectively upweights the \"code reasoning\" behavior in Qwen2.5-Math models, which supports the hypothesis that RLVR surfaces latent abilities from pretraining by amplifying existing reasoning patterns."
+        },
+        {
+          "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+          "answer": "The Qwen2.5-Math model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+        },
+        {
+          "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+          "answer": "According to the article, Llama and OLMo models generally show minimal improvement or even worsen after training on the same spurious rewards that benefit Qwen models."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+              "answer": "RLVR training with spurious rewards like \"random reward\" or \"incorrect label\" dramatically improves the performance of Qwen2.5-Math models, but these same spurious rewards largely fail to yield gains for other models like Llama3 and OLMo2."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+              "answer": "The article identifies a unique \"code reasoning\" behavior in Qwen2.5-Math models, where they generate Python code to aid mathematical reasoning without execution. RLVR effectively upweights this behavior, driving performance gains. This behavior is largely absent or ineffective in other models like Llama and OLMo."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+              "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because RLVR's success is heavily dependent on the base model's pre-existing reasoning capabilities, and its effectiveness is not guaranteed to generalize across different model architectures. Validating RLVR on diverse model architectures is needed to avoid conclusions based on model-specific sensitivities to reward signals."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+              "answer": "The summary does not contain information about \"reasoning strategy switching\" or a \"Lang→Code\" transition. It states that RLVR effectively upweights the \"code reasoning\" behavior in Qwen2.5-Math models, which supports the hypothesis that RLVR surfaces latent abilities from pretraining by amplifying existing reasoning patterns."
+            },
+            "result": false,
+            "issue": "The answer incorrectly states that the summary does not contain information about \"reasoning strategy switching\" or a \"Lang→Code\" transition. The article explicitly discusses this in Section 4.2 and Figure 7, which is summarized in the provided text."
+          },
+          {
+            "qa": {
+              "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does contain information about this. The article states that for \"Bad-Code\" models like OLMo2-7B-SFT, compound rewards often outperform the originals, and specifically that OLMo2-7B-SFT gains +8.9 and +5.5 points when the no-code reward is added, as it downweights suboptimal code behavior."
+          },
+          {
+            "qa": {
+              "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+              "answer": "The Qwen2.5-Math model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary explicitly states that \"incorrect labels for training results in 24.1% absolute accuracy gain on MATH-500.\" Therefore, the information is present in the summary."
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states that \"Qwen2.5-Math models exhibit a unique \"code reasoning\" behavior... from 65% to over 90%\" after RLVR training. While it does not explicitly state the *before* frequency, it implies it by stating the *after* frequency and the increase. However, the article text *does* state the frequency before training is 65.0%."
+          },
+          {
+            "qa": {
+              "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+              "answer": "According to the article, Llama and OLMo models generally show minimal improvement or even worsen after training on the same spurious rewards that benefit Qwen models."
+            },
+            "result": true,
+            "issue": null
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Spurious Rewards vs. Model Families",
+          "Code Reasoning Behavior",
+          "RLVR Generalization Issues",
+          "Pretraining Differences",
+          "Model-Specific RLVR Outcomes"
+        ]
+      },
+      "correct_count_all": 5,
+      "correct_count_acu": 2,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Spurious Rewards vs. Model Families",
+        "Code Reasoning Behavior",
+        "RLVR Generalization Issues",
+        "Pretraining Differences",
+        "Model-Specific RLVR Outcomes"
+      ],
+      "sections_to_highlight_size": 5,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 6,
+      "summary": "1. SUMMARY:\nThis paper investigates Reinforcement Learning with Verifiable Rewards (RLVR) and highlights a significant lack of technique generalization across different model families, specifically Qwen, Llama, and OLMo. The research demonstrates that while RLVR can elicit substantial improvements in mathematical reasoning for Qwen models, even with spurious or weak reward signals (e.g., random rewards, incorrect labels, format adherence), these same techniques often fail to yield similar gains for Llama or OLMo models. This divergence suggests that the effectiveness of RLVR is heavily influenced by pretraining data and learned reasoning strategies. For Qwen models, particularly Qwen2.5-Math, a key factor identified is their propensity for \"code reasoning\" – generating Python code to assist in solving problems, even without execution. RLVR, especially with spurious rewards, appears to upweight this pre-existing capability in Qwen models, leading to performance boosts. However, other model families lack this robust code reasoning ability, rendering the same RLVR strategies ineffective or even detrimental. The study concludes that RLVR research should be validated on diverse model architectures to avoid drawing conclusions based on model-specific behaviors.\n\n2. KEY HIGHLIGHTS:\n*   RLVR training with spurious rewards (random, incorrect labels, format) significantly improves Qwen models' mathematical reasoning but fails to generalize to Llama and OLMo models.\n*   Qwen2.5-Math models exhibit a distinctive \"code reasoning\" behavior (generating Python code for problem-solving) which is effectively amplified by RLVR, even with weak signals.\n*   Other model families (Llama, OLMo) lack this strong, beneficial code reasoning capability, explaining their limited response to the same RLVR techniques.\n*   The effectiveness of RLVR is highly dependent on the model's pretraining and pre-existing reasoning strategies, indicating a fundamental lack of technique generalization.\n*   Future RLVR research should be validated across diverse model families to account for these model-specific outcomes.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+            "answer": "RLVR training with spurious rewards like \"random reward\" or \"incorrect label\" significantly improves Qwen models' mathematical reasoning, but these same techniques often fail to yield similar gains for Llama or OLMo models. In fact, for Llama and OLMo models, these techniques can be ineffective or even detrimental."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+            "answer": "The article identifies \"code reasoning\" – the generation of Python code to assist in solving problems, even without execution – as a pre-existing reasoning strategy in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models. The summary states that RLVR, especially with spurious rewards, appears to upweight this pre-existing capability in Qwen models, leading to performance boosts, implying an increase in its frequency or effectiveness during RLVR training."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+            "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because the effectiveness of RLVR is heavily influenced by the model's pretraining and pre-existing reasoning strategies. Specifically, Qwen models exhibit \"code reasoning\" which is amplified by RLVR, while other model families like Llama and OLMo lack this robust capability, leading to different outcomes with the same RLVR techniques. This indicates a lack of technique generalization."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+            "answer": "The summary mentions that RLVR, especially with spurious rewards, appears to upweight the pre-existing \"code reasoning\" capability in Qwen models, leading to performance boosts. While it doesn't explicitly use the term \"reasoning strategy switching\" or \"Lang→Code\" transition, the amplification of this latent code generation ability by RLVR supports the hypothesis that RLVR surfaces latent abilities from pretraining."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "The summary does not contain information about the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training."
+        },
+        {
+          "qa": {
+            "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+            "answer": "The Qwen model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "The summary does not provide the specific absolute percentage point improvement for Qwen2.5-Math-7B's MATH-500 performance with an \"incorrect label\" reward."
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "The summary states that Qwen2.5-Math models exhibit \"code reasoning\" and that RLVR upweights this capability, but it does not specify the frequency of code reasoning before RLVR training."
+        },
+        {
+          "qa": {
+            "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+            "answer": "According to the article, Llama and OLMo models generally show minimal improvement or even worsen after training on the same spurious rewards that benefit Qwen models."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+          "answer": "RLVR training with spurious rewards like \"random reward\" or \"incorrect label\" significantly improves Qwen models' mathematical reasoning, but these same techniques often fail to yield similar gains for Llama or OLMo models. In fact, for Llama and OLMo models, these techniques can be ineffective or even detrimental."
+        },
+        {
+          "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+          "answer": "The article identifies \"code reasoning\" – the generation of Python code to assist in solving problems, even without execution – as a pre-existing reasoning strategy in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models. The summary states that RLVR, especially with spurious rewards, appears to upweight this pre-existing capability in Qwen models, leading to performance boosts, implying an increase in its frequency or effectiveness during RLVR training."
+        },
+        {
+          "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+          "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because the effectiveness of RLVR is heavily influenced by the model's pretraining and pre-existing reasoning strategies. Specifically, Qwen models exhibit \"code reasoning\" which is amplified by RLVR, while other model families like Llama and OLMo lack this robust capability, leading to different outcomes with the same RLVR techniques. This indicates a lack of technique generalization."
+        },
+        {
+          "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+          "answer": "The summary mentions that RLVR, especially with spurious rewards, appears to upweight the pre-existing \"code reasoning\" capability in Qwen models, leading to performance boosts. While it doesn't explicitly use the term \"reasoning strategy switching\" or \"Lang→Code\" transition, the amplification of this latent code generation ability by RLVR supports the hypothesis that RLVR surfaces latent abilities from pretraining."
+        },
+        {
+          "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+          "answer": "The Qwen model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+        },
+        {
+          "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+          "answer": "According to the article, Llama and OLMo models generally show minimal improvement or even worsen after training on the same spurious rewards that benefit Qwen models."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+              "answer": "RLVR training with spurious rewards like \"random reward\" or \"incorrect label\" significantly improves Qwen models' mathematical reasoning, but these same techniques often fail to yield similar gains for Llama or OLMo models. In fact, for Llama and OLMo models, these techniques can be ineffective or even detrimental."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+              "answer": "The article identifies \"code reasoning\" – the generation of Python code to assist in solving problems, even without execution – as a pre-existing reasoning strategy in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models. The summary states that RLVR, especially with spurious rewards, appears to upweight this pre-existing capability in Qwen models, leading to performance boosts, implying an increase in its frequency or effectiveness during RLVR training."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+              "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because the effectiveness of RLVR is heavily influenced by the model's pretraining and pre-existing reasoning strategies. Specifically, Qwen models exhibit \"code reasoning\" which is amplified by RLVR, while other model families like Llama and OLMo lack this robust capability, leading to different outcomes with the same RLVR techniques. This indicates a lack of technique generalization."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+              "answer": "The summary mentions that RLVR, especially with spurious rewards, appears to upweight the pre-existing \"code reasoning\" capability in Qwen models, leading to performance boosts. While it doesn't explicitly use the term \"reasoning strategy switching\" or \"Lang→Code\" transition, the amplification of this latent code generation ability by RLVR supports the hypothesis that RLVR surfaces latent abilities from pretraining."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The answer states \"Not enough information in summary\" but the summary does not contain this information. The article mentions that for \"Bad-Code\" models, compound rewards often outperform the originals, and specifically for OLMo2-7B-SFT, adding a no-code reward leads to gains. This information is present in the summary."
+          },
+          {
+            "qa": {
+              "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+              "answer": "The Qwen model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The answer states \"Not enough information in summary\" but the summary explicitly states that \"incorrect labels for training results in 24.1% absolute accuracy gain on MATH-500\". This information is present in the summary."
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The answer states \"Not enough information in summary\" but the summary states that \"Qwen2.5-Math models, particularly Qwen2.5-Math, a key factor identified is their propensity for \"code reasoning\" – generating Python code to assist in solving problems, even without execution. RLVR, especially with spurious rewards, appears to upweight this pre-existing capability in Qwen models, leading to performance boosts, implying an increase in its frequency or effectiveness during RLVR training.\" The frequency before RLVR is mentioned as 65.0% in the article."
+          },
+          {
+            "qa": {
+              "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+              "answer": "According to the article, Llama and OLMo models generally show minimal improvement or even worsen after training on the same spurious rewards that benefit Qwen models."
+            },
+            "result": true,
+            "issue": null
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Introduction",
+          "Spurious Rewards Yield Significant RLVR Gains",
+          "Generalization to Other Models",
+          "What Makes RLVR with Spurious Rewards Work?",
+          "Code Reasoning Analysis",
+          "Impact of RLVR on Reasoning Strategies"
+        ]
+      },
+      "correct_count_all": 6,
+      "correct_count_acu": 2,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Introduction",
+        "Spurious Rewards Yield Significant RLVR Gains",
+        "Generalization to Other Models",
+        "What Makes RLVR with Spurious Rewards Work?",
+        "Code Reasoning Analysis",
+        "Impact of RLVR on Reasoning Strategies"
+      ],
+      "sections_to_highlight_size": 6,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 7,
+      "summary": "1. SUMMARY:\nThis research investigates the effectiveness of Reinforcement Learning with Verifiable Rewards (RLVR) across different language model families, specifically Qwen, Llama, and OLMo. The study reveals a significant lack of generalization for RLVR techniques, particularly when employing \"spurious\" or weak reward signals. While Qwen models, especially Qwen2.5-Math, show substantial performance improvements even with random or incorrect rewards, Llama and OLMo models exhibit minimal gains or even degrade. This divergence is attributed to pre-training differences, with Qwen models demonstrating a notable \"code reasoning\" capability (using Python for mathematical thinking) that is effectively amplified by RLVR, regardless of reward quality. In contrast, other models either lack this specific reasoning strategy or employ it ineffectively. The findings underscore that RLVR's success is heavily dependent on the model's pre-existing reasoning abilities, rather than solely on the reward signal itself, highlighting a fundamental issue with technique generalization in current RLVR practices.\n\n2. KEY HIGHLIGHTS:\n*   RLVR training with spurious rewards (e.g., random, incorrect labels) significantly boosts performance in Qwen models, often matching ground truth reward gains.\n*   These same spurious rewards yield minimal to negative performance improvements in Llama and OLMo models, indicating a lack of technique generalization across model families.\n*   Qwen2.5-Math models exhibit a distinct \"code reasoning\" behavior (using Python for math), which RLVR effectively amplifies, leading to performance gains even with weak rewards.\n*   The effectiveness of RLVR with spurious rewards is strongly tied to the model's pre-existing reasoning strategies, suggesting that RLVR primarily elicits latent capabilities rather than teaching new ones.\n*   The study cautions that conclusions drawn from Qwen-centric RLVR research may not generalize to other model architectures due to these differing underlying reasoning patterns.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+            "answer": "Qwen models show substantial performance improvements even with random or incorrect rewards, while Llama and OLMo models exhibit minimal gains or even degrade."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+            "answer": "The article identifies a \"code reasoning\" capability (using Python for mathematical thinking) in Qwen models, which RLVR effectively amplifies. The summary does not specify how its frequency changes during RLVR training for Llama and OLMo models, only that it is largely absent or ineffective in them."
+          },
+          "result": false,
+          "issue": "partial information"
+        },
+        {
+          "qa": {
+            "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+            "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because the effectiveness of RLVR with spurious rewards is strongly tied to the model's pre-existing reasoning abilities, and these patterns differ across model families, meaning conclusions from Qwen-centric research may not generalize."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+            "answer": "The summary states that Qwen models demonstrate a notable \"code reasoning\" capability (using Python for mathematical thinking) that RLVR effectively amplifies, regardless of reward quality. This supports the hypothesis by showing that RLVR elicits latent capabilities (code reasoning) rather than teaching new ones, as evidenced by the \"Lang→Code\" transition which is amplified by RLVR. The term \"reasoning strategy switching\" itself is not explicitly used in the summary, but the concept of amplifying existing strategies is present."
+          },
+          "result": false,
+          "issue": "partial information"
+        },
+        {
+          "qa": {
+            "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+            "answer": "The Qwen model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+            "answer": "Llama and OLMo models generally show minimal improvement or even worsen after training on the same spurious rewards that benefit Qwen models."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+          "answer": "Qwen models show substantial performance improvements even with random or incorrect rewards, while Llama and OLMo models exhibit minimal gains or even degrade."
+        },
+        {
+          "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+          "answer": "The article identifies a \"code reasoning\" capability (using Python for mathematical thinking) in Qwen models, which RLVR effectively amplifies. The summary does not specify how its frequency changes during RLVR training for Llama and OLMo models, only that it is largely absent or ineffective in them."
+        },
+        {
+          "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+          "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because the effectiveness of RLVR with spurious rewards is strongly tied to the model's pre-existing reasoning abilities, and these patterns differ across model families, meaning conclusions from Qwen-centric research may not generalize."
+        },
+        {
+          "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+          "answer": "The summary states that Qwen models demonstrate a notable \"code reasoning\" capability (using Python for mathematical thinking) that RLVR effectively amplifies, regardless of reward quality. This supports the hypothesis by showing that RLVR elicits latent capabilities (code reasoning) rather than teaching new ones, as evidenced by the \"Lang→Code\" transition which is amplified by RLVR. The term \"reasoning strategy switching\" itself is not explicitly used in the summary, but the concept of amplifying existing strategies is present."
+        },
+        {
+          "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+          "answer": "The Qwen model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+        },
+        {
+          "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+          "answer": "Llama and OLMo models generally show minimal improvement or even worsen after training on the same spurious rewards that benefit Qwen models."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+              "answer": "Qwen models show substantial performance improvements even with random or incorrect rewards, while Llama and OLMo models exhibit minimal gains or even degrade."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+              "answer": "The article identifies a \"code reasoning\" capability (using Python for mathematical thinking) in Qwen models, which RLVR effectively amplifies. The summary does not specify how its frequency changes during RLVR training for Llama and OLMo models, only that it is largely absent or ineffective in them."
+            },
+            "result": false,
+            "issue": "The answer correctly identifies code reasoning but incorrectly states the summary does not mention frequency changes. The summary states code reasoning becomes 'significantly more frequent after RLVR, from 65% to over 90%'"
+          },
+          {
+            "qa": {
+              "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+              "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because the effectiveness of RLVR with spurious rewards is strongly tied to the model's pre-existing reasoning abilities, and these patterns differ across model families, meaning conclusions from Qwen-centric research may not generalize."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+              "answer": "The summary states that Qwen models demonstrate a notable \"code reasoning\" capability (using Python for mathematical thinking) that RLVR effectively amplifies, regardless of reward quality. This supports the hypothesis by showing that RLVR elicits latent capabilities (code reasoning) rather than teaching new ones, as evidenced by the \"Lang→Code\" transition which is amplified by RLVR. The term \"reasoning strategy switching\" itself is not explicitly used in the summary, but the concept of amplifying existing strategies is present."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not contain information about compound rewards or \"Bad-Code\" models like OLMo2-7B-SFT."
+          },
+          {
+            "qa": {
+              "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+              "answer": "The Qwen model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not mention the specific percentage point improvement for Qwen2.5-Math-7B with an \"incorrect label\" reward."
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not mention the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training."
+          },
+          {
+            "qa": {
+              "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+              "answer": "Llama and OLMo models generally show minimal improvement or even worsen after training on the same spurious rewards that benefit Qwen models."
+            },
+            "result": true,
+            "issue": null
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "RLVR effectiveness across models",
+          "Code reasoning in Qwen models",
+          "Generalization of RLVR techniques",
+          "Impact of spurious rewards",
+          "Pre-training influence on RLVR",
+          "Model-specific RLVR behavior"
+        ]
+      },
+      "correct_count_all": 5,
+      "correct_count_acu": 2,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "RLVR effectiveness across models",
+        "Code reasoning in Qwen models",
+        "Generalization of RLVR techniques",
+        "Impact of spurious rewards",
+        "Pre-training influence on RLVR",
+        "Model-specific RLVR behavior"
+      ],
+      "sections_to_highlight_size": 6,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 8,
+      "summary": "1. SUMMARY:\nThis paper investigates the effectiveness of Reinforcement Learning with Verifiable Rewards (RLVR) across different model families, specifically Qwen, Llama, and OLMo. The core finding is a significant divergence in how these models respond to identical RLVR training signals, particularly when using \"spurious\" or weak rewards (e.g., random, format-based, or incorrect labels). While Qwen models, especially Qwen2.5-Math, show substantial performance improvements with these weak signals, often matching ground truth rewards, Llama and OLMo models exhibit minimal gains or even degradation. This indicates a fundamental lack of technique generalization in RLVR. The research hypothesizes that this divergence stems from pre-training differences; Qwen models, for instance, exhibit a strong pre-existing tendency towards \"code reasoning\" (using Python to assist reasoning without execution), which RLVR effectively amplifies, leading to performance gains. This code reasoning capability is less prevalent or less effective in other model families, explaining their inability to benefit from spurious rewards. The study concludes that RLVR's effectiveness is heavily model-dependent, urging future research to validate findings across diverse models rather than relying solely on Qwen.\n\n2. KEY HIGHLIGHTS:\n*   RLVR training with spurious rewards leads to significant performance gains in Qwen models but fails to generalize to Llama and OLMo models, highlighting a lack of technique generalization.\n*   Qwen models, particularly Qwen2.5-Math, demonstrate a strong pre-existing \"code reasoning\" capability (using Python for mathematical problem-solving) that is effectively amplified by RLVR, even with weak or random reward signals.\n*   Other model families (Llama, OLMo) do not exhibit this code reasoning behavior to the same extent, thus failing to benefit from the same RLVR training strategies.\n*   The effectiveness of RLVR is heavily influenced by the model's pre-training, as it appears to elicit latent reasoning abilities rather than teaching new ones, especially when using spurious rewards.\n*   Future RLVR research should be validated on diverse model families to avoid drawing conclusions based on model-specific behaviors.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+            "answer": "When subjected to RLVR training with spurious rewards, Qwen models show substantial performance improvements, while Llama and OLMo models exhibit minimal gains or even degradation."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+            "answer": "The article identifies a strong pre-existing tendency towards \"code reasoning\" (using Python to assist reasoning without execution) in Qwen models, which is less prevalent or effective in Llama and OLMo models. The summary does not specify how its frequency changes during RLVR training."
+          },
+          "result": false,
+          "issue": "The summary does not specify how the frequency of code reasoning changes during RLVR training."
+        },
+        {
+          "qa": {
+            "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+            "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because the effectiveness of RLVR is heavily model-dependent, and findings from Qwen models do not generalize to other model families like Llama and OLMo, which do not benefit from the same training strategies."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+            "answer": "The summary does not contain information about \"reasoning strategy switching\" or the \"Lang→Code\" transition, so it cannot support the hypothesis."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+            "answer": "The summary does not contain information about the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+            "answer": "The Qwen model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+            "answer": "The summary states that Qwen models show substantial performance improvements with weak signals like \"incorrect label\" reward, often matching ground truth rewards, but it does not provide the absolute percentage points of improvement for Qwen2.5-Math-7B's MATH-500 performance."
+          },
+          "result": false,
+          "issue": "The summary does not provide the absolute percentage points of improvement."
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+            "answer": "The summary mentions that Qwen models exhibit a strong pre-existing tendency towards \"code reasoning,\" but it does not specify the frequency of this behavior in Qwen2.5-Math-7B's responses before RLVR training."
+          },
+          "result": false,
+          "issue": "The summary does not specify the frequency of code reasoning before RLVR training."
+        },
+        {
+          "qa": {
+            "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+            "answer": "After training on the same spurious rewards that benefit Qwen models, Llama and OLMo models generally show minimal improvement or even worsen."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+          "answer": "When subjected to RLVR training with spurious rewards, Qwen models show substantial performance improvements, while Llama and OLMo models exhibit minimal gains or even degradation."
+        },
+        {
+          "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+          "answer": "The article identifies a strong pre-existing tendency towards \"code reasoning\" (using Python to assist reasoning without execution) in Qwen models, which is less prevalent or effective in Llama and OLMo models. The summary does not specify how its frequency changes during RLVR training."
+        },
+        {
+          "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+          "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because the effectiveness of RLVR is heavily model-dependent, and findings from Qwen models do not generalize to other model families like Llama and OLMo, which do not benefit from the same training strategies."
+        },
+        {
+          "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+          "answer": "The summary does not contain information about \"reasoning strategy switching\" or the \"Lang→Code\" transition, so it cannot support the hypothesis."
+        },
+        {
+          "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+          "answer": "The summary does not contain information about the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training."
+        },
+        {
+          "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+          "answer": "The Qwen model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+        },
+        {
+          "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+          "answer": "The summary states that Qwen models show substantial performance improvements with weak signals like \"incorrect label\" reward, often matching ground truth rewards, but it does not provide the absolute percentage points of improvement for Qwen2.5-Math-7B's MATH-500 performance."
+        },
+        {
+          "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+          "answer": "The summary mentions that Qwen models exhibit a strong pre-existing tendency towards \"code reasoning,\" but it does not specify the frequency of this behavior in Qwen2.5-Math-7B's responses before RLVR training."
+        },
+        {
+          "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+          "answer": "After training on the same spurious rewards that benefit Qwen models, Llama and OLMo models generally show minimal improvement or even worsen."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+              "answer": "When subjected to RLVR training with spurious rewards, Qwen models show substantial performance improvements, while Llama and OLMo models exhibit minimal gains or even degradation."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+              "answer": "The article identifies a strong pre-existing tendency towards \"code reasoning\" (using Python to assist reasoning without execution) in Qwen models, which is less prevalent or effective in Llama and OLMo models. The summary does not specify how its frequency changes during RLVR training."
+            },
+            "result": false,
+            "issue": "The summary correctly identifies code reasoning but fails to mention its frequency change, which is stated in the article as increasing from 65% to over 90% after RLVR."
+          },
+          {
+            "qa": {
+              "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+              "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because the effectiveness of RLVR is heavily model-dependent, and findings from Qwen models do not generalize to other model families like Llama and OLMo, which do not benefit from the same training strategies."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+              "answer": "The summary does not contain information about \"reasoning strategy switching\" or the \"Lang→Code\" transition, so it cannot support the hypothesis."
+            },
+            "result": false,
+            "issue": "The summary omits information about 'reasoning strategy switching' and the 'Lang->Code' transition, which is present in the article and supports the hypothesis."
+          },
+          {
+            "qa": {
+              "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+              "answer": "The summary does not contain information about the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training."
+            },
+            "result": false,
+            "issue": "The summary omits information about the effect of compound rewards on 'Bad-Code' models, which is present in the article."
+          },
+          {
+            "qa": {
+              "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+              "answer": "The Qwen model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+              "answer": "The summary states that Qwen models show substantial performance improvements with weak signals like \"incorrect label\" reward, often matching ground truth rewards, but it does not provide the absolute percentage points of improvement for Qwen2.5-Math-7B's MATH-500 performance."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+              "answer": "The summary mentions that Qwen models exhibit a strong pre-existing tendency towards \"code reasoning,\" but it does not specify the frequency of this behavior in Qwen2.5-Math-7B's responses before RLVR training."
+            },
+            "result": false,
+            "issue": "The summary fails to mention the specific frequency (65.0%) of code reasoning before RLVR training, which is present in the article."
+          },
+          {
+            "qa": {
+              "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+              "answer": "After training on the same spurious rewards that benefit Qwen models, Llama and OLMo models generally show minimal improvement or even worsen."
+            },
+            "result": true,
+            "issue": null
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Code Reasoning in Qwen Models",
+          "Generalization Across Model Families",
+          "Spurious Rewards Effectiveness",
+          "Pre-training Influence on RLVR",
+          "Model-Specific RLVR Outcomes",
+          "Cross-Model Analysis of RLVR",
+          "Impact of Pre-existing Strategies"
+        ]
+      },
+      "correct_count_all": 5,
+      "correct_count_acu": 3,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Code Reasoning in Qwen Models",
+        "Generalization Across Model Families",
+        "Spurious Rewards Effectiveness",
+        "Pre-training Influence on RLVR",
+        "Model-Specific RLVR Outcomes",
+        "Cross-Model Analysis of RLVR",
+        "Impact of Pre-existing Strategies"
+      ],
+      "sections_to_highlight_size": 7,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 9,
+      "summary": "1. SUMMARY:\n\nThis paper investigates the effectiveness of Reinforcement Learning from Verifiable Rewards (RLVR) across different model families (Qwen, Llama, OLMo) and highlights a significant lack of technique generalization. The research demonstrates that while RLVR, even with spurious rewards (e.g., random, incorrect labels, or format adherence), can substantially improve mathematical reasoning in Qwen2.5-Math models, these gains do not consistently transfer to other model families like Llama3 or OLMo2. These latter models often show minimal improvement or even performance degradation when trained with the same spurious reward signals. The study posits that these divergent outcomes are primarily due to differences in pre-training, specifically the presence of pre-existing reasoning strategies. Qwen2.5-Math models, for instance, exhibit a strong propensity for \"code reasoning\" (generating Python code to aid mathematical thought), which RLVR effectively amplifies, leading to performance boosts. This suggests that RLVR's success is highly dependent on the base model's pre-trained capabilities and that current RLVR techniques may not be universally applicable.\n\n2. KEY HIGHLIGHTS:\n\n*   RLVR with spurious rewards significantly improves Qwen2.5-Math models, often matching gains from ground-truth rewards.\n*   These spurious rewards and the gains they elicit do not generalize to other model families such as Llama3 and OLMo2, which show little to no improvement or performance degradation.\n*   The effectiveness of RLVR is strongly influenced by pre-existing reasoning strategies within models; Qwen2.5-Math's \"code reasoning\" is identified as a key factor enabling spurious reward success.\n*   This divergence across model families indicates a fundamental lack of generalization in current RLVR techniques, suggesting that pre-training plays a crucial role in RLVR outcomes.\n*   The research advises validating RLVR findings on diverse model architectures, not solely on Qwen models, due to this observed lack of generalization.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+            "answer": "While RLVR, even with spurious rewards, can substantially improve mathematical reasoning in Qwen2.5-Math models, these gains do not consistently transfer to other model families like Llama3 or OLMo2. These latter models often show minimal improvement or even performance degradation when trained with the same spurious reward signals."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+            "answer": "The article identifies a strong propensity for \"code reasoning\" (generating Python code to aid mathematical thought) in Qwen2.5-Math models, which is largely absent or ineffective in Llama and OLMo models. The summary does not specify how its frequency changes during RLVR training."
+          },
+          "result": false,
+          "issue": "The summary does not specify how the frequency of code reasoning changes during RLVR training."
+        },
+        {
+          "qa": {
+            "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+            "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because the effectiveness of RLVR is strongly influenced by pre-existing reasoning strategies within models, and the observed lack of generalization indicates that pre-training plays a crucial role in RLVR outcomes. The gains seen in Qwen models do not consistently transfer to other model families like Llama3 or OLMo2."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+            "answer": "The Qwen model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+            "answer": "According to the article, Llama and OLMo models generally show minimal improvement or even worsen after training on the same spurious rewards that benefit Qwen models."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+          "answer": "While RLVR, even with spurious rewards, can substantially improve mathematical reasoning in Qwen2.5-Math models, these gains do not consistently transfer to other model families like Llama3 or OLMo2. These latter models often show minimal improvement or even performance degradation when trained with the same spurious reward signals."
+        },
+        {
+          "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+          "answer": "The article identifies a strong propensity for \"code reasoning\" (generating Python code to aid mathematical thought) in Qwen2.5-Math models, which is largely absent or ineffective in Llama and OLMo models. The summary does not specify how its frequency changes during RLVR training."
+        },
+        {
+          "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+          "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because the effectiveness of RLVR is strongly influenced by pre-existing reasoning strategies within models, and the observed lack of generalization indicates that pre-training plays a crucial role in RLVR outcomes. The gains seen in Qwen models do not consistently transfer to other model families like Llama3 or OLMo2."
+        },
+        {
+          "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+          "answer": "The Qwen model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+        },
+        {
+          "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+          "answer": "According to the article, Llama and OLMo models generally show minimal improvement or even worsen after training on the same spurious rewards that benefit Qwen models."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+              "answer": "While RLVR, even with spurious rewards, can substantially improve mathematical reasoning in Qwen2.5-Math models, these gains do not consistently transfer to other model families like Llama3 or OLMo2. These latter models often show minimal improvement or even performance degradation when trained with the same spurious reward signals."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+              "answer": "The article identifies a strong propensity for \"code reasoning\" (generating Python code to aid mathematical thought) in Qwen2.5-Math models, which is largely absent or ineffective in Llama and OLMo models. The summary does not specify how its frequency changes during RLVR training."
+            },
+            "result": false,
+            "issue": "The summary correctly identifies 'code reasoning' but fails to mention its frequency change during RLVR training, which is stated in the article."
+          },
+          {
+            "qa": {
+              "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+              "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because the effectiveness of RLVR is strongly influenced by pre-existing reasoning strategies within models, and the observed lack of generalization indicates that pre-training plays a crucial role in RLVR outcomes. The gains seen in Qwen models do not consistently transfer to other model families like Llama3 or OLMo2."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The answer is 'Not enough information in summary' but the article does contain information about reasoning strategy switching and its support for the hypothesis."
+          },
+          {
+            "qa": {
+              "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The answer is 'Not enough information in summary' but the article does contain information about compound rewards and their effect on 'Bad-Code' models."
+          },
+          {
+            "qa": {
+              "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+              "answer": "The Qwen model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The answer is 'Not enough information in summary' but the article explicitly states the performance improvement with an 'incorrect label' reward."
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The answer is 'Not enough information in summary' but the article explicitly states the frequency of code reasoning before RLVR training."
+          },
+          {
+            "qa": {
+              "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+              "answer": "According to the article, Llama and OLMo models generally show minimal improvement or even worsen after training on the same spurious rewards that benefit Qwen models."
+            },
+            "result": true,
+            "issue": null
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Spurious Rewards Effectiveness",
+          "Generalization to Other Models",
+          "Code Reasoning Behavior",
+          "Pre-training Influence",
+          "Model-Specific RLVR Outcomes"
+        ]
+      },
+      "correct_count_all": 4,
+      "correct_count_acu": 2,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Spurious Rewards Effectiveness",
+        "Generalization to Other Models",
+        "Code Reasoning Behavior",
+        "Pre-training Influence",
+        "Model-Specific RLVR Outcomes"
+      ],
+      "sections_to_highlight_size": 5,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 10,
+      "summary": "1. SUMMARY:\nThis research investigates the effectiveness of Reinforcement Learning from Verifiable Rewards (RLVR) with spurious reward signals, demonstrating that such methods can significantly improve mathematical reasoning in Qwen2.5-Math models. Counterintuitively, even rewards with no or negative correlation to the correct answer, such as random or incorrect labels, yielded substantial gains, sometimes approaching those from ground truth rewards. This suggests RLVR might be eliciting latent reasoning abilities from pre-training rather than teaching new ones. A critical finding is the lack of generalization of these spurious rewards to other model families like Llama3 and OLMo2, which showed minimal or no improvement. This divergence is attributed to differences in pre-training data and learned reasoning strategies, with Qwen2.5-Math models uniquely exhibiting \"code reasoning\" (generating Python code for thought processes) that is strongly correlated with performance and is effectively upweighted by RLVR, even with spurious rewards. This highlights a fundamental lack of technique generalization in RLVR, emphasizing that conclusions drawn from Qwen models may not apply universally.\n\n2. KEY HIGHLIGHTS:\n*   RLVR with spurious rewards (e.g., random, incorrect labels) significantly boosts mathematical reasoning in Qwen2.5-Math models, often comparable to ground truth rewards.\n*   These spurious reward techniques fail to generalize to other model families like Llama3 and OLMo2, which show minimal or negative gains.\n*   Qwen2.5-Math models exhibit a unique \"code reasoning\" behavior (using Python for thought) that is strongly correlated with performance and is effectively amplified by RLVR, even with weak/spurious rewards.\n*   The effectiveness of RLVR with spurious rewards is heavily dependent on the model's pre-training data and pre-existing reasoning strategies, not the quality of the reward signal itself.\n*   The findings underscore a fundamental lack of generalization in RLVR techniques, cautioning against drawing conclusions solely from Qwen-centric experiments.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+            "answer": "RLVR training with spurious rewards like \"random reward\" or \"incorrect label\" resulted in significant gains for Qwen2.5-Math models, while Llama3 and OLMo2 model families showed minimal or no improvement."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+            "answer": "The article identifies \"code reasoning\" (generating Python code for thought processes) as a pre-existing reasoning strategy in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models. The frequency of this strategy is effectively upweighted by RLVR, even with spurious rewards."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+            "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because the effectiveness of RLVR with spurious rewards is heavily dependent on the model's pre-training data and pre-existing reasoning strategies, and these techniques fail to generalize to other model families like Llama3 and OLMo2."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+            "answer": "The concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, supports the hypothesis that RLVR with spurious rewards surfaces latent abilities from pretraining for Qwen models by showing that these models exhibit \"code reasoning\" which is amplified by RLVR even with spurious rewards, suggesting these abilities were present from pretraining."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+            "answer": "The Qwen2.5-Math model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+            "answer": "According to the article, Llama and OLMo models generally show minimal improvement or even worsen after training on the same spurious rewards that benefit Qwen models."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+          "answer": "RLVR training with spurious rewards like \"random reward\" or \"incorrect label\" resulted in significant gains for Qwen2.5-Math models, while Llama3 and OLMo2 model families showed minimal or no improvement."
+        },
+        {
+          "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+          "answer": "The article identifies \"code reasoning\" (generating Python code for thought processes) as a pre-existing reasoning strategy in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models. The frequency of this strategy is effectively upweighted by RLVR, even with spurious rewards."
+        },
+        {
+          "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+          "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because the effectiveness of RLVR with spurious rewards is heavily dependent on the model's pre-training data and pre-existing reasoning strategies, and these techniques fail to generalize to other model families like Llama3 and OLMo2."
+        },
+        {
+          "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+          "answer": "The concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, supports the hypothesis that RLVR with spurious rewards surfaces latent abilities from pretraining for Qwen models by showing that these models exhibit \"code reasoning\" which is amplified by RLVR even with spurious rewards, suggesting these abilities were present from pretraining."
+        },
+        {
+          "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+          "answer": "The Qwen2.5-Math model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+        },
+        {
+          "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+          "answer": "According to the article, Llama and OLMo models generally show minimal improvement or even worsen after training on the same spurious rewards that benefit Qwen models."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+              "answer": "RLVR training with spurious rewards like \"random reward\" or \"incorrect label\" resulted in significant gains for Qwen2.5-Math models, while Llama3 and OLMo2 model families showed minimal or no improvement."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+              "answer": "The article identifies \"code reasoning\" (generating Python code for thought processes) as a pre-existing reasoning strategy in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models. The frequency of this strategy is effectively upweighted by RLVR, even with spurious rewards."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+              "answer": "The paper cautions against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models because the effectiveness of RLVR with spurious rewards is heavily dependent on the model's pre-training data and pre-existing reasoning strategies, and these techniques fail to generalize to other model families like Llama3 and OLMo2."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+              "answer": "The concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, supports the hypothesis that RLVR with spurious rewards surfaces latent abilities from pretraining for Qwen models by showing that these models exhibit \"code reasoning\" which is amplified by RLVR even with spurious rewards, suggesting these abilities were present from pretraining."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The answer states 'Not enough information in summary' but the article provides information on this topic in Section 4.3, stating that for 'Bad-Code' models, compound rewards often outperform the originals, and specifically for OLMo2-7B-SFT, gains were observed when the no-code reward was added."
+          },
+          {
+            "qa": {
+              "question": "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+              "answer": "The Qwen2.5-Math model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The answer states 'Not enough information in summary' but the article explicitly states in the abstract and introduction that RLVR improves MATH-500 performance for Qwen2.5-Math-7B by 24.1% with an incorrect label reward."
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The answer states 'Not enough information in summary' but the article explicitly states in the abstract and Section 4.1 that the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training was 65%."
+          },
+          {
+            "qa": {
+              "question": "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?",
+              "answer": "According to the article, Llama and OLMo models generally show minimal improvement or even worsen after training on the same spurious rewards that benefit Qwen models."
+            },
+            "result": true,
+            "issue": null
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Spurious Rewards Effectiveness",
+          "Model Generalization",
+          "Code Reasoning Behavior",
+          "RLVR Mechanism",
+          "Practical Implications"
+        ]
+      },
+      "correct_count_all": 6,
+      "correct_count_acu": 2,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Spurious Rewards Effectiveness",
+        "Model Generalization",
+        "Code Reasoning Behavior",
+        "RLVR Mechanism",
+        "Practical Implications"
+      ],
+      "sections_to_highlight_size": 5,
+      "qa_failures_present": true
+    }
+  ],
+  "final_summary": "1. SUMMARY:\nThis research investigates the effectiveness of Reinforcement Learning from Verifiable Rewards (RLVR) with spurious reward signals, demonstrating that such methods can significantly improve mathematical reasoning in Qwen2.5-Math models. Counterintuitively, even rewards with no or negative correlation to the correct answer, such as random or incorrect labels, yielded substantial gains, sometimes approaching those from ground truth rewards. This suggests RLVR might be eliciting latent reasoning abilities from pre-training rather than teaching new ones. A critical finding is the lack of generalization of these spurious rewards to other model families like Llama3 and OLMo2, which showed minimal or no improvement. This divergence is attributed to differences in pre-training data and learned reasoning strategies, with Qwen2.5-Math models uniquely exhibiting \"code reasoning\" (generating Python code for thought processes) that is strongly correlated with performance and is effectively upweighted by RLVR, even with spurious rewards. This highlights a fundamental lack of technique generalization in RLVR, emphasizing that conclusions drawn from Qwen models may not apply universally.\n\n2. KEY HIGHLIGHTS:\n*   RLVR with spurious rewards (e.g., random, incorrect labels) significantly boosts mathematical reasoning in Qwen2.5-Math models, often comparable to ground truth rewards.\n*   These spurious reward techniques fail to generalize to other model families like Llama3 and OLMo2, which show minimal or negative gains.\n*   Qwen2.5-Math models exhibit a unique \"code reasoning\" behavior (using Python for thought) that is strongly correlated with performance and is effectively amplified by RLVR, even with weak/spurious rewards.\n*   The effectiveness of RLVR with spurious rewards is heavily dependent on the model's pre-training data and pre-existing reasoning strategies, not the quality of the reward signal itself.\n*   The findings underscore a fundamental lack of generalization in RLVR techniques, cautioning against drawing conclusions solely from Qwen-centric experiments.",
+  "total_iterations": 10,
+  "status": "max_iterations_reached",
+  "questions": [
+    "How do the performance outcomes of the Llama3 and OLMo2 model families compare to the Qwen model family when subjected to RLVR training with spurious rewards like \"random reward\" or \"incorrect label\"?",
+    "What specific pre-existing reasoning strategy does the article identify in Qwen2.5-Math models that is largely absent or ineffective in Llama and OLMo models, and how does its frequency change during RLVR training?",
+    "Why does the paper caution against drawing general conclusions about RLVR techniques based solely on experiments with Qwen models?",
+    "The article hypothesizes that RLVR with spurious rewards surfaces latent abilities from pretraining. How does the concept of \"reasoning strategy switching,\" particularly the \"Lang→Code\" transition, support this hypothesis for Qwen models?",
+    "What happens to the performance of \"Bad-Code\" models like OLMo2-7B-SFT when a compound reward is used to explicitly penalize the generation of Python code during RLVR training?"
+  ],
+  "acu_questions": [
+    "ACU. Which model family is noted for its distinctive \"code reasoning\" behavior that increases significantly after RLVR training, even with spurious rewards?",
+    "ACU. By what absolute percentage points did Qwen2.5-Math-7B's MATH-500 performance improve with an \"incorrect label\" reward?",
+    "ACU. What was the frequency of code reasoning in Qwen2.5-Math-7B's responses before RLVR training?",
+    "ACU. According to the article, do Llama and OLMo models generally improve, or do they show minimal improvement or even worsen, after training on the same spurious rewards that benefit Qwen models?"
+  ]
+}

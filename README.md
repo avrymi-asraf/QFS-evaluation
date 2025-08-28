@@ -87,3 +87,55 @@ You can customize the evaluation with additional arguments:
   <article-stem>--<query-snippet>--<hash>.json
   ```
   Raw stdout/stderr for each run are stored under `results/<run-name>/raw/` with the same slug and `.stdout.txt` / `.stderr.txt` suffixes.
+
+
+### Easiest way
+
+- Serve the folder, then open the viewer in your browser. Use either option:
+
+Option A: serve repo root
+```bash
+cd /home/user/studies/QFS-evaluation
+python3 -m http.server 8000 --bind 127.0.0.1
+```
+Open: `http://127.0.0.1:8000/results/viewer/?debug=1`
+
+Option B: serve results folder
+```bash
+cd /home/user/studies/QFS-evaluation/results
+python3 -m http.server 8000 --bind 127.0.0.1
+```
+Open: `http://127.0.0.1:8000/viewer/?debug=1`
+
+Notes:
+- Use a server (not file://). The page parses the server’s directory listing.
+- `?debug=1` enables console logs to help verify what it’s loading.
+
+### Yes — easy ways to open it in Windows
+
+- **Use your Windows browser (recommended)**
+  - Start server in WSL:
+    ```bash
+    python3 -m http.server 8000 --directory /home/user/studies/QFS-evaluation/results
+    ```
+  - In Windows, open:
+    - `http://localhost:8000/index.html`
+    - or `http://localhost:8000/viewer/index.html`
+
+- **Auto-open Windows browser from WSL**
+  - With wslu installed:
+    ```bash
+    wslview http://localhost:8000/index.html
+    ```
+  - Without wslu:
+    ```bash
+    powershell.exe -NoProfile -Command Start-Process 'http://localhost:8000/index.html'
+    ```
+
+- **Open the file directly (no server)**
+  - In Windows File Explorer:
+    - `\\wsl$\Ubuntu\home\user\studies\QFS-evaluation\results\index.html`
+    - `\\wsl$\Ubuntu\home\user\studies\QFS-evaluation\results\viewer\index.html`
+  - Replace `Ubuntu` with your distro name if different.
+
+If `localhost` doesn’t work, use the WSL IP (e.g., `http://<wsl-ip>:8000`).

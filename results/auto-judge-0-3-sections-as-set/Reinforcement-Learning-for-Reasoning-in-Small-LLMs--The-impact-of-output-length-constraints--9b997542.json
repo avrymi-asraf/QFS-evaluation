@@ -1,0 +1,1948 @@
+{
+  "query": "The impact of output length constraints on the stability and efficacy of training LLMs for complex reasoning tasks.",
+  "max_iterations": 15,
+  "iterations": [
+    {
+      "iteration_number": 1,
+      "summary": "1. SUMMARY:\nThis study investigates the impact of output length constraints on training small LLMs for complex reasoning tasks using reinforcement learning (RL). Researchers adapted the Group Relative Policy Optimization (GRPO) algorithm and a curated mathematical reasoning dataset to train a 1.5-billion-parameter model (DeepSeek-R1-Distill-Qwen-1.5B) under strict resource limitations (4 NVIDIA A40 GPUs, 24-hour window). The findings reveal that while RL can rapidly improve reasoning capabilities (e.g., AMC23 accuracy from 63% to 80%), prolonged training under strict length constraints leads to performance degradation, instability, and even language drift. Experimentation showed that mixing easier and harder problems, along with using cosine rewards to control output length, offered better initial performance and stability. However, longer completion lengths were deemed necessary for extremely complex tasks. Despite these challenges, the approach achieved competitive reasoning performance with minimal data and cost, offering a cost-effective alternative to large-scale methods.\n\n2. KEY HIGHLIGHTS:\n*   Strict output length constraints can lead to performance degradation, optimization instability, and language drift in small LLMs trained with RL for reasoning tasks, especially with prolonged training.\n*   A mix of easy and hard problems, combined with cosine rewards to manage output length, can improve initial reasoning performance and stabilize training in small LLMs.\n*   For highly complex reasoning tasks, extending output length limits is crucial to prevent premature truncation and fully leverage the model's capabilities.\n*   RL-based fine-tuning can significantly enhance the reasoning abilities of small LLMs with minimal data and cost, providing a viable, resource-efficient alternative to large-scale approaches.\n*   The multilingual nature of base models can introduce language drift, necessitating explicit language control or monolingual pre-filtering for consistent reasoning performance.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+            "answer": "The summary states that prolonged training under strict length constraints leads to performance degradation, instability, and language drift. It mentions a 4096-token limit was used in Experiment 1 but does not detail the specific effects of this exact limit on stability and output quality."
+          },
+          "result": false,
+          "issue": "Partial information"
+        },
+        {
+          "qa": {
+            "question": "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+            "answer": "The summary does not specify why the maximum output length was reduced in Experiment 2 or what the initial impact of this change was on the model's performance and reasoning behavior."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+            "answer": "The 'cosine reward' was used to manage output length. The study found that mixing easier and harder problems, along with using cosine rewards to control output length, offered better initial performance and stability compared to previous methods."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+            "answer": "According to 'Insight 1', strict length constraints, when combined with prolonged training duration, lead to the degradation of reasoning performance in small LLMs."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?",
+            "answer": "The summary states that strict output length constraints can lead to performance degradation, optimization instability, and language drift in small LLMs trained with RL for reasoning tasks, especially with prolonged training. It also mentions that for highly complex reasoning tasks, extending output length limits is crucial to prevent premature truncation. However, specific evidence or examples from the experiments demonstrating these issues are not detailed."
+          },
+          "result": false,
+          "issue": "Partial information"
+        },
+        {
+          "qa": {
+            "question": "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+            "answer": "The summary mentions a 4096-token completion limit in Experiment 1 but does not state that the model often exceeded this limit or what that limit was."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+            "answer": "The summary does not specify the value to which the maximum completion length was reduced in Experiment 2."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+            "answer": "In Experiment 3, 'cosine reward' was introduced to better control output length."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?",
+            "answer": "The summary does not specify the number of global steps after which the model's performance began to degrade in Experiment 1."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+          "answer": "The summary states that prolonged training under strict length constraints leads to performance degradation, instability, and language drift. It mentions a 4096-token limit was used in Experiment 1 but does not detail the specific effects of this exact limit on stability and output quality."
+        },
+        {
+          "question": "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+          "answer": "The summary does not specify why the maximum output length was reduced in Experiment 2 or what the initial impact of this change was on the model's performance and reasoning behavior."
+        },
+        {
+          "question": "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+          "answer": "The 'cosine reward' was used to manage output length. The study found that mixing easier and harder problems, along with using cosine rewards to control output length, offered better initial performance and stability compared to previous methods."
+        },
+        {
+          "question": "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+          "answer": "According to 'Insight 1', strict length constraints, when combined with prolonged training duration, lead to the degradation of reasoning performance in small LLMs."
+        },
+        {
+          "question": "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?",
+          "answer": "The summary states that strict output length constraints can lead to performance degradation, optimization instability, and language drift in small LLMs trained with RL for reasoning tasks, especially with prolonged training. It also mentions that for highly complex reasoning tasks, extending output length limits is crucial to prevent premature truncation. However, specific evidence or examples from the experiments demonstrating these issues are not detailed."
+        },
+        {
+          "question": "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+          "answer": "The summary mentions a 4096-token completion limit in Experiment 1 but does not state that the model often exceeded this limit or what that limit was."
+        },
+        {
+          "question": "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+          "answer": "The summary does not specify the value to which the maximum completion length was reduced in Experiment 2."
+        },
+        {
+          "question": "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+          "answer": "In Experiment 3, 'cosine reward' was introduced to better control output length."
+        },
+        {
+          "question": "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?",
+          "answer": "The summary does not specify the number of global steps after which the model's performance began to degrade in Experiment 1."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+              "answer": "The summary states that prolonged training under strict length constraints leads to performance degradation, instability, and language drift. It mentions a 4096-token limit was used in Experiment 1 but does not detail the specific effects of this exact limit on stability and output quality."
+            },
+            "result": false,
+            "issue": "The answer correctly notes that the summary mentions the effects but doesn't detail them. However, the article *does* detail these effects."
+          },
+          {
+            "qa": {
+              "question": "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+              "answer": "The summary does not specify why the maximum output length was reduced in Experiment 2 or what the initial impact of this change was on the model's performance and reasoning behavior."
+            },
+            "result": false,
+            "issue": "The answer correctly states the summary lacks this information, but the article provides it."
+          },
+          {
+            "qa": {
+              "question": "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+              "answer": "The 'cosine reward' was used to manage output length. The study found that mixing easier and harder problems, along with using cosine rewards to control output length, offered better initial performance and stability compared to previous methods."
+            },
+            "result": false,
+            "issue": "The answer is partially correct about the function of cosine reward, but it incorrectly attributes the findings about mixing problems to the effectiveness of cosine reward. The article states cosine reward stabilized lengths, but the comparison of initial performance/stability was between Experiment 2 (mixed problems) and Experiment 3 (cosine reward)."
+          },
+          {
+            "qa": {
+              "question": "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+              "answer": "According to 'Insight 1', strict length constraints, when combined with prolonged training duration, lead to the degradation of reasoning performance in small LLMs."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?",
+              "answer": "The summary states that strict output length constraints can lead to performance degradation, optimization instability, and language drift in small LLMs trained with RL for reasoning tasks, especially with prolonged training. It also mentions that for highly complex reasoning tasks, extending output length limits is crucial to prevent premature truncation. However, specific evidence or examples from the experiments demonstrating these issues are not detailed."
+            },
+            "result": false,
+            "issue": "The answer incorrectly states the summary doesn't detail evidence. The article provides specific details about truncation leading to unreadable content and language drift."
+          },
+          {
+            "qa": {
+              "question": "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+              "answer": "The summary mentions a 4096-token completion limit in Experiment 1 but does not state that the model often exceeded this limit or what that limit was."
+            },
+            "result": false,
+            "issue": "The article explicitly states the model 'often exceeding the 4096-token limit'."
+          },
+          {
+            "qa": {
+              "question": "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+              "answer": "The summary does not specify the value to which the maximum completion length was reduced in Experiment 2."
+            },
+            "result": false,
+            "issue": "The article states the maximum completion length was reduced to 3584 tokens in Experiment 2."
+          },
+          {
+            "qa": {
+              "question": "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+              "answer": "In Experiment 3, 'cosine reward' was introduced to better control output length."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?",
+              "answer": "The summary does not specify the number of global steps after which the model's performance began to degrade in Experiment 1."
+            },
+            "result": false,
+            "issue": "The article states that after 200 steps, accuracy degraded significantly in Experiment 1."
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Experiment 1 — effect of 4096-token limit",
+          "Experiment 2 — reason for length reduction and initial impact",
+          "Experiment 3 — cosine reward effectiveness vs prior methods",
+          "Evidence for truncation issues — language drift and unreadable content",
+          "Experiment 1 — specific step degradation point",
+          "Experiment 2 — maximum completion length value"
+        ]
+      },
+      "correct_count_all": 2,
+      "correct_count_acu": 1,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Experiment 1 — effect of 4096-token limit",
+        "Experiment 2 — reason for length reduction and initial impact",
+        "Experiment 3 — cosine reward effectiveness vs prior methods",
+        "Evidence for truncation issues — language drift and unreadable content",
+        "Experiment 1 — specific step degradation point",
+        "Experiment 2 — maximum completion length value"
+      ],
+      "sections_to_highlight_size": 6,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 2,
+      "summary": "1. SUMMARY:\nThis study investigates the impact of output length constraints on training small LLMs for complex reasoning tasks using reinforcement learning (RL). The researchers found that while small LLMs can achieve rapid reasoning gains within the initial 50-100 training steps, prolonged training under strict length constraints leads to performance degradation. Specifically, Experiment 1 showed that the 4096-token limit, combined with prolonged training, resulted in unstable accuracy, increased completion lengths, and ultimately, language drift and unreadable content, indicating truncation issues. Experiment 2 mitigated some of these problems by mixing easier and harder problems, reducing the maximum completion length to 3584 tokens, which led to improved initial performance and more stable reasoning behavior. However, late-stage instability persisted. Experiment 3 further improved length control with a cosine reward, stabilizing output lengths between 1000 and 3500 tokens, but found that extending length limits is necessary for extremely hard tasks, especially with multilingual base models. Overall, the research demonstrates the efficacy of RL for small LLMs but highlights the critical challenges posed by output length limitations and the need for careful tuning to avoid degradation.\n\n2. KEY HIGHLIGHTS:\n*   Prolonged training of small LLMs under strict output length constraints (e.g., 4096 tokens) leads to performance degradation, unstable accuracy, and phenomena like language drift and unreadable content, suggesting truncation issues.\n*   Experiment 2 reduced the maximum completion length to 3584 tokens and mixed problem difficulties, yielding improved initial performance and more stable reasoning, though long-term stability remained a challenge.\n*   Experiment 3 utilized a cosine reward to stabilize output lengths between 1000-3500 tokens, demonstrating better training consistency, but confirmed that extending length limits is crucial for highly complex tasks.\n*   The study emphasizes that while RL can boost small LLM reasoning efficiently, output length constraints are a significant factor affecting stability and efficacy, particularly for challenging reasoning tasks.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+            "answer": "In Experiment 1, the 4096-token completion limit, combined with prolonged training, resulted in unstable accuracy, increased completion lengths, and ultimately, language drift and unreadable content, indicating truncation issues."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+            "answer": "In Experiment 2, the maximum output length was reduced to 3584 tokens to mitigate problems seen in Experiment 1. This change led to improved initial performance and more stable reasoning behavior."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+            "answer": "The 'cosine reward' was used in Experiment 3 to stabilize output lengths between 1000 and 3500 tokens, demonstrating better training consistency compared to previous experiments. However, extending length limits was found to be necessary for extremely hard tasks."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?",
+            "answer": "Experiment 1 showed that the 4096-token limit, combined with prolonged training, resulted in unstable accuracy, increased completion lengths, and ultimately, language drift and unreadable content, indicating truncation issues."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+            "answer": "The summary does not explicitly state the maximum completion length that the model often exceeded in Experiment 1, only that the limit was 4096 tokens and that completion lengths increased."
+          },
+          "result": false,
+          "issue": "partial information"
+        },
+        {
+          "qa": {
+            "question": "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+            "answer": "In Experiment 2, the maximum completion length was reduced to 3584 tokens to help stabilize training."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+            "answer": "A 'cosine reward' was introduced in Experiment 3 to better control output length."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?",
+            "answer": "The summary states that prolonged training leads to performance degradation, but does not specify the number of global steps after which this degradation began in Experiment 1."
+          },
+          "result": false,
+          "issue": "Not enough information"
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+          "answer": "In Experiment 1, the 4096-token completion limit, combined with prolonged training, resulted in unstable accuracy, increased completion lengths, and ultimately, language drift and unreadable content, indicating truncation issues."
+        },
+        {
+          "question": "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+          "answer": "In Experiment 2, the maximum output length was reduced to 3584 tokens to mitigate problems seen in Experiment 1. This change led to improved initial performance and more stable reasoning behavior."
+        },
+        {
+          "question": "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+          "answer": "The 'cosine reward' was used in Experiment 3 to stabilize output lengths between 1000 and 3500 tokens, demonstrating better training consistency compared to previous experiments. However, extending length limits was found to be necessary for extremely hard tasks."
+        },
+        {
+          "question": "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?",
+          "answer": "Experiment 1 showed that the 4096-token limit, combined with prolonged training, resulted in unstable accuracy, increased completion lengths, and ultimately, language drift and unreadable content, indicating truncation issues."
+        },
+        {
+          "question": "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+          "answer": "The summary does not explicitly state the maximum completion length that the model often exceeded in Experiment 1, only that the limit was 4096 tokens and that completion lengths increased."
+        },
+        {
+          "question": "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+          "answer": "In Experiment 2, the maximum completion length was reduced to 3584 tokens to help stabilize training."
+        },
+        {
+          "question": "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+          "answer": "A 'cosine reward' was introduced in Experiment 3 to better control output length."
+        },
+        {
+          "question": "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?",
+          "answer": "The summary states that prolonged training leads to performance degradation, but does not specify the number of global steps after which this degradation began in Experiment 1."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+              "answer": "In Experiment 1, the 4096-token completion limit, combined with prolonged training, resulted in unstable accuracy, increased completion lengths, and ultimately, language drift and unreadable content, indicating truncation issues."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+              "answer": "In Experiment 2, the maximum output length was reduced to 3584 tokens to mitigate problems seen in Experiment 1. This change led to improved initial performance and more stable reasoning behavior."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+              "answer": "The 'cosine reward' was used in Experiment 3 to stabilize output lengths between 1000 and 3500 tokens, demonstrating better training consistency compared to previous experiments. However, extending length limits was found to be necessary for extremely hard tasks."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not explicitly state the relationship described in Insight 1; it only mentions that prolonged training under strict length constraints leads to performance degradation."
+          },
+          {
+            "qa": {
+              "question": "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?",
+              "answer": "Experiment 1 showed that the 4096-token limit, combined with prolonged training, resulted in unstable accuracy, increased completion lengths, and ultimately, language drift and unreadable content, indicating truncation issues."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+              "answer": "The summary does not explicitly state the maximum completion length that the model often exceeded in Experiment 1, only that the limit was 4096 tokens and that completion lengths increased."
+            },
+            "result": false,
+            "issue": "The article states in Experiment 1, the model struggled with the complexity of open-s1, often exceeding the 4096-token limit before producing a final answer. The summary should have captured this detail."
+          },
+          {
+            "qa": {
+              "question": "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+              "answer": "In Experiment 2, the maximum completion length was reduced to 3584 tokens to help stabilize training."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+              "answer": "A 'cosine reward' was introduced in Experiment 3 to better control output length."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?",
+              "answer": "The summary states that prolonged training leads to performance degradation, but does not specify the number of global steps after which this degradation began in Experiment 1."
+            },
+            "result": false,
+            "issue": "The article states that after 200 steps, accuracy degrades significantly. The summary should have captured this detail."
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Experiment 1 — degradation timing and causes",
+          "Experiment 2 — length reduction impact",
+          "Experiment 3 — cosine reward effectiveness",
+          "Limitations — training duration and length insufficiency",
+          "Limitations — multilingual base model impact",
+          "Methodology — dataset curation process"
+        ]
+      },
+      "correct_count_all": 6,
+      "correct_count_acu": 2,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Experiment 1 — degradation timing and causes",
+        "Experiment 2 — length reduction impact",
+        "Experiment 3 — cosine reward effectiveness",
+        "Limitations — training duration and length insufficiency",
+        "Limitations — multilingual base model impact",
+        "Methodology — dataset curation process"
+      ],
+      "sections_to_highlight_size": 6,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 3,
+      "summary": "1. SUMMARY:\nThis study investigates the impact of output length constraints on training small LLMs for complex reasoning tasks using reinforcement learning (RL). The researchers found that while RL can rapidly improve reasoning in small LLMs, prolonged training under strict length constraints leads to performance degradation. Experiment 1 showed that the 4096-token limit, combined with prolonged training beyond 200 steps, resulted in accuracy drops and unstable outputs, including unreadable content and language drift, likely due to the base model's multilingual nature. Experiment 2, by reducing the maximum completion length to 3584 tokens and mixing easy with hard problems, initially improved performance and stabilized behavior, but still faced late-stage instability. Experiment 3 demonstrated that a cosine reward effectively controlled output length, leading to more consistent training, but the 3584-token limit and the multilingual base model still posed challenges for complex reasoning and language purity. The findings suggest that while RL is effective for small LLMs, careful consideration of length constraints, training duration, and base model characteristics is crucial for sustained efficacy.\n\n2. KEY HIGHLIGHTS:\n*   Prolonged training of small LLMs under strict output length constraints (e.g., 4096 tokens) can lead to performance degradation, instability, and language drift, particularly with multilingual base models.\n*   Reducing maximum completion length (e.g., to 3584 tokens) and incorporating easier problems can improve initial reasoning performance and stabilize training, but long-term stability remains a challenge.\n*   Cosine rewards effectively control output length, enhancing training consistency, but the chosen length limit may still be insufficient for extremely complex reasoning tasks.\n*   The multilingual nature of the base model (DeepSeek-R1-Distill-Qwen-1.5B) contributes to language drift and complicates monolingual optimization efforts.\n*   The study highlights a trade-off: while RL offers cost-effective reasoning improvements for small LLMs, limitations in training duration and output length can hinder their full potential on complex tasks.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+            "answer": "In Experiment 1, the 4096-token limit, combined with prolonged training beyond 200 steps, resulted in accuracy drops and unstable outputs, including unreadable content and language drift."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+            "answer": "In Experiment 2, the maximum output length was reduced to 3584 tokens and easy problems were mixed with hard problems. This initially improved performance and stabilized behavior."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+            "answer": "The 'cosine reward' used in Experiment 3 effectively controlled output length, leading to more consistent training compared to previous experiments, although the 3584-token limit and multilingual base model still posed challenges."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?",
+            "answer": "Experiment 1 showed that the 4096-token limit, combined with prolonged training beyond 200 steps, resulted in accuracy drops and unstable outputs, including unreadable content and language drift, likely due to the base model's multilingual nature. This suggests that insufficient completion lengths can force a model to truncate reasoning."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+            "answer": "In Experiment 2, the maximum completion length was reduced to 3584 tokens."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+            "answer": "A cosine reward was introduced in Experiment 3 to better control output length."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?",
+            "answer": "In Experiment 1, prolonged training beyond 200 steps resulted in accuracy drops and unstable outputs."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+          "answer": "In Experiment 1, the 4096-token limit, combined with prolonged training beyond 200 steps, resulted in accuracy drops and unstable outputs, including unreadable content and language drift."
+        },
+        {
+          "question": "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+          "answer": "In Experiment 2, the maximum output length was reduced to 3584 tokens and easy problems were mixed with hard problems. This initially improved performance and stabilized behavior."
+        },
+        {
+          "question": "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+          "answer": "The 'cosine reward' used in Experiment 3 effectively controlled output length, leading to more consistent training compared to previous experiments, although the 3584-token limit and multilingual base model still posed challenges."
+        },
+        {
+          "question": "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?",
+          "answer": "Experiment 1 showed that the 4096-token limit, combined with prolonged training beyond 200 steps, resulted in accuracy drops and unstable outputs, including unreadable content and language drift, likely due to the base model's multilingual nature. This suggests that insufficient completion lengths can force a model to truncate reasoning."
+        },
+        {
+          "question": "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+          "answer": "In Experiment 2, the maximum completion length was reduced to 3584 tokens."
+        },
+        {
+          "question": "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+          "answer": "A cosine reward was introduced in Experiment 3 to better control output length."
+        },
+        {
+          "question": "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?",
+          "answer": "In Experiment 1, prolonged training beyond 200 steps resulted in accuracy drops and unstable outputs."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+              "answer": "In Experiment 1, the 4096-token limit, combined with prolonged training beyond 200 steps, resulted in accuracy drops and unstable outputs, including unreadable content and language drift."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+              "answer": "In Experiment 2, the maximum output length was reduced to 3584 tokens and easy problems were mixed with hard problems. This initially improved performance and stabilized behavior."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+              "answer": "The 'cosine reward' used in Experiment 3 effectively controlled output length, leading to more consistent training compared to previous experiments, although the 3584-token limit and multilingual base model still posed challenges."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not contain 'Insight 1' or the specific relationship described."
+          },
+          {
+            "qa": {
+              "question": "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?",
+              "answer": "Experiment 1 showed that the 4096-token limit, combined with prolonged training beyond 200 steps, resulted in accuracy drops and unstable outputs, including unreadable content and language drift, likely due to the base model's multilingual nature. This suggests that insufficient completion lengths can force a model to truncate reasoning."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not specify the maximum completion length that the model often exceeded in Experiment 1."
+          },
+          {
+            "qa": {
+              "question": "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+              "answer": "In Experiment 2, the maximum completion length was reduced to 3584 tokens."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+              "answer": "A cosine reward was introduced in Experiment 3 to better control output length."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?",
+              "answer": "In Experiment 1, prolonged training beyond 200 steps resulted in accuracy drops and unstable outputs."
+            },
+            "result": true,
+            "issue": ""
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Experiment 1 — Impact of length constraints on performance",
+          "Experiment 2 — Mixing problem difficulties",
+          "Experiment 3 — Cosine reward effectiveness",
+          "Base Model — Multilingual nature and its impact",
+          "Limitations — Training duration and length insufficiency"
+        ]
+      },
+      "correct_count_all": 7,
+      "correct_count_acu": 3,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Experiment 1 — Impact of length constraints on performance",
+        "Experiment 2 — Mixing problem difficulties",
+        "Experiment 3 — Cosine reward effectiveness",
+        "Base Model — Multilingual nature and its impact",
+        "Limitations — Training duration and length insufficiency"
+      ],
+      "sections_to_highlight_size": 5,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 4,
+      "summary": "1. SUMMARY:\nThis study investigates the impact of output length constraints on training small LLMs for complex reasoning tasks using reinforcement learning (RL). Experiment 1 demonstrated that while small LLMs can achieve rapid reasoning gains (e.g., AMC23 accuracy from 63% to 70%) within initial training steps, prolonged training under a 4096-token limit leads to performance degradation, evidenced by accuracy drops and unstable completion lengths. Experiment 2, by mixing easier problems and reducing the maximum completion length to 3584 tokens, showed improved initial performance (AMC23 to 80%) but still faced late-stage instability. Experiment 3 incorporated a cosine reward to better control output length, stabilizing it between 1000-3500 tokens and improving training consistency, though peak accuracy was slightly lower. A key limitation identified was the multilingual nature of the base model (DeepSeek-R1-Distill-Qwen-1.5B), which contributed to language drift and non-English outputs after 150-200 steps, even with explicit prompts. Insufficient training duration and length constraints were also noted as hindrances to fully exploring the models' potential on complex tasks.\n\n2. KEY HIGHLIGHTS:\n*   Prolonged training of small LLMs under strict length constraints (e.g., 4096 tokens) leads to performance degradation and instability, as seen in Experiment 1.\n*   Reducing the maximum completion length (to 3584 tokens) and mixing easier problems (Experiment 2) initially boosts performance but does not fully resolve long-term stability issues.\n*   Cosine rewards effectively stabilize output lengths, improving training consistency (Experiment 3), but may slightly reduce peak accuracy compared to methods that prioritize raw performance.\n*   The multilingual nature of the base model is a significant limitation, causing language drift and non-English outputs, even with explicit instructions.\n*   Limited training duration and insufficient length constraints hinder the full potential of small LLMs on complex reasoning tasks.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+            "answer": "In Experiment 1, a 4096-token completion limit led to performance degradation, evidenced by accuracy drops and unstable completion lengths during prolonged training."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+            "answer": "In Experiment 2, the maximum output length was reduced to 3584 tokens to help stabilize training. This change, along with mixing easier problems, initially boosted performance, with AMC23 accuracy reaching 80%."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+            "answer": "The 'cosine reward' was introduced in Experiment 3 to better control output length, stabilizing it between 1000-3500 tokens and improving training consistency. While effective at stabilizing length, it resulted in slightly lower peak accuracy compared to methods prioritizing raw performance in previous experiments."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+            "answer": "According to 'Insight 1', prolonged training of small LLMs under strict length constraints leads to degradation of reasoning performance."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?",
+            "answer": "The summary mentions that insufficient training duration and length constraints were noted as hindrances to fully exploring the models' potential on complex tasks, and that the multilingual nature of the base model contributed to language drift and non-English outputs. However, it does not directly provide evidence linking insufficient completion lengths specifically to truncated reasoning, language drift, and unreadable content."
+          },
+          "result": false,
+          "issue": "The summary does not provide direct evidence linking insufficient completion lengths to truncated reasoning, language drift, and unreadable content."
+        },
+        {
+          "qa": {
+            "question": "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+            "answer": "In Experiment 2, the maximum completion length was reduced to 3584 tokens to help stabilize training."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+            "answer": "A 'cosine reward' was introduced in Experiment 3 to better control output length."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?",
+            "answer": "The summary states that prolonged training in Experiment 1 led to performance degradation but does not specify the number of global steps after which this degradation began."
+          },
+          "result": false,
+          "issue": "The summary does not specify the number of global steps after which performance degradation began in Experiment 1."
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+          "answer": "In Experiment 1, a 4096-token completion limit led to performance degradation, evidenced by accuracy drops and unstable completion lengths during prolonged training."
+        },
+        {
+          "question": "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+          "answer": "In Experiment 2, the maximum output length was reduced to 3584 tokens to help stabilize training. This change, along with mixing easier problems, initially boosted performance, with AMC23 accuracy reaching 80%."
+        },
+        {
+          "question": "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+          "answer": "The 'cosine reward' was introduced in Experiment 3 to better control output length, stabilizing it between 1000-3500 tokens and improving training consistency. While effective at stabilizing length, it resulted in slightly lower peak accuracy compared to methods prioritizing raw performance in previous experiments."
+        },
+        {
+          "question": "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+          "answer": "According to 'Insight 1', prolonged training of small LLMs under strict length constraints leads to degradation of reasoning performance."
+        },
+        {
+          "question": "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?",
+          "answer": "The summary mentions that insufficient training duration and length constraints were noted as hindrances to fully exploring the models' potential on complex tasks, and that the multilingual nature of the base model contributed to language drift and non-English outputs. However, it does not directly provide evidence linking insufficient completion lengths specifically to truncated reasoning, language drift, and unreadable content."
+        },
+        {
+          "question": "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+          "answer": "In Experiment 2, the maximum completion length was reduced to 3584 tokens to help stabilize training."
+        },
+        {
+          "question": "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+          "answer": "A 'cosine reward' was introduced in Experiment 3 to better control output length."
+        },
+        {
+          "question": "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?",
+          "answer": "The summary states that prolonged training in Experiment 1 led to performance degradation but does not specify the number of global steps after which this degradation began."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+              "answer": "In Experiment 1, a 4096-token completion limit led to performance degradation, evidenced by accuracy drops and unstable completion lengths during prolonged training."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+              "answer": "In Experiment 2, the maximum output length was reduced to 3584 tokens to help stabilize training. This change, along with mixing easier problems, initially boosted performance, with AMC23 accuracy reaching 80%."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+              "answer": "The 'cosine reward' was introduced in Experiment 3 to better control output length, stabilizing it between 1000-3500 tokens and improving training consistency. While effective at stabilizing length, it resulted in slightly lower peak accuracy compared to methods prioritizing raw performance in previous experiments."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+              "answer": "According to 'Insight 1', prolonged training of small LLMs under strict length constraints leads to degradation of reasoning performance."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?",
+              "answer": "The summary mentions that insufficient training duration and length constraints were noted as hindrances to fully exploring the models' potential on complex tasks, and that the multilingual nature of the base model contributed to language drift and non-English outputs. However, it does not directly provide evidence linking insufficient completion lengths specifically to truncated reasoning, language drift, and unreadable content."
+            },
+            "result": false,
+            "issue": "The answer correctly identifies that the summary does not provide direct evidence for the stated conclusion. The article mentions that the model struggled with the complexity of open-s1, often exceeding the 4096-token limit before producing a final answer, and that insufficient length constraints hinder the full potential on complex tasks. It also mentions language drift as a separate issue. However, it does not explicitly link truncated reasoning due to length constraints to language drift and unreadable content."
+          },
+          {
+            "qa": {
+              "question": "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states that the model struggled with the complexity of open-s1, often exceeding the 4096-token limit, but does not explicitly state that the model *often exceeded* this limit. The article mentions the limit was 4096 tokens."
+          },
+          {
+            "qa": {
+              "question": "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+              "answer": "In Experiment 2, the maximum completion length was reduced to 3584 tokens to help stabilize training."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+              "answer": "A 'cosine reward' was introduced in Experiment 3 to better control output length."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?",
+              "answer": "The summary states that prolonged training in Experiment 1 led to performance degradation but does not specify the number of global steps after which this degradation began."
+            },
+            "result": true,
+            "issue": ""
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Experiment 1 — impact of 4096-token limit on performance",
+          "Experiment 2 — effect of reduced length and mixed data",
+          "Experiment 3 — cosine reward for length control",
+          "Base model limitations — multilingual nature and language drift",
+          "Overall findings — trade-offs of RL for small LLMs",
+          "Future directions — addressing length constraints and language drift"
+        ]
+      },
+      "correct_count_all": 7,
+      "correct_count_acu": 3,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Experiment 1 — impact of 4096-token limit on performance",
+        "Experiment 2 — effect of reduced length and mixed data",
+        "Experiment 3 — cosine reward for length control",
+        "Base model limitations — multilingual nature and language drift",
+        "Overall findings — trade-offs of RL for small LLMs",
+        "Future directions — addressing length constraints and language drift"
+      ],
+      "sections_to_highlight_size": 6,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 5,
+      "summary": "1. SUMMARY:\nThis study investigates the efficacy of reinforcement learning (RL) for enhancing the reasoning capabilities of small LLMs, specifically a 1.5-billion-parameter model, under strict computational constraints. The researchers adapted the GRPO algorithm and curated a high-quality mathematical reasoning dataset, achieving rapid reasoning gains (e.g., AMC23 accuracy from 63% to 80%) with minimal resources ($42 cost, 7,000 samples). However, prolonged training revealed significant challenges. Experiment 1 showed performance degradation after 200 steps due to the 4096-token limit, leading to unstable accuracy, increased completion lengths, and unintelligible outputs. Experiment 2, by mixing easier problems and reducing the length limit to 3584 tokens, improved initial performance but still faced late-stage instability. Experiment 3 employed a cosine reward to control output length, stabilizing it between 1000-3500 tokens and improving consistency, though it slightly lagged in peak performance. A key limitation identified was the multilingual nature of the base model, leading to language drift and the need for explicit language constraints or extended completion lengths for complex tasks. The findings highlight a trade-off between efficiency and reasoning depth, with small, high-quality datasets effectively bootstrapping capabilities but facing over-optimization under strict constraints. Future work should address length constraints and language drift for more robust reasoning.\n\n2. KEY HIGHLIGHTS:\n*   Small LLMs can achieve significant reasoning improvements with RL and limited high-quality data, but prolonged training under strict length constraints leads to performance degradation and instability.\n*   The 4096-token limit in early experiments contributed to performance degradation, unstable rewards, and unintelligible outputs, indicating truncation issues.\n*   A cosine reward effectively stabilized output lengths, improving training consistency, but extended length limits are necessary for extremely hard tasks, especially with multilingual base models.\n*   The multilingual nature of the base model (DeepSeek-R1-Distill-Qwen-1.5B) was a limitation, causing language drift and necessitating explicit language constraints or longer completion lengths for optimal reasoning.\n*   RL-based fine-tuning offers a cost-effective and data-efficient alternative for enhancing small LLM reasoning, achieving competitive results with minimal resources, but challenges in optimization stability and length control persist.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+            "answer": "In Experiment 1, the 4096-token limit led to performance degradation after 200 steps, resulting in unstable accuracy, increased completion lengths, and unintelligible outputs."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+            "answer": "In Experiment 2, the maximum output length was reduced to help stabilize training, and this change improved initial performance but still faced late-stage instability."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+            "answer": "The 'cosine reward' was used in Experiment 3 to control output length, stabilizing it between 1000-3500 tokens and improving consistency, though it slightly lagged in peak performance compared to previous methods."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?",
+            "answer": "The summary states that the 4096-token limit in early experiments contributed to performance degradation, unstable rewards, and unintelligible outputs, indicating truncation issues. It also mentions that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+            "answer": "In Experiment 2, the maximum completion length was reduced to 3584 tokens to help stabilize training."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+            "answer": "A cosine reward was introduced in Experiment 3 to better control output length."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?",
+            "answer": "In Experiment 1, the model's performance began to degrade after 200 steps due to the complexity and length of problems."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+          "answer": "In Experiment 1, the 4096-token limit led to performance degradation after 200 steps, resulting in unstable accuracy, increased completion lengths, and unintelligible outputs."
+        },
+        {
+          "question": "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+          "answer": "In Experiment 2, the maximum output length was reduced to help stabilize training, and this change improved initial performance but still faced late-stage instability."
+        },
+        {
+          "question": "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+          "answer": "The 'cosine reward' was used in Experiment 3 to control output length, stabilizing it between 1000-3500 tokens and improving consistency, though it slightly lagged in peak performance compared to previous methods."
+        },
+        {
+          "question": "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?",
+          "answer": "The summary states that the 4096-token limit in early experiments contributed to performance degradation, unstable rewards, and unintelligible outputs, indicating truncation issues. It also mentions that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content."
+        },
+        {
+          "question": "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+          "answer": "In Experiment 2, the maximum completion length was reduced to 3584 tokens to help stabilize training."
+        },
+        {
+          "question": "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+          "answer": "A cosine reward was introduced in Experiment 3 to better control output length."
+        },
+        {
+          "question": "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?",
+          "answer": "In Experiment 1, the model's performance began to degrade after 200 steps due to the complexity and length of problems."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+              "answer": "In Experiment 1, the 4096-token limit led to performance degradation after 200 steps, resulting in unstable accuracy, increased completion lengths, and unintelligible outputs."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+              "answer": "In Experiment 2, the maximum output length was reduced to help stabilize training, and this change improved initial performance but still faced late-stage instability."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+              "answer": "The 'cosine reward' was used in Experiment 3 to control output length, stabilizing it between 1000-3500 tokens and improving consistency, though it slightly lagged in peak performance compared to previous methods."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states that \"Insight 1: Small LLMs can achieve rapid reasoning improvements with limited high-quality data within 50–100 steps, but performance degrades with prolonged training under strict length constraints.\" This directly answers the question about the relationship between length constraints, training duration, and performance degradation."
+          },
+          {
+            "qa": {
+              "question": "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?",
+              "answer": "The summary states that the 4096-token limit in early experiments contributed to performance degradation, unstable rewards, and unintelligible outputs, indicating truncation issues. It also mentions that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The article states in Section 3.5.1: 'This degradation suggests that the model struggles with the complexity of open-s1, often exceeding the 4096-token limit before producing a final answer.' The summary should have included this specific detail."
+          },
+          {
+            "qa": {
+              "question": "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+              "answer": "In Experiment 2, the maximum completion length was reduced to 3584 tokens to help stabilize training."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+              "answer": "A cosine reward was introduced in Experiment 3 to better control output length."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?",
+              "answer": "In Experiment 1, the model's performance began to degrade after 200 steps due to the complexity and length of problems."
+            },
+            "result": true,
+            "issue": ""
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Experiment 1 — impact of length limits on performance degradation",
+          "Experiment 2 — effect of mixed problem difficulty on stability",
+          "Experiment 3 — cosine reward for length control",
+          "Limitations — multilingual base model challenges",
+          "Cost Comparison — RL vs baseline training costs",
+          "Methodology — GRPO algorithm details",
+          "Overall Results — performance comparison with baselines"
+        ]
+      },
+      "correct_count_all": 7,
+      "correct_count_acu": 3,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Experiment 1 — impact of length limits on performance degradation",
+        "Experiment 2 — effect of mixed problem difficulty on stability",
+        "Experiment 3 — cosine reward for length control",
+        "Limitations — multilingual base model challenges",
+        "Cost Comparison — RL vs baseline training costs",
+        "Methodology — GRPO algorithm details",
+        "Overall Results — performance comparison with baselines"
+      ],
+      "sections_to_highlight_size": 7,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 6,
+      "summary": "1. SUMMARY:\nThis study investigates the impact of output length constraints and other factors on the stability and efficacy of training small LLMs for complex reasoning tasks using Reinforcement Learning (RL). The researchers adapted the GRPO algorithm and a curated mathematical reasoning dataset to train a 1.5-billion-parameter model (DeepSeek-R1-Distill-Qwen-1.5B) under strict resource constraints (4 NVIDIA A40 GPUs, 24 hours).\n\nExperiments revealed that small LLMs can achieve rapid reasoning gains (e.g., AMC23 accuracy from 63% to 80%) within the first 50-100 steps, especially when a mix of easy and hard problems is used and output length is managed. However, prolonged training under strict 4096-token length limits led to performance degradation, optimization instability, and language drift due to the multilingual nature of the base model. The cosine reward was found to stabilize output lengths, improving consistency, but extreme tasks still required longer completion limits. Despite these challenges, the approach demonstrated significant cost-efficiency ($42 vs. thousands for baselines) and competitive performance, highlighting RL's potential for resource-constrained reasoning enhancement.\n\n2. KEY HIGHLIGHTS:\n*   Strict output length constraints (e.g., 4096 tokens) negatively impact small LLMs trained for complex reasoning, leading to performance degradation and truncation issues after initial gains.\n*   Mixing easy and hard problems improves early reasoning performance and stabilizes behavior, but long-term stability under length constraints remains a challenge.\n*   Cosine rewards effectively control output length and improve training consistency, but may sacrifice peak accuracy on extremely difficult tasks where longer completion limits are still necessary.\n*   The multilingual nature of the base model contributes to language drift during prolonged training, necessitating explicit language controls or longer output lengths for optimal performance.\n*   RL-based fine-tuning offers a cost-effective alternative to large-scale methods for enhancing small LLM reasoning, achieving competitive results with significantly reduced data and computational resources.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+            "answer": "Prolonged training under strict 4096-token length limits led to performance degradation, optimization instability, and language drift."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+            "answer": "The 'cosine reward' was used to stabilize output lengths and improve consistency. It was effective at stabilizing completion lengths compared to previous methods, though extreme tasks still required longer completion limits for peak accuracy."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+            "answer": "Strict length constraints, when training duration is prolonged, lead to degradation of reasoning performance in small LLMs."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?",
+            "answer": "The summary states that strict output length constraints lead to performance degradation and truncation issues, and prolonged training under these limits resulted in language drift. This suggests that insufficient completion lengths can force a model to truncate reasoning, leading to these issues."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+            "answer": "The model often exceeded the 4096-token completion limit in Experiment 1."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        },
+        {
+          "qa": {
+            "question": "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+            "answer": "A 'cosine reward' was introduced in Experiment 3 to better control output length."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?",
+            "answer": "The summary states that performance degradation occurred during prolonged training under strict 4096-token length limits, but does not specify a number of global steps."
+          },
+          "result": false,
+          "issue": "Not enough information"
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+          "answer": "Prolonged training under strict 4096-token length limits led to performance degradation, optimization instability, and language drift."
+        },
+        {
+          "question": "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+          "answer": "The 'cosine reward' was used to stabilize output lengths and improve consistency. It was effective at stabilizing completion lengths compared to previous methods, though extreme tasks still required longer completion limits for peak accuracy."
+        },
+        {
+          "question": "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+          "answer": "Strict length constraints, when training duration is prolonged, lead to degradation of reasoning performance in small LLMs."
+        },
+        {
+          "question": "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?",
+          "answer": "The summary states that strict output length constraints lead to performance degradation and truncation issues, and prolonged training under these limits resulted in language drift. This suggests that insufficient completion lengths can force a model to truncate reasoning, leading to these issues."
+        },
+        {
+          "question": "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+          "answer": "The model often exceeded the 4096-token completion limit in Experiment 1."
+        },
+        {
+          "question": "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+          "answer": "A 'cosine reward' was introduced in Experiment 3 to better control output length."
+        },
+        {
+          "question": "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?",
+          "answer": "The summary states that performance degradation occurred during prolonged training under strict 4096-token length limits, but does not specify a number of global steps."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+              "answer": "Prolonged training under strict 4096-token length limits led to performance degradation, optimization instability, and language drift."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states that the maximum completion length was reduced to 3584 tokens and that this helped stabilize training and improve performance, but does not explicitly state *why* it was reduced beyond this general goal."
+          },
+          {
+            "qa": {
+              "question": "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+              "answer": "The 'cosine reward' was used to stabilize output lengths and improve consistency. It was effective at stabilizing completion lengths compared to previous methods, though extreme tasks still required longer completion limits for peak accuracy."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+              "answer": "Strict length constraints, when training duration is prolonged, lead to degradation of reasoning performance in small LLMs."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?",
+              "answer": "The summary states that strict output length constraints lead to performance degradation and truncation issues, and prolonged training under these limits resulted in language drift. This suggests that insufficient completion lengths can force a model to truncate reasoning, leading to these issues."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+              "answer": "The model often exceeded the 4096-token completion limit in Experiment 1."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states the length was reduced to 3584 tokens but does not explicitly state this was done 'to help stabilize training', only that it was done in conjunction with mixing easy/hard problems."
+          },
+          {
+            "qa": {
+              "question": "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+              "answer": "A 'cosine reward' was introduced in Experiment 3 to better control output length."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?",
+              "answer": "The summary states that performance degradation occurred during prolonged training under strict 4096-token length limits, but does not specify a number of global steps."
+            },
+            "result": false,
+            "issue": "The summary states degradation occurred 'after 200 steps' in Experiment 1."
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Experiment 2 — Rationale for length reduction",
+          "Experiment 2 — Impact of length reduction on stability",
+          "Experiment 1 — Degradation point (global steps)",
+          "Baseline Models — Cost comparison details",
+          "Methodology — Dataset curation filtering criteria",
+          "Limitations — Generalizability to other domains",
+          "Reward Models — Comparison of accuracy vs cosine reward effectiveness"
+        ]
+      },
+      "correct_count_all": 6,
+      "correct_count_acu": 2,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Experiment 2 — Rationale for length reduction",
+        "Experiment 2 — Impact of length reduction on stability",
+        "Experiment 1 — Degradation point (global steps)",
+        "Baseline Models — Cost comparison details",
+        "Methodology — Dataset curation filtering criteria",
+        "Limitations — Generalizability to other domains",
+        "Reward Models — Comparison of accuracy vs cosine reward effectiveness"
+      ],
+      "sections_to_highlight_size": 7,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 7,
+      "summary": "1. SUMMARY:\nThis study investigates the impact of output length constraints on training small LLMs for complex reasoning tasks using Reinforcement Learning (RL). Researchers adapted the GRPO algorithm and a curated mathematical reasoning dataset to train a 1.5-billion-parameter model under strict resource constraints (4 NVIDIA A40 GPUs, 24 hours). Experiments revealed that while small LLMs can achieve rapid reasoning gains (e.g., AMC23 accuracy from 63% to 80%) with limited high-quality data and within initial training steps (50-100), prolonged training under strict length limits (4096 tokens) leads to performance degradation, optimization instability, and language drift. Mixing easier problems with harder ones under reduced length constraints (3584 tokens) improved initial performance and stabilized behavior, but long-term stability remained an issue. A cosine reward effectively controlled output length, enhancing training consistency, but longer completion lengths were deemed necessary for extremely hard tasks, especially with multilingual base models. The findings highlight that RL is a cost-effective approach for small LLMs, but output length constraints and base model limitations pose significant challenges to sustained efficacy and stability in complex reasoning.\n\n2. KEY HIGHLIGHTS:\n*   Strict output length constraints (e.g., 4096 tokens) contribute to performance degradation and optimization instability in small LLMs trained with RL for reasoning, particularly after initial rapid gains.\n*   The multilingual nature of the base model (DeepSeek-R1-Distill-Qwen-1.5B) leads to language drift and non-English outputs in prolonged training, despite attempts to enforce English-only responses.\n*   A cosine reward effectively stabilizes output lengths, improving training consistency, but longer maximum completion lengths are necessary for complex reasoning tasks to avoid premature truncation.\n*   Mixing easier problems with harder ones can enhance initial reasoning performance and stabilize training behavior in small LLMs under RL, but does not fully resolve long-term stability issues related to length constraints.\n*   RL-based fine-tuning offers a cost-effective method for improving small LLMs' reasoning capabilities, achieving competitive performance with significantly less data and computational cost compared to larger models.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+            "answer": "Prolonged training under a strict 4096-token completion limit led to performance degradation, optimization instability, and language drift in the model."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+            "answer": "The maximum output length was reduced in Experiment 2 to help stabilize training. This change improved initial performance and stabilized behavior."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+            "answer": "The 'cosine reward' was used to effectively control output length, enhancing training consistency. It stabilized output lengths better than previous methods."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+            "answer": "Strict length constraints, especially during prolonged training, contribute to the degradation of reasoning performance in small LLMs."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?",
+            "answer": "The summary states that prolonged training under strict length limits leads to language drift, and that longer completion lengths are necessary to avoid premature truncation, implying that insufficient lengths cause these issues."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+            "answer": "The maximum completion length in Experiment 1 was 4096 tokens, which the model often exceeded during prolonged training."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+            "answer": "The maximum completion length was reduced to 3584 tokens in Experiment 2 to help stabilize training."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+            "answer": "A cosine reward was introduced in Experiment 3 to better control output length."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "Not enough information"
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+          "answer": "Prolonged training under a strict 4096-token completion limit led to performance degradation, optimization instability, and language drift in the model."
+        },
+        {
+          "question": "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+          "answer": "The maximum output length was reduced in Experiment 2 to help stabilize training. This change improved initial performance and stabilized behavior."
+        },
+        {
+          "question": "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+          "answer": "The 'cosine reward' was used to effectively control output length, enhancing training consistency. It stabilized output lengths better than previous methods."
+        },
+        {
+          "question": "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+          "answer": "Strict length constraints, especially during prolonged training, contribute to the degradation of reasoning performance in small LLMs."
+        },
+        {
+          "question": "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?",
+          "answer": "The summary states that prolonged training under strict length limits leads to language drift, and that longer completion lengths are necessary to avoid premature truncation, implying that insufficient lengths cause these issues."
+        },
+        {
+          "question": "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+          "answer": "The maximum completion length in Experiment 1 was 4096 tokens, which the model often exceeded during prolonged training."
+        },
+        {
+          "question": "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+          "answer": "The maximum completion length was reduced to 3584 tokens in Experiment 2 to help stabilize training."
+        },
+        {
+          "question": "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+          "answer": "A cosine reward was introduced in Experiment 3 to better control output length."
+        },
+        {
+          "question": "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?",
+          "answer": "Not enough information in summary"
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+              "answer": "Prolonged training under a strict 4096-token completion limit led to performance degradation, optimization instability, and language drift in the model."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+              "answer": "The maximum output length was reduced in Experiment 2 to help stabilize training. This change improved initial performance and stabilized behavior."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+              "answer": "The 'cosine reward' was used to effectively control output length, enhancing training consistency. It stabilized output lengths better than previous methods."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+              "answer": "Strict length constraints, especially during prolonged training, contribute to the degradation of reasoning performance in small LLMs."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?",
+              "answer": "The summary states that prolonged training under strict length limits leads to language drift, and that longer completion lengths are necessary to avoid premature truncation, implying that insufficient lengths cause these issues."
+            },
+            "result": false,
+            "issue": "The answer is an inference and not directly stated in the summary. The article states that the model often exceeded the 4096-token limit before producing a final answer, and that insufficient completion lengths forced truncation, leading to issues like language drift and unreadable content. The summary does not explicitly link these two points as evidence."
+          },
+          {
+            "qa": {
+              "question": "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+              "answer": "The maximum completion length in Experiment 1 was 4096 tokens, which the model often exceeded during prolonged training."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+              "answer": "The maximum completion length was reduced to 3584 tokens in Experiment 2 to help stabilize training."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+              "answer": "A cosine reward was introduced in Experiment 3 to better control output length."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states that after 200 steps, accuracy degrades significantly in Experiment 1. The article provides this information."
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Experiment 1 — impact of length constraints on performance degradation",
+          "Experiment 2 — effect of mixed problem difficulty on stability",
+          "Experiment 3 — cosine reward's role in length control",
+          "Limitations — multilingual base model and length constraints",
+          "Future Directions — extending training duration and language control"
+        ]
+      },
+      "correct_count_all": 7,
+      "correct_count_acu": 3,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Experiment 1 — impact of length constraints on performance degradation",
+        "Experiment 2 — effect of mixed problem difficulty on stability",
+        "Experiment 3 — cosine reward's role in length control",
+        "Limitations — multilingual base model and length constraints",
+        "Future Directions — extending training duration and language control"
+      ],
+      "sections_to_highlight_size": 5,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 8,
+      "summary": "1. SUMMARY:\nThis study investigates the impact of output length constraints on training small LLMs for complex reasoning tasks using reinforcement learning (RL). The researchers adapted the GRPO algorithm and a curated mathematical reasoning dataset to train a 1.5-billion-parameter model (DeepSeek-R1-Distill-Qwen-1.5B) under strict resource limitations (4 NVIDIA A40 GPUs, 24 hours). Experiments revealed that small LLMs can achieve rapid reasoning gains (e.g., AMC23 accuracy from 63% to 80%) within the first 50-100 training steps. However, prolonged training under a 4096-token limit led to performance degradation, unstable optimization, and language drift due to the multilingual nature of the base model. Reducing the length constraint and incorporating easier problems initially improved stability but did not fully resolve long-term issues. The cosine reward effectively controlled output length, enhancing training consistency, but extending length limits is crucial for highly complex tasks. The findings highlight a trade-off: RL is effective for small LLMs with limited data and cost, but output length constraints and base model multilingualism pose significant challenges to sustained efficacy and stability.\n\n2. KEY HIGHLIGHTS:\n*   Strict output length constraints (e.g., 4096 tokens) can lead to rapid performance degradation and instability in small LLMs after initial gains during RL training for reasoning tasks.\n*   The multilingual nature of the base model contributes to language drift and complicates efforts to enforce consistent output language under prolonged training and length constraints.\n*   A cosine reward function effectively stabilizes output lengths, improving training consistency, but may not be sufficient for extremely complex reasoning tasks that require longer generated outputs.\n*   Mixing easier problems with harder ones can initially improve reasoning stability and reduce completion lengths, but long-term stability remains a challenge under these constraints.\n*   RL-based fine-tuning offers a cost-effective and data-efficient method to enhance reasoning in small LLMs, significantly outperforming larger models in terms of cost and resource usage, despite the identified limitations.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+            "answer": "Prolonged training under a 4096-token limit led to performance degradation, unstable optimization, and language drift due to the multilingual nature of the base model."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+            "answer": "The maximum output length was reduced to help stabilize training. The initial impact of this change was improved stability, but it did not fully resolve long-term issues."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+            "answer": "The cosine reward effectively controlled output length, enhancing training consistency. However, it may not be sufficient for extremely complex reasoning tasks that require longer generated outputs."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+            "answer": "Not enough information in summary"
+          },
+          "result": false,
+          "issue": "The summary does not contain 'Insight 1' to answer this question."
+        },
+        {
+          "qa": {
+            "question": "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?",
+            "answer": "The summary states that strict output length constraints can lead to performance degradation and instability, and mentions language drift as an issue. However, it does not provide specific evidence linking insufficient completion lengths directly to truncated reasoning, language drift, and unreadable content."
+          },
+          "result": false,
+          "issue": "partial information"
+        },
+        {
+          "qa": {
+            "question": "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+            "answer": "The model was trained under a 4096-token limit in Experiment 1."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+            "answer": "The summary does not specify the exact value to which the maximum completion length was reduced in Experiment 2."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        },
+        {
+          "qa": {
+            "question": "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+            "answer": "A 'cosine reward' was introduced in Experiment 3 to better control output length."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?",
+            "answer": "The summary states that small LLMs can achieve rapid reasoning gains within the first 50-100 training steps, and prolonged training under a 4096-token limit led to performance degradation. However, it does not specify the exact number of global steps after which performance began to degrade in Experiment 1."
+          },
+          "result": false,
+          "issue": "Not enough information in summary"
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+          "answer": "Prolonged training under a 4096-token limit led to performance degradation, unstable optimization, and language drift due to the multilingual nature of the base model."
+        },
+        {
+          "question": "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+          "answer": "The maximum output length was reduced to help stabilize training. The initial impact of this change was improved stability, but it did not fully resolve long-term issues."
+        },
+        {
+          "question": "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+          "answer": "The cosine reward effectively controlled output length, enhancing training consistency. However, it may not be sufficient for extremely complex reasoning tasks that require longer generated outputs."
+        },
+        {
+          "question": "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?",
+          "answer": "The summary states that strict output length constraints can lead to performance degradation and instability, and mentions language drift as an issue. However, it does not provide specific evidence linking insufficient completion lengths directly to truncated reasoning, language drift, and unreadable content."
+        },
+        {
+          "question": "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+          "answer": "The model was trained under a 4096-token limit in Experiment 1."
+        },
+        {
+          "question": "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+          "answer": "The summary does not specify the exact value to which the maximum completion length was reduced in Experiment 2."
+        },
+        {
+          "question": "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+          "answer": "A 'cosine reward' was introduced in Experiment 3 to better control output length."
+        },
+        {
+          "question": "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?",
+          "answer": "The summary states that small LLMs can achieve rapid reasoning gains within the first 50-100 training steps, and prolonged training under a 4096-token limit led to performance degradation. However, it does not specify the exact number of global steps after which performance began to degrade in Experiment 1."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+              "answer": "Prolonged training under a 4096-token limit led to performance degradation, unstable optimization, and language drift due to the multilingual nature of the base model."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+              "answer": "The maximum output length was reduced to help stabilize training. The initial impact of this change was improved stability, but it did not fully resolve long-term issues."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+              "answer": "The cosine reward effectively controlled output length, enhancing training consistency. However, it may not be sufficient for extremely complex reasoning tasks that require longer generated outputs."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The answer states 'Not enough information in summary' but the summary does contain information about Insight 1. The summary states: 'Small LLMs can achieve rapid reasoning improvements with limited high-quality data within 50–100 steps, but performance degrades with prolonged training under strict length constraints.'"
+          },
+          {
+            "qa": {
+              "question": "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?",
+              "answer": "The summary states that strict output length constraints can lead to performance degradation and instability, and mentions language drift as an issue. However, it does not provide specific evidence linking insufficient completion lengths directly to truncated reasoning, language drift, and unreadable content."
+            },
+            "result": false,
+            "issue": "The summary does provide evidence. Experiment 1 states: 'This degradation suggests that the model struggles with the complexity of open-s1, often exceeding the 4096-token limit before producing a final answer. The initial length reduction reflects adaptation to the format reward, but the subsequent increase and language drift indicate reward misalignment.' This directly links exceeding the length limit to language drift."
+          },
+          {
+            "qa": {
+              "question": "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+              "answer": "The model was trained under a 4096-token limit in Experiment 1."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+              "answer": "The summary does not specify the exact value to which the maximum completion length was reduced in Experiment 2."
+            },
+            "result": false,
+            "issue": "The summary does not specify the exact value, but the article does. Experiment 2 states: 'The maximum completion length is reduced to 3584 tokens'."
+          },
+          {
+            "qa": {
+              "question": "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+              "answer": "A 'cosine reward' was introduced in Experiment 3 to better control output length."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?",
+              "answer": "The summary states that small LLMs can achieve rapid reasoning gains within the first 50-100 training steps, and prolonged training under a 4096-token limit led to performance degradation. However, it does not specify the exact number of global steps after which performance began to degrade in Experiment 1."
+            },
+            "result": false,
+            "issue": "The summary does contain this information. Experiment 1 states: 'However, after 200 steps, accuracy degrades significantly...'"
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Experiment 1 — degradation after 200 steps",
+          "Experiment 2 — reduced length constraint value",
+          "Insight 1 — relationship between constraints, duration, and degradation",
+          "Evidence for length constraints causing language drift",
+          "Methodology — specific details on reward functions",
+          "Limitations — impact of multilingual base model"
+        ]
+      },
+      "correct_count_all": 5,
+      "correct_count_acu": 2,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Experiment 1 — degradation after 200 steps",
+        "Experiment 2 — reduced length constraint value",
+        "Insight 1 — relationship between constraints, duration, and degradation",
+        "Evidence for length constraints causing language drift",
+        "Methodology — specific details on reward functions",
+        "Limitations — impact of multilingual base model"
+      ],
+      "sections_to_highlight_size": 6,
+      "qa_failures_present": true
+    },
+    {
+      "iteration_number": 9,
+      "summary": "1. SUMMARY:\nThis study investigates the impact of output length constraints on the stability and efficacy of training small LLMs for complex reasoning tasks using Reinforcement Learning (RL). The researchers adapted the GRPO algorithm and curated a high-quality mathematical reasoning dataset, training a 1.5B parameter model (DeepSeek-R1-Distill-Qwen-1.5B) under strict computational limits (4 NVIDIA A40 GPUs, 24 hours). They found that small LLMs can achieve rapid reasoning gains (e.g., AMC23 accuracy from 63% to 80%) with limited data and cost ($42). However, prolonged training under strict length constraints (4096 tokens, later reduced to 3584) led to performance degradation, instability, and language drift, particularly after 200 steps. Experiment 1 showed degradation due to exceeding length limits. Experiment 2, mixing easy and hard problems with reduced length, improved initial performance but still faced late-stage instability. Experiment 3 utilized a cosine reward to control length, stabilizing outputs but sacrificing peak accuracy, indicating that for very hard tasks, extended length limits are crucial, especially with multilingual base models. Future directions include extending training duration and addressing language drift.\n\n2. KEY HIGHLIGHTS:\n*   Small LLMs can achieve significant reasoning improvements with RL and limited data/cost, but prolonged training under strict output length constraints (e.g., 4096 tokens) leads to performance degradation and instability.\n*   Mixing easier problems with harder ones can improve initial performance and stabilize reasoning behavior in small LLMs, but long-term stability remains a challenge.\n*   Cosine rewards effectively control output length, enhancing training consistency, but may require longer completion limits for extremely complex tasks and multilingual base models to prevent issues like language drift.\n*   The multilingual nature of the base model (DeepSeek-R1-Distill-Qwen-1.5B) contributes to language drift and complicates monolingual optimization, especially after extended training.\n*   The study demonstrates a cost-effective approach ($42) for enhancing small LLM reasoning, significantly outperforming larger models in terms of resource utilization.",
+      "qa_evaluations": [
+        {
+          "qa": {
+            "question": "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+            "answer": "Prolonged training under the 4096-token completion limit in Experiment 1 led to performance degradation and instability, particularly after 200 steps, with the model often exceeding this length limit."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+            "answer": "In Experiment 2, the maximum output length was reduced to 3584 tokens to help stabilize training. This change improved initial performance and stabilized reasoning behavior by mixing easy and hard problems, but the model still faced late-stage instability."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+            "answer": "The 'cosine reward' was used in Experiment 3 to control output length, which effectively stabilized outputs and enhanced training consistency. However, it sacrificed peak accuracy, indicating that for very hard tasks, extended length limits are crucial."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+            "answer": "According to 'Insight 1', prolonged training under strict length constraints leads to performance degradation and instability in small LLMs."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?",
+            "answer": "The summary states that prolonged training under strict length constraints led to performance degradation, instability, and language drift. Experiment 3's use of cosine rewards stabilized outputs but sacrificed peak accuracy, suggesting that insufficient completion lengths can force truncation and lead to issues like language drift, especially with multilingual base models."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+            "answer": "In Experiment 1, the maximum completion length was 4096 tokens, which the model often exceeded."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+            "answer": "In Experiment 2, the maximum completion length was reduced to 3584 tokens."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+            "answer": "A 'cosine reward' was introduced in Experiment 3 to better control output length."
+          },
+          "result": true,
+          "issue": null
+        },
+        {
+          "qa": {
+            "question": "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?",
+            "answer": "In Experiment 1, the model's performance began to degrade after 200 steps due to the complexity and length of problems."
+          },
+          "result": true,
+          "issue": null
+        }
+      ],
+      "qa_pairs": [
+        {
+          "question": "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+          "answer": "Prolonged training under the 4096-token completion limit in Experiment 1 led to performance degradation and instability, particularly after 200 steps, with the model often exceeding this length limit."
+        },
+        {
+          "question": "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+          "answer": "In Experiment 2, the maximum output length was reduced to 3584 tokens to help stabilize training. This change improved initial performance and stabilized reasoning behavior by mixing easy and hard problems, but the model still faced late-stage instability."
+        },
+        {
+          "question": "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+          "answer": "The 'cosine reward' was used in Experiment 3 to control output length, which effectively stabilized outputs and enhanced training consistency. However, it sacrificed peak accuracy, indicating that for very hard tasks, extended length limits are crucial."
+        },
+        {
+          "question": "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+          "answer": "According to 'Insight 1', prolonged training under strict length constraints leads to performance degradation and instability in small LLMs."
+        },
+        {
+          "question": "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?",
+          "answer": "The summary states that prolonged training under strict length constraints led to performance degradation, instability, and language drift. Experiment 3's use of cosine rewards stabilized outputs but sacrificed peak accuracy, suggesting that insufficient completion lengths can force truncation and lead to issues like language drift, especially with multilingual base models."
+        },
+        {
+          "question": "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+          "answer": "In Experiment 1, the maximum completion length was 4096 tokens, which the model often exceeded."
+        },
+        {
+          "question": "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+          "answer": "In Experiment 2, the maximum completion length was reduced to 3584 tokens."
+        },
+        {
+          "question": "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+          "answer": "A 'cosine reward' was introduced in Experiment 3 to better control output length."
+        },
+        {
+          "question": "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?",
+          "answer": "In Experiment 1, the model's performance began to degrade after 200 steps due to the complexity and length of problems."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+              "answer": "Prolonged training under the 4096-token completion limit in Experiment 1 led to performance degradation and instability, particularly after 200 steps, with the model often exceeding this length limit."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+              "answer": "In Experiment 2, the maximum output length was reduced to 3584 tokens to help stabilize training. This change improved initial performance and stabilized reasoning behavior by mixing easy and hard problems, but the model still faced late-stage instability."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+              "answer": "The 'cosine reward' was used in Experiment 3 to control output length, which effectively stabilized outputs and enhanced training consistency. However, it sacrificed peak accuracy, indicating that for very hard tasks, extended length limits are crucial."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+              "answer": "According to 'Insight 1', prolonged training under strict length constraints leads to performance degradation and instability in small LLMs."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?",
+              "answer": "The summary states that prolonged training under strict length constraints led to performance degradation, instability, and language drift. Experiment 3's use of cosine rewards stabilized outputs but sacrificed peak accuracy, suggesting that insufficient completion lengths can force truncation and lead to issues like language drift, especially with multilingual base models."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+              "answer": "In Experiment 1, the maximum completion length was 4096 tokens, which the model often exceeded."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+              "answer": "In Experiment 2, the maximum completion length was reduced to 3584 tokens."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+              "answer": "A 'cosine reward' was introduced in Experiment 3 to better control output length."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?",
+              "answer": "In Experiment 1, the model's performance began to degrade after 200 steps due to the complexity and length of problems."
+            },
+            "result": true,
+            "issue": ""
+          }
+        ],
+        "judgment": true,
+        "sections_to_highlight": [
+          "Experiment 1 — length constraints impact",
+          "Experiment 2 — mixed difficulty stabilization",
+          "Experiment 3 — cosine reward effectiveness",
+          "Baseline Comparison — cost and data efficiency",
+          "Limitations — multilingual drift and generalization",
+          "Future Directions — training duration and language handling"
+        ]
+      },
+      "correct_count_all": 9,
+      "correct_count_acu": 4,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Experiment 1 — length constraints impact",
+        "Experiment 2 — mixed difficulty stabilization",
+        "Experiment 3 — cosine reward effectiveness",
+        "Baseline Comparison — cost and data efficiency",
+        "Limitations — multilingual drift and generalization",
+        "Future Directions — training duration and language handling"
+      ],
+      "sections_to_highlight_size": 6,
+      "qa_failures_present": false
+    }
+  ],
+  "final_summary": "1. SUMMARY:\nThis study investigates the impact of output length constraints on the stability and efficacy of training small LLMs for complex reasoning tasks using Reinforcement Learning (RL). The researchers adapted the GRPO algorithm and curated a high-quality mathematical reasoning dataset, training a 1.5B parameter model (DeepSeek-R1-Distill-Qwen-1.5B) under strict computational limits (4 NVIDIA A40 GPUs, 24 hours). They found that small LLMs can achieve rapid reasoning gains (e.g., AMC23 accuracy from 63% to 80%) with limited data and cost ($42). However, prolonged training under strict length constraints (4096 tokens, later reduced to 3584) led to performance degradation, instability, and language drift, particularly after 200 steps. Experiment 1 showed degradation due to exceeding length limits. Experiment 2, mixing easy and hard problems with reduced length, improved initial performance but still faced late-stage instability. Experiment 3 utilized a cosine reward to control length, stabilizing outputs but sacrificing peak accuracy, indicating that for very hard tasks, extended length limits are crucial, especially with multilingual base models. Future directions include extending training duration and addressing language drift.\n\n2. KEY HIGHLIGHTS:\n*   Small LLMs can achieve significant reasoning improvements with RL and limited data/cost, but prolonged training under strict output length constraints (e.g., 4096 tokens) leads to performance degradation and instability.\n*   Mixing easier problems with harder ones can improve initial performance and stabilize reasoning behavior in small LLMs, but long-term stability remains a challenge.\n*   Cosine rewards effectively control output length, enhancing training consistency, but may require longer completion limits for extremely complex tasks and multilingual base models to prevent issues like language drift.\n*   The multilingual nature of the base model (DeepSeek-R1-Distill-Qwen-1.5B) contributes to language drift and complicates monolingual optimization, especially after extended training.\n*   The study demonstrates a cost-effective approach ($42) for enhancing small LLM reasoning, significantly outperforming larger models in terms of resource utilization.",
+  "total_iterations": 9,
+  "status": "completed",
+  "questions": [
+    "How did the 4096-token completion limit in Experiment 1 affect the model's stability and output quality during prolonged training?",
+    "In Experiment 2, why was the maximum output length reduced, and what was the initial impact of this change on the model's performance and reasoning behavior?",
+    "Explain the function of the 'cosine reward' used in Experiment 3 and evaluate its effectiveness at stabilizing completion lengths compared to the methods in previous experiments.",
+    "According to 'Insight 1', what is the relationship between strict length constraints, the duration of training, and the degradation of reasoning performance in small LLMs?",
+    "What evidence from the experiments supports the conclusion that insufficient completion lengths can force a model to truncate reasoning, leading to issues like language drift and unreadable content?"
+  ],
+  "acu_questions": [
+    "ACU. In Experiment 1, what was the maximum completion length in tokens that the model often exceeded?",
+    "ACU. To what value was the maximum completion length reduced in Experiment 2 to help stabilize training?",
+    "ACU. What specific type of reward was introduced in Experiment 3 to better control output length?",
+    "ACU. After how many global steps did the model's performance begin to degrade in Experiment 1 due to the complexity and length of problems?"
+  ]
+}

@@ -1,0 +1,1908 @@
+{
+  "query": "The practical challenges and solutions for stabilizing dot-product attention.",
+  "max_iterations": 15,
+  "iterations": [
+    {
+      "iteration_number": 1,
+      "summary": "1. SUMMARY:\nThis paper introduces the Transformer, a novel architecture that dispenses with recurrence and convolutions entirely, relying solely on attention mechanisms. The core of this model is \"Scaled Dot-Product Attention,\" which addresses potential issues with large dot products by scaling them with the inverse square root of the key dimension (√dk). This scaling prevents the softmax function from entering regions with extremely small gradients, thereby stabilizing the attention mechanism, particularly for larger key dimensions. The Transformer further enhances stability and performance through \"Multi-Head Attention,\" which projects queries, keys, and values into multiple lower-dimensional subspaces and performs attention in parallel. This allows the model to jointly attend to information from different representation subspaces, mitigating the averaging effect that can occur with single-head attention. The authors demonstrate that this attention-based approach leads to superior quality, improved parallelizability, and significantly reduced training times for sequence transduction tasks like machine translation, outperforming previous state-of-the-art models.\n\n2. KEY HIGHLIGHTS:\n*   The Transformer model stabilizes dot-product attention by scaling dot products with 1/√dk to counteract large magnitudes that can lead to vanishing gradients in the softmax.\n*   Multi-Head Attention, by performing attention across multiple projected subspaces, enhances the model's ability to capture diverse dependencies and improves stability.\n*   The Transformer's reliance on attention, rather than recurrence or convolutions, allows for greater parallelization and faster training.\n*   The model achieves state-of-the-art results in machine translation tasks, demonstrating the effectiveness and stability of its attention-based design.",
+      "qa_pairs": [
+        {
+          "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+          "answer": "When the dimensionality of the keys (dk) is large, the dot products can grow large in magnitude, which can lead to the softmax function entering regions with extremely small gradients, thereby stabilizing the attention mechanism."
+        },
+        {
+          "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+          "answer": "Scaled Dot-Product Attention addresses potential issues with large dot products by scaling them with the inverse square root of the key dimension (√dk). This scaling prevents the softmax function from entering regions with extremely small gradients, thereby stabilizing the attention mechanism."
+        },
+        {
+          "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+          "answer": "Multi-Head Attention is mentioned as an attention mechanism that performs better than unscaled dot-product attention for large key dimensions."
+        },
+        {
+          "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+          "answer": "Multi-Head Attention allows the model to jointly attend to information from different representation subspaces, mitigating the averaging effect that can occur with single-head attention, which indirectly contributes to more stable attention calculations."
+        },
+        {
+          "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+          "answer": "The dot products are scaled with the inverse square root of the key dimension (1/√dk) before the softmax function to stabilize attention."
+        },
+        {
+          "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+          "answer": "Not enough information in summary"
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+              "answer": "When the dimensionality of the keys (dk) is large, the dot products can grow large in magnitude, which can lead to the softmax function entering regions with extremely small gradients, thereby stabilizing the attention mechanism."
+            },
+            "result": false,
+            "issue": "The answer incorrectly states that large dot products stabilize the attention mechanism. The paper states that large dot products push the softmax into regions of small gradients, which is problematic."
+          },
+          {
+            "qa": {
+              "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+              "answer": "Scaled Dot-Product Attention addresses potential issues with large dot products by scaling them with the inverse square root of the key dimension (√dk). This scaling prevents the softmax function from entering regions with extremely small gradients, thereby stabilizing the attention mechanism."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not contain this information, but the article does. The footnote states that if the components of q and k are independent random variables with mean 0 and variance 1, then their dot product has mean 0 and variance dk. This implies that for large dk, the variance of the dot product is large, leading to large magnitudes."
+          },
+          {
+            "qa": {
+              "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+              "answer": "Multi-Head Attention is mentioned as an attention mechanism that performs better than unscaled dot-product attention for large key dimensions."
+            },
+            "result": false,
+            "issue": "The answer is incomplete. The paper mentions additive attention as an alternative that performs better than unscaled dot-product attention for large key dimensions. Multi-head attention is a different concept that builds upon scaled dot-product attention."
+          },
+          {
+            "qa": {
+              "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+              "answer": "Multi-Head Attention allows the model to jointly attend to information from different representation subspaces, mitigating the averaging effect that can occur with single-head attention, which indirectly contributes to more stable attention calculations."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+              "answer": "The dot products are scaled with the inverse square root of the key dimension (1/√dk) before the softmax function to stabilize attention."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not contain this information, but the article does. The footnote states that if the components of q and k are independent random variables with mean 0 and variance 1, then their dot product has variance dk."
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Scaled Dot-Product Attention — scaling factor and gradient stability",
+          "Multi-Head Attention — subspace projection and averaging effect",
+          "Comparison of attention to RNNs and CNNs — path length and complexity",
+          "Statistical properties of dot products — query/key vector assumptions and variance",
+          "Transformer architecture — encoder-decoder structure and self-attention applications"
+        ]
+      },
+      "correct_count_all": 3,
+      "correct_count_acu": 1,
+      "num_of_questions": 5,
+      "sections_to_highlight": [],
+      "sections_to_highlight_size": 0
+    },
+    {
+      "iteration_number": 2,
+      "summary": "1. SUMMARY:\nThe Transformer model, by eschewing recurrence and convolutions, relies entirely on attention mechanisms for sequence transduction. A key innovation is \"Scaled Dot-Product Attention,\" which calculates attention weights via dot products between queries and keys, scaled by the square root of the key dimension ($ \\sqrt{d_k} $). This scaling is crucial to prevent large dot products from pushing the softmax function into regions with vanishing gradients, a problem observed with standard dot-product attention for larger $ d_k $. The model further utilizes \"Multi-Head Attention,\" where queries, keys, and values are projected into multiple lower-dimensional subspaces. This allows the model to jointly attend to information from different representation subspaces at different positions, mitigating the averaging inhibition that single attention heads can cause. Compared to RNNs and CNNs, self-attention offers a constant number of sequential operations, enabling greater parallelization and shorter path lengths for learning long-range dependencies. The Transformer's encoder and decoder stacks leverage self-attention to relate positions within the same sequence, with the decoder employing masked self-attention to maintain auto-regressive properties.\n\n2. KEY HIGHLIGHTS:\n*   Scaled Dot-Product Attention uses a scaling factor of $ \\frac{1}{\\sqrt{d_k}} $ to stabilize gradients by preventing large dot products from saturating the softmax function.\n*   Multi-Head Attention projects queries, keys, and values into multiple subspaces, allowing the model to attend to different representation subspaces simultaneously and avoid averaging inhibition.\n*   Self-attention layers in the Transformer have a constant number of sequential operations and shorter path lengths compared to RNNs and CNNs, improving parallelization and learning of long-range dependencies.\n*   The Transformer architecture employs self-attention within the encoder and decoder (with masking in the latter) to capture dependencies between sequence positions.",
+      "qa_pairs": [
+        {
+          "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+          "answer": "The paper identifies that for larger dk, standard dot-product attention can lead to large dot products which push the softmax function into regions with vanishing gradients."
+        },
+        {
+          "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+          "answer": "Scaled Dot-Product Attention counteracts vanishing gradients by scaling the dot products by the square root of the key dimension ($ \\sqrt{d_k} $) before applying the softmax function."
+        },
+        {
+          "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+          "answer": "Multi-Head Attention projects queries, keys, and values into multiple lower-dimensional subspaces, which allows the model to jointly attend to information from different representation subspaces at different positions, mitigating the averaging inhibition that single attention heads can cause."
+        },
+        {
+          "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+          "answer": "The dot products are scaled by $ \\frac{1}{\\sqrt{d_k}} $ before the softmax function to stabilize attention."
+        },
+        {
+          "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+          "answer": "Not enough information in summary"
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+              "answer": "The paper identifies that for larger dk, standard dot-product attention can lead to large dot products which push the softmax function into regions with vanishing gradients."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+              "answer": "Scaled Dot-Product Attention counteracts vanishing gradients by scaling the dot products by the square root of the key dimension ($ \\sqrt{d_k} $) before applying the softmax function."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not contain the information about the statistical assumption of query and key vectors."
+          },
+          {
+            "qa": {
+              "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not mention any other attention mechanism as an alternative to scaled dot-product attention."
+          },
+          {
+            "qa": {
+              "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+              "answer": "Multi-Head Attention projects queries, keys, and values into multiple lower-dimensional subspaces, which allows the model to jointly attend to information from different representation subspaces at different positions, mitigating the averaging inhibition that single attention heads can cause."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+              "answer": "The dot products are scaled by $ \\frac{1}{\\sqrt{d_k}} $ before the softmax function to stabilize attention."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not contain information about the hypothesized variance of the dot product of query and key vectors."
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Scaled Dot-Product Attention — explanation of scaling factor and its purpose",
+          "Multi-Head Attention — benefits of subspace projection",
+          "Comparison of attention to RNNs/CNNs — parallelization and path length",
+          "Transformer architecture — encoder/decoder self-attention",
+          "Statistical properties of dot products — relation to softmax saturation",
+          "Alternative attention mechanisms — comparison to unscaled dot-product",
+          "Positional Encoding — sinusoidal vs. learned embeddings"
+        ]
+      },
+      "correct_count_all": 4,
+      "correct_count_acu": 1,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Multi-Head Attention — subspace projection and averaging effect",
+        "Comparison of attention to RNNs and CNNs — path length and complexity",
+        "Scaled Dot-Product Attention — scaling factor and gradient stability",
+        "Transformer architecture — encoder-decoder structure and self-attention applications",
+        "Statistical properties of dot products — query/key vector assumptions and variance"
+      ],
+      "sections_to_highlight_size": 5
+    },
+    {
+      "iteration_number": 3,
+      "summary": "1. SUMMARY:\nThe Transformer model, as presented in \"Attention Is All You Need,\" introduces a novel architecture that eschews recurrence and convolutions, relying solely on attention mechanisms. A key component is Scaled Dot-Product Attention, which computes attention weights by taking the dot product of queries and keys, scaling it by the inverse square root of the key dimension ($ \\sqrt{d_k} $), and applying a softmax. This scaling is crucial to counteract the issue of large dot products pushing the softmax into regions with extremely small gradients, a problem observed with unscaled dot-product attention when $ d_k $ is large. The model also employs Multi-Head Attention, which projects queries, keys, and values into multiple lower-dimensional subspaces, allowing the model to jointly attend to information from different representation subspaces. This is beneficial as a single attention head's averaging can inhibit attending to diverse information. Compared to RNNs and CNNs, self-attention offers constant path lengths for dependencies and greater parallelization, though it can be computationally more expensive for very long sequences. The paper also briefly touches on positional encodings, finding sinusoidal and learned embeddings to yield similar results.\n\n2. KEY HIGHLIGHTS:\n*   Scaled Dot-Product Attention uses a $ \\frac{1}{\\sqrt{d_k}} $ scaling factor to prevent softmax saturation and gradient issues with large dot products.\n*   Multi-Head Attention projects queries, keys, and values into multiple subspaces, enabling the model to attend to different representation subspaces simultaneously and avoid the averaging limitations of a single head.\n*   The Transformer's reliance on self-attention provides constant path lengths for dependencies and superior parallelization compared to RNNs and CNNs.\n*   Sinusoidal and learned positional encodings were found to produce nearly identical results in the Transformer architecture.",
+      "qa_pairs": [
+        {
+          "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+          "answer": "When the dimensionality of the keys (dk) is large, the dot products can grow large in magnitude, pushing the softmax into regions with extremely small gradients."
+        },
+        {
+          "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+          "answer": "Scaled Dot-Product Attention scales the dot product of queries and keys by the inverse square root of the key dimension ($ \\sqrt{d_k} $) before applying the softmax function. This scaling counteracts the issue of large dot products pushing the softmax into regions with extremely small gradients."
+        },
+        {
+          "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+          "answer": "Multi-Head Attention projects queries, keys, and values into multiple lower-dimensional subspaces. This allows the model to jointly attend to information from different representation subspaces, which is beneficial as a single attention head's averaging can inhibit attending to diverse information. The summary does not directly link this to more stable attention calculations but rather to attending to diverse information."
+        },
+        {
+          "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+          "answer": "The dot products are scaled by the inverse square root of the key dimension ($ \\frac{1}{\\sqrt{d_k}} $) before the softmax function."
+        },
+        {
+          "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+          "answer": "Not enough information in summary"
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+              "answer": "When the dimensionality of the keys (dk) is large, the dot products can grow large in magnitude, pushing the softmax into regions with extremely small gradients."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+              "answer": "Scaled Dot-Product Attention scales the dot product of queries and keys by the inverse square root of the key dimension ($ \\sqrt{d_k} $) before applying the softmax function. This scaling counteracts the issue of large dot products pushing the softmax into regions with extremely small gradients."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states 'Not enough information in summary' but the article's footnote (4) does provide this information. The footnote states: 'assume that the components of q and k are independent random variables with mean 0 and variance 1. Then their dot product, q · k = (cid:80)dk i=1 qiki, has mean 0 and variance dk.'"
+          },
+          {
+            "qa": {
+              "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states 'Not enough information in summary' but the article mentions 'additive attention' as an alternative. The article states: 'The two most commonly used attention functions are additive attention [2], and dot-product (multiplicative) attention. ... While for small values of dk the two mechanisms perform similarly, additive attention outperforms dot product attention without scaling for larger values of dk [3].'"
+          },
+          {
+            "qa": {
+              "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+              "answer": "Multi-Head Attention projects queries, keys, and values into multiple lower-dimensional subspaces. This allows the model to jointly attend to information from different representation subspaces, which is beneficial as a single attention head's averaging can inhibit attending to diverse information. The summary does not directly link this to more stable attention calculations but rather to attending to diverse information."
+            },
+            "result": false,
+            "issue": "The answer correctly describes the function of Multi-Head Attention but fails to address the 'indirectly contribute to more stable attention calculations' aspect of the question. The article implies stability by reducing the dimensionality of each head, making calculations more manageable and potentially less prone to the issues described for large dk values in Scaled Dot-Product Attention."
+          },
+          {
+            "qa": {
+              "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+              "answer": "The dot products are scaled by the inverse square root of the key dimension ($ \\frac{1}{\\sqrt{d_k}} $) before the softmax function."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states 'Not enough information in summary' but the article's footnote (4) does provide this information. The footnote states: 'assume that the components of q and k are independent random variables with mean 0 and variance 1. Then their dot product, q · k = (cid:80)dk i=1 qiki, has mean 0 and variance dk.'"
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Scaled Dot-Product Attention — explanation of scaling factor and purpose",
+          "Multi-Head Attention — benefits of subspace projection and stability",
+          "Statistical properties of dot products — query/key vector assumptions and variance",
+          "Alternative attention mechanisms — comparison to additive attention",
+          "Positional Encoding — sinusoidal vs. learned embeddings",
+          "Transformer architecture — encoder-decoder self-attention and parallelization"
+        ]
+      },
+      "correct_count_all": 3,
+      "correct_count_acu": 1,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Positional Encoding — sinusoidal vs. learned embeddings",
+        "Transformer architecture — encoder/decoder self-attention",
+        "Multi-Head Attention — subspace projection and averaging effect",
+        "Alternative attention mechanisms — comparison to unscaled dot-product",
+        "Comparison of attention to RNNs and CNNs — path length and complexity",
+        "Scaled Dot-Product Attention — scaling factor and gradient stability",
+        "Scaled Dot-Product Attention — explanation of scaling factor and its purpose",
+        "Multi-Head Attention — benefits of subspace projection",
+        "Transformer architecture — encoder-decoder structure and self-attention applications",
+        "Statistical properties of dot products — query/key vector assumptions and variance",
+        "Comparison of attention to RNNs/CNNs — parallelization and path length",
+        "Statistical properties of dot products — relation to softmax saturation"
+      ],
+      "sections_to_highlight_size": 12
+    },
+    {
+      "iteration_number": 4,
+      "summary": "1. SUMMARY:\nThe Transformer model, as detailed in \"Attention Is All You Need,\" leverages scaled dot-product attention as its core mechanism, entirely replacing recurrent and convolutional layers for sequence transduction. A key practical challenge addressed is the potential for large dot products between queries and keys in high-dimensional spaces, which can lead to vanishing gradients when passed through the softmax function. To counteract this, the paper introduces a scaling factor of 1/√dk in \"Scaled Dot-Product Attention.\" This scaling stabilizes the gradients, allowing the model to learn more effectively. Multi-Head Attention further enhances this by projecting queries, keys, and values into multiple lower-dimensional subspaces, enabling the model to jointly attend to information from different representation subspaces at different positions and preventing the negative effects of averaging. The paper contrasts this approach with additive attention, noting dot-product attention's practical efficiency. Comparisons with RNNs and CNNs highlight attention's advantage in parallelization and constant path length for dependencies, crucial for learning long-range relationships. The authors also found positional encoding, specifically sinusoidal, to be effective, yielding similar results to learned embeddings.\n\n2. KEY HIGHLIGHTS:\n*   Scaled Dot-Product Attention uses a 1/√dk scaling factor to prevent softmax saturation and stabilize gradients when dot products become large.\n*   Multi-Head Attention projects queries, keys, and values into multiple subspaces, improving the model's ability to attend to diverse information and mitigating averaging issues.\n*   The Transformer architecture relies solely on attention, offering significant parallelization and constant path lengths for dependencies, outperforming RNNs and CNNs in these aspects.\n*   Sinusoidal positional encodings were found to be as effective as learned embeddings for injecting sequence order information.",
+      "qa_pairs": [
+        {
+          "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+          "answer": "The paper identifies that large dot products between queries and keys in high-dimensional spaces can lead to vanishing gradients when passed through the softmax function."
+        },
+        {
+          "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+          "answer": "The proposed \"Scaled Dot-Product Attention\" mechanism uses a scaling factor of 1/√dk to stabilize the gradients, which counteracts the problem of vanishing gradients in the softmax function."
+        },
+        {
+          "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+          "answer": "The paper mentions additive attention as a common alternative that performs better than unscaled dot-product attention for large key dimensions."
+        },
+        {
+          "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+          "answer": "The reduction of key/value dimensions in each head of Multi-Head Attention enables the model to jointly attend to information from different representation subspaces at different positions, preventing the negative effects of averaging and indirectly contributing to more stable attention calculations."
+        },
+        {
+          "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+          "answer": "The dot products are scaled by a factor of 1/√dk before the softmax function to stabilize attention."
+        },
+        {
+          "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+          "answer": "Not enough information in summary"
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+              "answer": "The paper identifies that large dot products between queries and keys in high-dimensional spaces can lead to vanishing gradients when passed through the softmax function."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+              "answer": "The proposed \"Scaled Dot-Product Attention\" mechanism uses a scaling factor of 1/√dk to stabilize the gradients, which counteracts the problem of vanishing gradients in the softmax function."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states 'Not enough information in summary' but the article footnote provides the assumption: 'assume that the components of q and k are independent random variables with mean 0 and variance 1.'"
+          },
+          {
+            "qa": {
+              "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+              "answer": "The paper mentions additive attention as a common alternative that performs better than unscaled dot-product attention for large key dimensions."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+              "answer": "The reduction of key/value dimensions in each head of Multi-Head Attention enables the model to jointly attend to information from different representation subspaces at different positions, preventing the negative effects of averaging and indirectly contributing to more stable attention calculations."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+              "answer": "The dot products are scaled by a factor of 1/√dk before the softmax function to stabilize attention."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states 'Not enough information in summary' but the article footnote provides the variance: 'variance dk.'"
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Scaled Dot-Product Attention — scaling factor and gradient stability",
+          "Multi-Head Attention — benefits of subspace projection",
+          "Positional Encoding — sinusoidal vs. learned embeddings",
+          "Comparison of attention to RNNs and CNNs — path length and complexity",
+          "Statistical properties of dot products — query/key vector assumptions and variance"
+        ]
+      },
+      "correct_count_all": 5,
+      "correct_count_acu": 1,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Positional Encoding — sinusoidal vs. learned embeddings",
+        "Transformer architecture — encoder/decoder self-attention",
+        "Multi-Head Attention — subspace projection and averaging effect",
+        "Alternative attention mechanisms — comparison to unscaled dot-product",
+        "Comparison of attention to RNNs and CNNs — path length and complexity",
+        "Scaled Dot-Product Attention — explanation of scaling factor and purpose",
+        "Multi-Head Attention — benefits of subspace projection and stability",
+        "Alternative attention mechanisms — comparison to additive attention",
+        "Scaled Dot-Product Attention — scaling factor and gradient stability",
+        "Scaled Dot-Product Attention — explanation of scaling factor and its purpose",
+        "Multi-Head Attention — benefits of subspace projection",
+        "Transformer architecture — encoder-decoder self-attention and parallelization",
+        "Transformer architecture — encoder-decoder structure and self-attention applications",
+        "Statistical properties of dot products — query/key vector assumptions and variance",
+        "Comparison of attention to RNNs/CNNs — parallelization and path length",
+        "Statistical properties of dot products — relation to softmax saturation"
+      ],
+      "sections_to_highlight_size": 16
+    },
+    {
+      "iteration_number": 5,
+      "summary": "1. SUMMARY:\nThe Transformer architecture, as presented in \"Attention Is All You Need,\" relies solely on attention mechanisms, eschewing recurrence and convolutions. This design choice significantly enhances parallelization and reduces training time. The core of the model is the \"Scaled Dot-Product Attention,\" which computes attention weights by taking the dot product of queries and keys, scaling it by the inverse square root of the key dimension ($1/\\sqrt{d_k}$), and then applying a softmax. This scaling is crucial to prevent the softmax from saturating due to large dot products, a problem observed with unscaled dot-product attention and additive attention for larger key dimensions. Multi-Head Attention further improves performance by allowing the model to jointly attend to information from different representation subspaces at different positions, mitigating the averaging effect of single-head attention. The Transformer utilizes self-attention within both the encoder and decoder. Positional information is injected via sinusoidal positional encodings, which were found to perform comparably to learned embeddings and potentially allow for extrapolation to longer sequences. Comparisons to RNNs and CNNs highlight attention's advantage in constant sequential operations and shorter path lengths for learning long-range dependencies.\n\n2. KEY HIGHLIGHTS:\n*   Scaled Dot-Product Attention uses a scaling factor ($1/\\sqrt{d_k}$) to prevent softmax saturation and maintain gradient stability, outperforming unscaled dot-product and additive attention for larger key dimensions.\n*   Multi-Head Attention enhances the model by attending to different representation subspaces in parallel, preventing information loss through averaging.\n*   The Transformer's reliance on self-attention in both encoder and decoder enables greater parallelization and shorter path lengths for learning long-range dependencies compared to RNNs and CNNs.\n*   Sinusoidal positional encodings are used to inject sequence order information, performing similarly to learned embeddings.",
+      "qa_pairs": [
+        {
+          "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+          "answer": "When the dimensionality of the keys (dk) is large, unscaled dot-product attention can lead to the softmax function saturating."
+        },
+        {
+          "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+          "answer": "Scaled Dot-Product Attention counteracts the problem of vanishing gradients by scaling the dot products by the inverse square root of the key dimension ($1/\\sqrt{d_k}$) before applying the softmax function. This scaling prevents the softmax from saturating."
+        },
+        {
+          "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+          "answer": "Additive attention is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions."
+        },
+        {
+          "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+          "answer": "The summary does not provide information on how the reduction of key/value dimensions in each head of Multi-Head Attention contributes to more stable attention calculations. It only mentions that Multi-Head Attention allows the model to jointly attend to information from different representation subspaces at different positions, mitigating the averaging effect of single-head attention."
+        },
+        {
+          "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+          "answer": "The dot products are scaled by the inverse square root of the key dimension ($1/\\sqrt{d_k}$) before the softmax function to stabilize attention."
+        },
+        {
+          "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+          "answer": "Not enough information in summary"
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+              "answer": "When the dimensionality of the keys (dk) is large, unscaled dot-product attention can lead to the softmax function saturating."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+              "answer": "Scaled Dot-Product Attention counteracts the problem of vanishing gradients by scaling the dot products by the inverse square root of the key dimension ($1/\\sqrt{d_k}$) before applying the softmax function. This scaling prevents the softmax from saturating."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states 'Not enough information in summary' while the article's footnote provides this information."
+          },
+          {
+            "qa": {
+              "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+              "answer": "Additive attention is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+              "answer": "The summary does not provide information on how the reduction of key/value dimensions in each head of Multi-Head Attention contributes to more stable attention calculations. It only mentions that Multi-Head Attention allows the model to jointly attend to information from different representation subspaces at different positions, mitigating the averaging effect of single-head attention."
+            },
+            "result": false,
+            "issue": "The summary correctly identifies that this information is not present. The question is about an indirect contribution which is not detailed."
+          },
+          {
+            "qa": {
+              "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+              "answer": "The dot products are scaled by the inverse square root of the key dimension ($1/\\sqrt{d_k}$) before the softmax function to stabilize attention."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states 'Not enough information in summary' while the article's footnote provides this information."
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Scaled Dot-Product Attention — explanation of scaling factor and purpose",
+          "Statistical properties of dot products — query/key vector assumptions and variance",
+          "Multi-Head Attention — benefits of subspace projection and stability",
+          "Alternative attention mechanisms — comparison to additive attention",
+          "Transformer architecture — encoder/decoder self-attention and parallelization",
+          "Positional Encoding — sinusoidal vs. learned embeddings"
+        ]
+      },
+      "correct_count_all": 4,
+      "correct_count_acu": 1,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Positional Encoding — sinusoidal vs. learned embeddings",
+        "Transformer architecture — encoder/decoder self-attention",
+        "Multi-Head Attention — subspace projection and averaging effect",
+        "Alternative attention mechanisms — comparison to unscaled dot-product",
+        "Comparison of attention to RNNs and CNNs — path length and complexity",
+        "Scaled Dot-Product Attention — explanation of scaling factor and purpose",
+        "Multi-Head Attention — benefits of subspace projection and stability",
+        "Alternative attention mechanisms — comparison to additive attention",
+        "Scaled Dot-Product Attention — scaling factor and gradient stability",
+        "Scaled Dot-Product Attention — explanation of scaling factor and its purpose",
+        "Multi-Head Attention — benefits of subspace projection",
+        "Transformer architecture — encoder-decoder self-attention and parallelization",
+        "Transformer architecture — encoder-decoder structure and self-attention applications",
+        "Statistical properties of dot products — query/key vector assumptions and variance",
+        "Comparison of attention to RNNs/CNNs — parallelization and path length",
+        "Statistical properties of dot products — relation to softmax saturation"
+      ],
+      "sections_to_highlight_size": 16
+    },
+    {
+      "iteration_number": 6,
+      "summary": "1. SUMMARY:\nThe Transformer model, as presented in \"Attention Is All You Need,\" offers a novel architecture that dispenses with recurrence and convolutions, relying solely on attention mechanisms. This design choice significantly enhances parallelization and reduces training time. The core of the Transformer is its \"Scaled Dot-Product Attention,\" which computes attention scores by taking dot products of queries and keys, scaling them by the square root of the key dimension ($\\sqrt{d_k}$), and then applying a softmax function. This scaling is crucial to prevent the softmax from entering regions with extremely small gradients when dot products become large, a phenomenon observed with unscaled dot-product attention and additive attention. Multi-Head Attention further improves this by linearly projecting queries, keys, and values into multiple lower-dimensional subspaces, allowing the model to attend to information from different representation subspaces concurrently. This parallel attention mechanism, applied across different subspaces, is more effective than single-head attention, which can suffer from averaging effects. The Transformer's self-attention layers in both the encoder and decoder, along with encoder-decoder attention, enable direct connections between all positions, drastically reducing path lengths compared to RNNs and CNNs. This constant path length facilitates learning long-range dependencies. Positional encodings, particularly sinusoidal ones, are added to inject sequence order information, as the model itself lacks inherent sequential processing.\n\n2. KEY HIGHLIGHTS:\n*   The Transformer model stabilizes dot-product attention by scaling dot products with $\\frac{1}{\\sqrt{d_k}}$ to prevent softmax saturation and gradient issues, outperforming unscaled dot-product and additive attention for larger key dimensions.\n*   Multi-Head Attention enhances stability and performance by projecting queries, keys, and values into multiple subspaces, allowing the model to jointly attend to different representation subspaces, which is more effective than single-head attention.\n*   The Transformer's reliance on self-attention (both within encoder/decoder and between them) provides a constant path length between any two positions, significantly improving the ability to learn long-range dependencies compared to the O(n) sequential operations of RNNs and the logarithmic or linear path lengths of CNNs.\n*   Positional encodings (sinusoidal are preferred for extrapolation) are essential for the Transformer, as it lacks recurrence or convolution, to incorporate sequence order information.",
+      "qa_pairs": [
+        {
+          "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+          "answer": "When the dimensionality of the keys (dk) is large, dot products can become large in magnitude, causing the softmax function to enter regions with extremely small gradients."
+        },
+        {
+          "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+          "answer": "Scaled Dot-Product Attention scales the dot products by the square root of the key dimension ($\\sqrt{d_k}$) before applying the softmax function. This scaling prevents the softmax from entering regions with extremely small gradients when dot products become large."
+        },
+        {
+          "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+          "answer": "Additive attention is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions."
+        },
+        {
+          "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+          "answer": "The dot products are scaled by $\\frac{1}{\\sqrt{d_k}}$ before the softmax function to stabilize attention."
+        },
+        {
+          "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+          "answer": "Not enough information in summary"
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+              "answer": "When the dimensionality of the keys (dk) is large, dot products can become large in magnitude, causing the softmax function to enter regions with extremely small gradients."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+              "answer": "Scaled Dot-Product Attention scales the dot products by the square root of the key dimension ($\\sqrt{d_k}$) before applying the softmax function. This scaling prevents the softmax from entering regions with extremely small gradients when dot products become large."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states 'Not enough information in summary' but the article's footnote states: 'assume that the components of q and k are independent random variables with mean 0 and variance 1. Then their dot product, q · k = sum(qi*ki), has mean 0 and variance dk.'"
+          },
+          {
+            "qa": {
+              "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+              "answer": "Additive attention is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states 'Not enough information in summary', but the article explains that reducing dimensions in each head allows for attending to different representation subspaces, which is more effective than single-head attention's averaging effect."
+          },
+          {
+            "qa": {
+              "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+              "answer": "The dot products are scaled by $\\frac{1}{\\sqrt{d_k}}$ before the softmax function to stabilize attention."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states 'Not enough information in summary', but the article's footnote states that the variance is dk, assuming query and key components are independent random variables with mean 0 and variance 1."
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Scaled Dot-Product Attention — scaling factor and gradient stability",
+          "Multi-Head Attention — benefits of subspace projection",
+          "Statistical properties of dot products — query/key vector assumptions and variance",
+          "Transformer architecture — encoder-decoder self-attention and parallelization",
+          "Positional Encoding — sinusoidal vs. learned embeddings",
+          "Comparison of attention to RNNs and CNNs — path length and complexity"
+        ]
+      },
+      "correct_count_all": 4,
+      "correct_count_acu": 1,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Transformer architecture — encoder/decoder self-attention and parallelization",
+        "Positional Encoding — sinusoidal vs. learned embeddings",
+        "Transformer architecture — encoder/decoder self-attention",
+        "Multi-Head Attention — subspace projection and averaging effect",
+        "Alternative attention mechanisms — comparison to unscaled dot-product",
+        "Comparison of attention to RNNs and CNNs — path length and complexity",
+        "Scaled Dot-Product Attention — explanation of scaling factor and purpose",
+        "Multi-Head Attention — benefits of subspace projection and stability",
+        "Alternative attention mechanisms — comparison to additive attention",
+        "Scaled Dot-Product Attention — scaling factor and gradient stability",
+        "Scaled Dot-Product Attention — explanation of scaling factor and its purpose",
+        "Multi-Head Attention — benefits of subspace projection",
+        "Transformer architecture — encoder-decoder self-attention and parallelization",
+        "Transformer architecture — encoder-decoder structure and self-attention applications",
+        "Statistical properties of dot products — query/key vector assumptions and variance",
+        "Comparison of attention to RNNs/CNNs — parallelization and path length",
+        "Statistical properties of dot products — relation to softmax saturation"
+      ],
+      "sections_to_highlight_size": 17
+    },
+    {
+      "iteration_number": 7,
+      "summary": "1. SUMMARY:\nThe Transformer model, by dispensing with recurrence and convolutions, relies entirely on attention mechanisms for sequence transduction. Its core is Scaled Dot-Product Attention, which computes attention scores by taking the dot product of queries and keys, scaling it by the inverse square root of the key dimension ($1/\\sqrt{d_k}$), and applying a softmax. This scaling is crucial to prevent the softmax from saturating due to large dot products when $d_k$ is large, thus maintaining stable gradients. The model employs Multi-Head Attention, which linearly projects queries, keys, and values into multiple subspaces and performs attention in parallel. This allows the model to jointly attend to information from different representation subspaces at different positions, a benefit that averaging in single-head attention would inhibit. Compared to RNNs, self-attention offers constant sequential operations and shorter path lengths for dependencies, enabling greater parallelization and efficient learning of long-range relationships. While additive attention is an alternative, Scaled Dot-Product Attention is faster due to optimized matrix multiplication.\n\n2. KEY HIGHLIGHTS:\n*   Scaled Dot-Product Attention uses a scaling factor of $1/\\sqrt{d_k}$ to prevent softmax saturation and maintain gradient stability with large key dimensions.\n*   Multi-Head Attention projects queries, keys, and values into multiple subspaces, allowing joint attention to different representation subspaces and avoiding the averaging effect of single-head attention.\n*   Self-attention in the Transformer enables constant sequential operations and shorter path lengths compared to RNNs and CNNs, leading to greater parallelization and efficient learning of long-range dependencies.\n*   The Transformer architecture leverages encoder-decoder self-attention to process sequences, with the decoder's self-attention masked to preserve auto-regressive properties.",
+      "qa_pairs": [
+        {
+          "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+          "answer": "When the dimensionality of the keys (dk) is large, the dot products can become large in magnitude, causing the softmax function to saturate and leading to unstable gradients."
+        },
+        {
+          "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+          "answer": "The scaling factor of $1/\\sqrt{d_k}$ is applied to the dot product before the softmax function. This scaling prevents the softmax from saturating due to large dot products when $d_k$ is large, thus maintaining stable gradients."
+        },
+        {
+          "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+          "answer": "The summary mentions additive attention as a common alternative, but does not explicitly state it performs better than unscaled dot-product attention for large key dimensions."
+        },
+        {
+          "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+          "answer": "The dot products are scaled by the inverse square root of the key dimension ($1/\\sqrt{d_k}$)."
+        },
+        {
+          "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+          "answer": "Not enough information in summary"
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+              "answer": "When the dimensionality of the keys (dk) is large, the dot products can become large in magnitude, causing the softmax function to saturate and leading to unstable gradients."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+              "answer": "The scaling factor of $1/\\sqrt{d_k}$ is applied to the dot product before the softmax function. This scaling prevents the softmax from saturating due to large dot products when $d_k$ is large, thus maintaining stable gradients."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not contain information about the statistical assumption of query and key vectors."
+          },
+          {
+            "qa": {
+              "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+              "answer": "The summary mentions additive attention as a common alternative, but does not explicitly state it performs better than unscaled dot-product attention for large key dimensions."
+            },
+            "result": false,
+            "issue": "The summary mentions additive attention as an alternative but does not state it performs better than unscaled dot-product attention for large key dimensions. The article states: \"While for small values of dk the two mechanisms perform similarly, additive attention outperforms dot product attention without scaling for larger values of dk [3].\""
+          },
+          {
+            "qa": {
+              "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not explain how the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contributes to more stable attention calculations."
+          },
+          {
+            "qa": {
+              "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+              "answer": "The dot products are scaled by the inverse square root of the key dimension ($1/\\sqrt{d_k}$)."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not mention the hypothesized variance of the dot product of query and key vectors."
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Scaled Dot-Product Attention — explanation of scaling factor and purpose",
+          "Multi-Head Attention — benefits of subspace projection and stability",
+          "Comparison of attention to RNNs and CNNs — path length and complexity",
+          "Statistical properties of dot products — query/key vector assumptions and variance",
+          "Transformer architecture — encoder/decoder self-attention and parallelization"
+        ]
+      },
+      "correct_count_all": 3,
+      "correct_count_acu": 1,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Transformer architecture — encoder/decoder self-attention and parallelization",
+        "Positional Encoding — sinusoidal vs. learned embeddings",
+        "Transformer architecture — encoder/decoder self-attention",
+        "Multi-Head Attention — subspace projection and averaging effect",
+        "Alternative attention mechanisms — comparison to unscaled dot-product",
+        "Comparison of attention to RNNs and CNNs — path length and complexity",
+        "Scaled Dot-Product Attention — explanation of scaling factor and purpose",
+        "Multi-Head Attention — benefits of subspace projection and stability",
+        "Alternative attention mechanisms — comparison to additive attention",
+        "Scaled Dot-Product Attention — scaling factor and gradient stability",
+        "Scaled Dot-Product Attention — explanation of scaling factor and its purpose",
+        "Multi-Head Attention — benefits of subspace projection",
+        "Transformer architecture — encoder-decoder self-attention and parallelization",
+        "Transformer architecture — encoder-decoder structure and self-attention applications",
+        "Statistical properties of dot products — query/key vector assumptions and variance",
+        "Comparison of attention to RNNs/CNNs — parallelization and path length",
+        "Statistical properties of dot products — relation to softmax saturation"
+      ],
+      "sections_to_highlight_size": 17
+    },
+    {
+      "iteration_number": 8,
+      "summary": "1. SUMMARY:\nThe Transformer model, by eschewing recurrence and convolutions, relies solely on attention mechanisms for sequence transduction. This shift enables significant parallelization and faster training, achieving state-of-the-art results in machine translation. The core of the Transformer is \"Scaled Dot-Product Attention,\" which computes attention weights by taking the dot product of queries and keys, scaling it by the inverse square root of the key dimension ($ \\sqrt{d_k} $), and applying a softmax. This scaling is crucial to prevent the softmax from entering regions with vanishing gradients, a problem observed with unscaled dot-product attention, especially for larger $ d_k $. Multi-Head Attention further enhances this by projecting queries, keys, and values into multiple subspaces, allowing the model to jointly attend to information from different representation subspaces. This approach is contrasted with additive attention, which uses a feed-forward network for compatibility. Compared to RNNs and CNNs, self-attention offers constant sequential operations and shorter path lengths for dependencies, though it can be computationally intensive ($ O(n^2 \\cdot d) $) for long sequences. Positional encodings, particularly sinusoidal ones, are added to input embeddings to retain sequence order information, and are shown to perform comparably to learned embeddings.\n\n2. KEY HIGHLIGHTS:\n*   Scaled Dot-Product Attention scales dot products by $ 1/\\sqrt{d_k} $ to prevent softmax saturation and gradient issues with large key dimensions, outperforming unscaled dot-product and additive attention.\n*   Multi-Head Attention projects queries, keys, and values into multiple subspaces, allowing for richer attention patterns and avoiding the averaging effect of a single attention mechanism.\n*   The Transformer architecture, by using self-attention, achieves superior parallelization and shorter path lengths for learning long-range dependencies compared to RNNs and CNNs.\n*   Sinusoidal positional encodings are used to inject sequence order information, performing similarly to learned positional embeddings.",
+      "qa_pairs": [
+        {
+          "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+          "answer": "With unscaled dot-product attention, the softmax function can enter regions with vanishing gradients when the dimensionality of the keys (dk) is large."
+        },
+        {
+          "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+          "answer": "Scaled Dot-Product Attention scales the dot products by the inverse square root of the key dimension ($ \\sqrt{d_k} $) before applying the softmax function, which prevents the softmax from entering regions with vanishing gradients."
+        },
+        {
+          "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+          "answer": "Additive attention is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions."
+        },
+        {
+          "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+          "answer": "The dot products are scaled by the inverse square root of the key dimension ($ 1/\\sqrt{d_k} $) before the softmax function."
+        },
+        {
+          "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+          "answer": "Not enough information in summary"
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+              "answer": "With unscaled dot-product attention, the softmax function can enter regions with vanishing gradients when the dimensionality of the keys (dk) is large."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+              "answer": "Scaled Dot-Product Attention scales the dot products by the inverse square root of the key dimension ($ \\sqrt{d_k} $) before applying the softmax function, which prevents the softmax from entering regions with vanishing gradients."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not contain the information from the footnote regarding the statistical assumption about query and key vectors."
+          },
+          {
+            "qa": {
+              "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+              "answer": "Additive attention is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not explain how the reduction of key/value dimensions in each head contributes to more stable attention calculations."
+          },
+          {
+            "qa": {
+              "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+              "answer": "The dot products are scaled by the inverse square root of the key dimension ($ 1/\\sqrt{d_k} $) before the softmax function."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not contain the information about the variance of the dot product of query and key vectors."
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Scaled Dot-Product Attention — scaling factor and gradient stability",
+          "Multi-Head Attention — benefits of subspace projection",
+          "Transformer architecture — comparison to RNNs and CNNs",
+          "Positional Encoding — sinusoidal vs. learned",
+          "Statistical properties of dot products — query/key vector assumptions and variance"
+        ]
+      },
+      "correct_count_all": 4,
+      "correct_count_acu": 1,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Transformer architecture — encoder/decoder self-attention and parallelization",
+        "Positional Encoding — sinusoidal vs. learned embeddings",
+        "Transformer architecture — encoder/decoder self-attention",
+        "Multi-Head Attention — subspace projection and averaging effect",
+        "Alternative attention mechanisms — comparison to unscaled dot-product",
+        "Comparison of attention to RNNs and CNNs — path length and complexity",
+        "Scaled Dot-Product Attention — explanation of scaling factor and purpose",
+        "Multi-Head Attention — benefits of subspace projection and stability",
+        "Alternative attention mechanisms — comparison to additive attention",
+        "Scaled Dot-Product Attention — scaling factor and gradient stability",
+        "Scaled Dot-Product Attention — explanation of scaling factor and its purpose",
+        "Multi-Head Attention — benefits of subspace projection",
+        "Transformer architecture — encoder-decoder self-attention and parallelization",
+        "Transformer architecture — encoder-decoder structure and self-attention applications",
+        "Statistical properties of dot products — query/key vector assumptions and variance",
+        "Comparison of attention to RNNs/CNNs — parallelization and path length",
+        "Statistical properties of dot products — relation to softmax saturation"
+      ],
+      "sections_to_highlight_size": 17
+    },
+    {
+      "iteration_number": 9,
+      "summary": "1. SUMMARY:\nThe Transformer model, as presented in \"Attention Is All You Need,\" addresses the practical challenges of stabilizing dot-product attention through its \"Scaled Dot-Product Attention\" mechanism. The core issue identified is that for large dimensions of query and key vectors, dot products can grow excessively large, pushing the softmax function into regions with vanishing gradients. To mitigate this, the model scales the dot products by the inverse square root of the key dimension ($1/\\sqrt{d_k}$). This scaling helps maintain stable gradients, preventing saturation and improving learning. The paper also introduces Multi-Head Attention, which projects queries, keys, and values into multiple lower-dimensional subspaces. This allows the model to jointly attend to information from different representation subspaces at different positions, preventing the averaging effect that can inhibit learning with a single attention head. The Transformer's reliance on self-attention, as opposed to recurrent or convolutional layers, also offers significant advantages in parallelization and reduces the path length between distant positions, thereby facilitating the learning of long-range dependencies.\n\n2. KEY HIGHLIGHTS:\n*   Scaled Dot-Product Attention scales dot products by $1/\\sqrt{d_k}$ to prevent softmax saturation and maintain stable gradients, a key solution to stabilizing dot-product attention.\n*   Multi-Head Attention projects queries, keys, and values into multiple subspaces, allowing the model to attend to different representation subspaces simultaneously and avoid averaging effects.\n*   The Transformer's self-attention mechanism offers superior parallelization and shorter path lengths for learning long-range dependencies compared to RNNs and CNNs.\n*   The paper notes that additive attention outperforms unscaled dot-product attention for larger $d_k$, implying the scaling factor in Scaled Dot-Product Attention is crucial for its effectiveness.",
+      "qa_pairs": [
+        {
+          "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+          "answer": "For large dimensions of query and key vectors, dot products can grow excessively large, pushing the softmax function into regions with vanishing gradients."
+        },
+        {
+          "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+          "answer": "The model scales the dot products by the inverse square root of the key dimension ($1/\\sqrt{d_k}$). This scaling helps maintain stable gradients, preventing saturation and improving learning."
+        },
+        {
+          "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+          "answer": "The paper notes that additive attention outperforms unscaled dot-product attention for larger $d_k$."
+        },
+        {
+          "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+          "answer": "This allows the model to jointly attend to information from different representation subspaces at different positions, preventing the averaging effect that can inhibit learning with a single attention head."
+        },
+        {
+          "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+          "answer": "The dot products are scaled by the inverse square root of the key dimension ($1/\\sqrt{d_k}$)."
+        },
+        {
+          "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+          "answer": "Not enough information in summary"
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+              "answer": "For large dimensions of query and key vectors, dot products can grow excessively large, pushing the softmax function into regions with vanishing gradients."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+              "answer": "The model scales the dot products by the inverse square root of the key dimension ($1/\\sqrt{d_k}$). This scaling helps maintain stable gradients, preventing saturation and improving learning."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states 'Not enough information in summary', but the article footnote states: 'assume that the components of q and k are independent random variables with mean 0 and variance 1. Then their dot product, q · k = (cid:80)dk i=1 qiki, has mean 0 and variance dk.' This information is missing from the summary."
+          },
+          {
+            "qa": {
+              "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+              "answer": "The paper notes that additive attention outperforms unscaled dot-product attention for larger $d_k$."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+              "answer": "This allows the model to jointly attend to information from different representation subspaces at different positions, preventing the averaging effect that can inhibit learning with a single attention head."
+            },
+            "result": false,
+            "issue": "The summary states that the reduction in dimensions prevents averaging effects, but the article states that Multi-Head Attention *jointly attends to information from different representation subspaces* which prevents the averaging effect. The summary implies the dimension reduction *causes* the prevention of averaging effects, which is not directly stated."
+          },
+          {
+            "qa": {
+              "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+              "answer": "The dot products are scaled by the inverse square root of the key dimension ($1/\\sqrt{d_k}$)."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states 'Not enough information in summary', but the article footnote states: 'assume that the components of q and k are independent random variables with mean 0 and variance 1. Then their dot product, q · k = (cid:80)dk i=1 qiki, has mean 0 and variance dk.' This information is missing from the summary."
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Scaled Dot-Product Attention — scaling factor and gradient stability",
+          "Statistical properties of dot products — query/key vector assumptions and variance",
+          "Multi-Head Attention — benefits of subspace projection and stability",
+          "Transformer architecture — comparison to RNNs and CNNs",
+          "Positional Encoding — sinusoidal vs. learned embeddings"
+        ]
+      },
+      "correct_count_all": 4,
+      "correct_count_acu": 1,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Multi-Head Attention — benefits of subspace projection",
+        "Positional Encoding — sinusoidal vs. learned",
+        "Statistical properties of dot products — query/key vector assumptions and variance",
+        "Comparison of attention to RNNs/CNNs — parallelization and path length",
+        "Statistical properties of dot products — relation to softmax saturation",
+        "Scaled Dot-Product Attention — scaling factor and gradient stability",
+        "Multi-Head Attention — subspace projection and averaging effect",
+        "Comparison of attention to RNNs and CNNs — path length and complexity",
+        "Scaled Dot-Product Attention — explanation of scaling factor and purpose",
+        "Multi-Head Attention — benefits of subspace projection and stability",
+        "Transformer architecture — comparison to RNNs and CNNs",
+        "Scaled Dot-Product Attention — explanation of scaling factor and its purpose",
+        "Transformer architecture — encoder-decoder self-attention and parallelization",
+        "Transformer architecture — encoder-decoder structure and self-attention applications",
+        "Transformer architecture — encoder/decoder self-attention and parallelization",
+        "Positional Encoding — sinusoidal vs. learned embeddings",
+        "Transformer architecture — encoder/decoder self-attention",
+        "Alternative attention mechanisms — comparison to unscaled dot-product",
+        "Alternative attention mechanisms — comparison to additive attention"
+      ],
+      "sections_to_highlight_size": 19
+    },
+    {
+      "iteration_number": 10,
+      "summary": "1. SUMMARY:\nThe Transformer model, as presented in \"Attention Is All You Need,\" tackles the practical challenges of stabilizing dot-product attention primarily through \"Scaled Dot-Product Attention\" and \"Multi-Head Attention.\" The core issue with standard dot-product attention, especially with large dimensionality (dk), is that dot products can become excessively large, pushing the softmax function into regions with vanishing gradients. To mitigate this, Scaled Dot-Product Attention divides the dot products by √dk, thereby stabilizing gradients and improving performance. Multi-Head Attention further enhances this by projecting queries, keys, and values into multiple lower-dimensional subspaces. This allows the model to jointly attend to information from different representation subspaces at different positions, preventing the averaging effect of a single attention head that could inhibit learning diverse dependencies. The paper also explores positional encoding, finding sinusoidal encodings to perform nearly identically to learned embeddings, but with the potential advantage of extrapolating to longer sequences. Overall, the Transformer's reliance on attention, as opposed to recurrence or convolutions, offers significant parallelization benefits and shorter path lengths for learning long-range dependencies.\n\n2. KEY HIGHLIGHTS:\n*   Scaled Dot-Product Attention stabilizes gradients by dividing dot products by √dk to prevent softmax saturation.\n*   Multi-Head Attention improves performance by projecting inputs into multiple subspaces, enabling joint attention to diverse representations and mitigating averaging effects.\n*   Positional encodings (sinusoidal and learned) are used to inject sequence order information, with sinusoidal offering potential extrapolation benefits.\n*   The Transformer's attention mechanism offers superior parallelization and shorter path lengths for learning long-range dependencies compared to RNNs and CNNs.",
+      "qa_pairs": [
+        {
+          "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+          "answer": "The core issue with standard dot-product attention, especially with large dimensionality (dk), is that dot products can become excessively large, pushing the softmax function into regions with vanishing gradients."
+        },
+        {
+          "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+          "answer": "Scaled Dot-Product Attention divides the dot products by √dk, thereby stabilizing gradients and improving performance."
+        },
+        {
+          "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+          "answer": "Multi-Head Attention"
+        },
+        {
+          "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+          "answer": "Multi-Head Attention enhances stability by projecting queries, keys, and values into multiple lower-dimensional subspaces, allowing the model to jointly attend to information from different representation subspaces at different positions, preventing the averaging effect of a single attention head that could inhibit learning diverse dependencies."
+        },
+        {
+          "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+          "answer": "The dot products are scaled by √dk before the softmax function to stabilize attention."
+        },
+        {
+          "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+          "answer": "Not enough information in summary"
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+              "answer": "The core issue with standard dot-product attention, especially with large dimensionality (dk), is that dot products can become excessively large, pushing the softmax function into regions with vanishing gradients."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+              "answer": "Scaled Dot-Product Attention divides the dot products by √dk, thereby stabilizing gradients and improving performance."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states 'Not enough information in summary', but the article's footnote provides the assumption: components of q and k are independent random variables with mean 0 and variance 1."
+          },
+          {
+            "qa": {
+              "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+              "answer": "Multi-Head Attention"
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+              "answer": "Multi-Head Attention enhances stability by projecting queries, keys, and values into multiple lower-dimensional subspaces, allowing the model to jointly attend to information from different representation subspaces at different positions, preventing the averaging effect of a single attention head that could inhibit learning diverse dependencies."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+              "answer": "The dot products are scaled by √dk before the softmax function to stabilize attention."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states 'Not enough information in summary', but the article's footnote explicitly states the variance is dk."
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Scaled Dot-Product Attention — purpose and scaling factor",
+          "Multi-Head Attention — benefits for stability and diverse dependencies",
+          "Positional Encoding — sinusoidal vs. learned and extrapolation",
+          "Statistical properties of dot products — relation to softmax saturation and variance",
+          "Transformer architecture — comparison to RNNs/CNNs for parallelization and path length"
+        ]
+      },
+      "correct_count_all": 5,
+      "correct_count_acu": 1,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Multi-Head Attention — benefits of subspace projection",
+        "Positional Encoding — sinusoidal vs. learned",
+        "Statistical properties of dot products — query/key vector assumptions and variance",
+        "Comparison of attention to RNNs/CNNs — parallelization and path length",
+        "Statistical properties of dot products — relation to softmax saturation",
+        "Scaled Dot-Product Attention — scaling factor and gradient stability",
+        "Multi-Head Attention — subspace projection and averaging effect",
+        "Comparison of attention to RNNs and CNNs — path length and complexity",
+        "Scaled Dot-Product Attention — explanation of scaling factor and purpose",
+        "Multi-Head Attention — benefits of subspace projection and stability",
+        "Transformer architecture — comparison to RNNs and CNNs",
+        "Scaled Dot-Product Attention — explanation of scaling factor and its purpose",
+        "Transformer architecture — encoder-decoder self-attention and parallelization",
+        "Transformer architecture — encoder-decoder structure and self-attention applications",
+        "Transformer architecture — encoder/decoder self-attention and parallelization",
+        "Positional Encoding — sinusoidal vs. learned embeddings",
+        "Transformer architecture — encoder/decoder self-attention",
+        "Alternative attention mechanisms — comparison to unscaled dot-product",
+        "Alternative attention mechanisms — comparison to additive attention"
+      ],
+      "sections_to_highlight_size": 19
+    },
+    {
+      "iteration_number": 11,
+      "summary": "1. SUMMARY:\nThe Transformer model addresses the practical challenge of stabilizing dot-product attention by introducing \"Scaled Dot-Product Attention.\" This method scales the dot products of queries and keys by the square root of the key dimension ($1/\\sqrt{d_k}$). This is crucial because large dot product values can push the softmax function into regions with extremely small gradients, hindering learning. By scaling, the model mitigates this \"softmax saturation\" problem, ensuring more stable gradients and thus better learning, especially for larger key dimensions. Furthermore, Multi-Head Attention enhances stability and the ability to capture diverse dependencies by projecting queries, keys, and values into lower-dimensional subspaces. This allows different attention heads to focus on different aspects of the input, preventing the averaging effect of a single attention mechanism from inhibiting the learning of diverse relationships. The paper also contrasts this approach with RNNs and CNNs, highlighting attention's superior parallelization and constant path length for capturing long-range dependencies, further contributing to its practical effectiveness.\n\n2. KEY HIGHLIGHTS:\n*   **Scaled Dot-Product Attention** mitigates softmax saturation and gradient issues by scaling dot products by $1/\\sqrt{d_k}$, stabilizing learning.\n*   **Multi-Head Attention** improves stability and captures diverse dependencies by projecting queries, keys, and values into multiple lower-dimensional subspaces.\n*   Attention mechanisms, particularly self-attention in the Transformer, offer significant advantages in **parallelization** and **constant path length** for dependencies compared to RNNs and CNNs.\n*   The Transformer's design, relying solely on attention, makes it more **parallelizable** and requires less training time than recurrent or convolutional models.",
+      "qa_pairs": [
+        {
+          "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+          "answer": "Large dot product values can push the softmax function into regions with extremely small gradients, hindering learning."
+        },
+        {
+          "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+          "answer": "By scaling the dot products of queries and keys by the square root of the key dimension ($1/\\sqrt{d_k}$), the model mitigates the \"softmax saturation\" problem, ensuring more stable gradients."
+        },
+        {
+          "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+          "answer": "Multi-Head Attention enhances stability by projecting queries, keys, and values into lower-dimensional subspaces, allowing different attention heads to focus on different aspects of the input."
+        },
+        {
+          "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+          "answer": "The dot products are scaled by the square root of the key dimension ($1/\\sqrt{d_k}$)."
+        },
+        {
+          "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+          "answer": "Not enough information in summary"
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+              "answer": "Large dot product values can push the softmax function into regions with extremely small gradients, hindering learning."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+              "answer": "By scaling the dot products of queries and keys by the square root of the key dimension ($1/\\sqrt{d_k}$), the model mitigates the \"softmax saturation\" problem, ensuring more stable gradients."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not contain the information from the footnote about the statistical assumption."
+          },
+          {
+            "qa": {
+              "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not mention additive attention as an alternative that performs better than unscaled dot-product attention for large key dimensions."
+          },
+          {
+            "qa": {
+              "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+              "answer": "Multi-Head Attention enhances stability by projecting queries, keys, and values into lower-dimensional subspaces, allowing different attention heads to focus on different aspects of the input."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+              "answer": "The dot products are scaled by the square root of the key dimension ($1/\\sqrt{d_k}$)."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not contain the information from the footnote about the variance of the dot product."
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Scaled Dot-Product Attention — scaling factor and gradient stability",
+          "Multi-Head Attention — benefits for stability and diverse dependencies",
+          "Transformer architecture — comparison to RNNs/CNNs for parallelization and path length",
+          "Statistical properties of dot products — query/key vector assumptions and variance",
+          "Alternative attention mechanisms — comparison to additive attention"
+        ]
+      },
+      "correct_count_all": 4,
+      "correct_count_acu": 1,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Multi-Head Attention — benefits for stability and diverse dependencies",
+        "Multi-Head Attention — benefits of subspace projection",
+        "Positional Encoding — sinusoidal vs. learned",
+        "Statistical properties of dot products — relation to softmax saturation and variance",
+        "Statistical properties of dot products — query/key vector assumptions and variance",
+        "Comparison of attention to RNNs/CNNs — parallelization and path length",
+        "Statistical properties of dot products — relation to softmax saturation",
+        "Scaled Dot-Product Attention — scaling factor and gradient stability",
+        "Multi-Head Attention — subspace projection and averaging effect",
+        "Comparison of attention to RNNs and CNNs — path length and complexity",
+        "Scaled Dot-Product Attention — explanation of scaling factor and purpose",
+        "Multi-Head Attention — benefits of subspace projection and stability",
+        "Transformer architecture — comparison to RNNs and CNNs",
+        "Scaled Dot-Product Attention — explanation of scaling factor and its purpose",
+        "Transformer architecture — encoder-decoder self-attention and parallelization",
+        "Positional Encoding — sinusoidal vs. learned and extrapolation",
+        "Transformer architecture — encoder-decoder structure and self-attention applications",
+        "Transformer architecture — encoder/decoder self-attention and parallelization",
+        "Positional Encoding — sinusoidal vs. learned embeddings",
+        "Transformer architecture — encoder/decoder self-attention",
+        "Alternative attention mechanisms — comparison to unscaled dot-product",
+        "Scaled Dot-Product Attention — purpose and scaling factor",
+        "Alternative attention mechanisms — comparison to additive attention",
+        "Transformer architecture — comparison to RNNs/CNNs for parallelization and path length"
+      ],
+      "sections_to_highlight_size": 24
+    },
+    {
+      "iteration_number": 12,
+      "summary": "1. SUMMARY:\nThe Transformer model stabilizes dot-product attention by introducing a scaling factor of $1/\\sqrt{d_k}$ in its \"Scaled Dot-Product Attention\" mechanism. This scaling addresses the issue where large dot products can push the softmax function into regions with extremely small gradients, hindering learning. The paper posits that assuming query and key vector components are independent random variables with mean 0 and variance 1 leads to dot products with a mean of 0 and variance of $d_k$, explaining the need for scaling to prevent saturation. Multi-head attention further enhances stability and the ability to capture diverse dependencies by projecting queries, keys, and values into multiple lower-dimensional subspaces. This allows the model to jointly attend to information from different representation subspaces, mitigating the averaging effect that would occur with a single attention head. Positional encoding, specifically sinusoidal encoding, is used to inject sequence order information, and experimentation showed it performs comparably to learned embeddings while potentially allowing for better extrapolation to longer sequences. Compared to RNNs and CNNs, self-attention offers constant sequential operations and shorter path lengths for long-range dependencies, leading to greater parallelization and faster training.\n\n2. KEY HIGHLIGHTS:\n*   Scaled Dot-Product Attention uses a $1/\\sqrt{d_k}$ scaling factor to prevent softmax saturation and maintain gradient flow, especially with large $d_k$.\n*   Multi-head attention improves stability and the ability to learn diverse dependencies by attending to information in multiple representation subspaces.\n*   Sinusoidal positional encodings are employed to inject sequence order, performing similarly to learned embeddings but offering potential for better extrapolation.\n*   Self-attention's constant sequential operations and shorter path lengths enable greater parallelization and more effective learning of long-range dependencies compared to RNNs and CNNs.",
+      "qa_pairs": [
+        {
+          "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+          "answer": "When the dimensionality of the keys (dk) is large, dot products can push the softmax function into regions with extremely small gradients, hindering learning."
+        },
+        {
+          "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+          "answer": "The \"Scaled Dot-Product Attention\" mechanism introduces a scaling factor of $1/\\sqrt{d_k}$, which prevents the softmax function from reaching regions with extremely small gradients, thereby maintaining gradient flow."
+        },
+        {
+          "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+          "answer": "The paper posits that assuming query and key vector components are independent random variables with mean 0 and variance 1 leads to dot products with a mean of 0 and variance of $d_k$, explaining the need for scaling to prevent saturation."
+        },
+        {
+          "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+          "answer": "Multi-head attention enhances stability by projecting queries, keys, and values into multiple lower-dimensional subspaces. This allows the model to jointly attend to information from different representation subspaces, mitigating the averaging effect that would occur with a single attention head."
+        },
+        {
+          "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+          "answer": "The dot products are scaled by a factor of $1/\\sqrt{d_k}$ before the softmax function to stabilize attention."
+        },
+        {
+          "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+          "answer": "As hypothesized in the paper, the variance of the dot product of the query and key vectors is $d_k$."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+              "answer": "When the dimensionality of the keys (dk) is large, dot products can push the softmax function into regions with extremely small gradients, hindering learning."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+              "answer": "The \"Scaled Dot-Product Attention\" mechanism introduces a scaling factor of $1/\\sqrt{d_k}$, which prevents the softmax function from reaching regions with extremely small gradients, thereby maintaining gradient flow."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+              "answer": "The paper posits that assuming query and key vector components are independent random variables with mean 0 and variance 1 leads to dot products with a mean of 0 and variance of $d_k$, explaining the need for scaling to prevent saturation."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not mention other attention mechanisms that perform better than unscaled dot-product attention for large key dimensions. The article mentions additive attention as an alternative, which performs better than unscaled dot-product attention for large dk."
+          },
+          {
+            "qa": {
+              "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+              "answer": "Multi-head attention enhances stability by projecting queries, keys, and values into multiple lower-dimensional subspaces. This allows the model to jointly attend to information from different representation subspaces, mitigating the averaging effect that would occur with a single attention head."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+              "answer": "The dot products are scaled by a factor of $1/\\sqrt{d_k}$ before the softmax function to stabilize attention."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+              "answer": "As hypothesized in the paper, the variance of the dot product of the query and key vectors is $d_k$."
+            },
+            "result": true,
+            "issue": ""
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Scaled Dot-Product Attention — purpose and scaling factor",
+          "Multi-Head Attention — benefits for stability and diverse dependencies",
+          "Positional Encoding — sinusoidal vs. learned and extrapolation",
+          "Transformer architecture — comparison to RNNs/CNNs for parallelization and path length",
+          "Alternative attention mechanisms — comparison to additive attention",
+          "Statistical properties of dot products — query/key vector assumptions and variance"
+        ]
+      },
+      "correct_count_all": 6,
+      "correct_count_acu": 2,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Multi-Head Attention — benefits for stability and diverse dependencies",
+        "Multi-Head Attention — benefits of subspace projection",
+        "Positional Encoding — sinusoidal vs. learned",
+        "Statistical properties of dot products — relation to softmax saturation and variance",
+        "Statistical properties of dot products — query/key vector assumptions and variance",
+        "Comparison of attention to RNNs/CNNs — parallelization and path length",
+        "Statistical properties of dot products — relation to softmax saturation",
+        "Scaled Dot-Product Attention — scaling factor and gradient stability",
+        "Multi-Head Attention — subspace projection and averaging effect",
+        "Comparison of attention to RNNs and CNNs — path length and complexity",
+        "Scaled Dot-Product Attention — explanation of scaling factor and purpose",
+        "Multi-Head Attention — benefits of subspace projection and stability",
+        "Transformer architecture — comparison to RNNs and CNNs",
+        "Scaled Dot-Product Attention — explanation of scaling factor and its purpose",
+        "Transformer architecture — encoder-decoder self-attention and parallelization",
+        "Positional Encoding — sinusoidal vs. learned and extrapolation",
+        "Transformer architecture — encoder-decoder structure and self-attention applications",
+        "Transformer architecture — encoder/decoder self-attention and parallelization",
+        "Positional Encoding — sinusoidal vs. learned embeddings",
+        "Transformer architecture — encoder/decoder self-attention",
+        "Alternative attention mechanisms — comparison to unscaled dot-product",
+        "Scaled Dot-Product Attention — purpose and scaling factor",
+        "Alternative attention mechanisms — comparison to additive attention",
+        "Transformer architecture — comparison to RNNs/CNNs for parallelization and path length"
+      ],
+      "sections_to_highlight_size": 24
+    },
+    {
+      "iteration_number": 13,
+      "summary": "1. SUMMARY:\nThe Transformer model addresses the practical challenges of stabilizing dot-product attention by introducing \"Scaled Dot-Product Attention.\" This method scales the dot products of queries and keys by the square root of the key dimension ($ \\sqrt{d_k} $). This scaling is crucial because, for large $ d_k $, the dot products can become excessively large, pushing the softmax function into regions with extremely small gradients, thus hindering learning. By normalizing these dot products, the model maintains stable gradients, enabling effective learning of long-range dependencies.\n\nFurthermore, \"Multi-Head Attention\" enhances stability and the ability to capture diverse dependencies. It achieves this by linearly projecting queries, keys, and values into multiple lower-dimensional subspaces and performing attention in parallel. This subspace projection allows the model to jointly attend to information from different representation subspaces at different positions, mitigating the averaging effect that can occur with a single attention head. The Transformer's architecture, relying solely on attention mechanisms, offers significant parallelization benefits and shorter path lengths for information flow compared to recurrent or convolutional networks, facilitating faster training and improved quality in sequence transduction tasks.\n\n2. KEY HIGHLIGHTS:\n*   Scaled Dot-Product Attention stabilizes learning by dividing dot products by $ \\sqrt{d_k} $ to prevent softmax saturation and vanishing gradients, especially with large key dimensions.\n*   Multi-Head Attention improves stability and the ability to capture diverse dependencies by projecting queries, keys, and values into multiple subspaces and attending in parallel.\n*   The Transformer's reliance on attention, rather than recurrence or convolutions, allows for greater parallelization and shorter path lengths for learning long-range dependencies.\n*   Multi-head attention's subspace projections enable attending to different representation subspaces, overcoming the limitations of averaging seen in single attention heads.",
+      "qa_pairs": [
+        {
+          "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+          "answer": "For large $ d_k $, the dot products can become excessively large, pushing the softmax function into regions with extremely small gradients, thus hindering learning."
+        },
+        {
+          "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+          "answer": "This method scales the dot products of queries and keys by the square root of the key dimension ($ \\sqrt{d_k} $). By normalizing these dot products, the model maintains stable gradients, enabling effective learning of long-range dependencies."
+        },
+        {
+          "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+          "answer": "Multi-Head Attention"
+        },
+        {
+          "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+          "answer": "This subspace projection allows the model to jointly attend to information from different representation subspaces at different positions, mitigating the averaging effect that can occur with a single attention head."
+        },
+        {
+          "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+          "answer": "scaled by the square root of the key dimension ($ \\sqrt{d_k} $)"
+        },
+        {
+          "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+          "answer": "Not enough information in summary"
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+              "answer": "For large $ d_k $, the dot products can become excessively large, pushing the softmax function into regions with extremely small gradients, thus hindering learning."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+              "answer": "This method scales the dot products of queries and keys by the square root of the key dimension ($ \\sqrt{d_k} $). By normalizing these dot products, the model maintains stable gradients, enabling effective learning of long-range dependencies."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states 'Not enough information in summary' but the article footnote states: 'assume that the components of q and k are independent random variables with mean 0 and variance 1. Then their dot product, q · k = (cid:80)dk qiki, has mean 0 and variance dk.'"
+          },
+          {
+            "qa": {
+              "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+              "answer": "Multi-Head Attention"
+            },
+            "result": false,
+            "issue": "The summary claims Multi-Head Attention is an alternative that performs better than unscaled dot-product attention for large key dimensions. However, the text states that additive attention performs better than unscaled dot-product attention for large key dimensions, and Multi-Head Attention is a different concept altogether."
+          },
+          {
+            "qa": {
+              "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+              "answer": "This subspace projection allows the model to jointly attend to information from different representation subspaces at different positions, mitigating the averaging effect that can occur with a single attention head."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+              "answer": "scaled by the square root of the key dimension ($ \\sqrt{d_k} $)"
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states 'Not enough information in summary' but the article footnote states: 'assume that the components of q and k are independent random variables with mean 0 and variance 1. Then their dot product, q · k = (cid:80)dk qiki, has mean 0 and variance dk.'"
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Scaled Dot-Product Attention — scaling factor and gradient stability",
+          "Multi-Head Attention — benefits of subspace projection and stability",
+          "Statistical properties of dot products — query/key vector assumptions and variance",
+          "Transformer architecture — comparison to RNNs/CNNs for parallelization and path length",
+          "Alternative attention mechanisms — comparison to additive attention",
+          "Scaled Dot-Product Attention — explanation of scaling factor and purpose"
+        ]
+      },
+      "correct_count_all": 4,
+      "correct_count_acu": 1,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Multi-Head Attention — benefits for stability and diverse dependencies",
+        "Multi-Head Attention — benefits of subspace projection",
+        "Positional Encoding — sinusoidal vs. learned",
+        "Statistical properties of dot products — relation to softmax saturation and variance",
+        "Statistical properties of dot products — query/key vector assumptions and variance",
+        "Comparison of attention to RNNs/CNNs — parallelization and path length",
+        "Statistical properties of dot products — relation to softmax saturation",
+        "Scaled Dot-Product Attention — scaling factor and gradient stability",
+        "Multi-Head Attention — subspace projection and averaging effect",
+        "Comparison of attention to RNNs and CNNs — path length and complexity",
+        "Scaled Dot-Product Attention — explanation of scaling factor and purpose",
+        "Multi-Head Attention — benefits of subspace projection and stability",
+        "Transformer architecture — comparison to RNNs and CNNs",
+        "Scaled Dot-Product Attention — explanation of scaling factor and its purpose",
+        "Transformer architecture — encoder-decoder self-attention and parallelization",
+        "Positional Encoding — sinusoidal vs. learned and extrapolation",
+        "Transformer architecture — encoder-decoder structure and self-attention applications",
+        "Transformer architecture — encoder/decoder self-attention and parallelization",
+        "Positional Encoding — sinusoidal vs. learned embeddings",
+        "Transformer architecture — encoder/decoder self-attention",
+        "Alternative attention mechanisms — comparison to unscaled dot-product",
+        "Scaled Dot-Product Attention — purpose and scaling factor",
+        "Alternative attention mechanisms — comparison to additive attention",
+        "Transformer architecture — comparison to RNNs/CNNs for parallelization and path length"
+      ],
+      "sections_to_highlight_size": 24
+    },
+    {
+      "iteration_number": 14,
+      "summary": "1. SUMMARY:\nThe Transformer model addresses the practical challenges of stabilizing dot-product attention by introducing Scaled Dot-Product Attention. The core issue identified is that for large values of the key dimension ($d_k$), dot products between queries and keys can grow large, pushing the softmax function into regions with extremely small gradients, hindering learning. To counteract this, the authors scale the dot products by $1/\\sqrt{d_k}$. This scaling factor is crucial for maintaining gradient stability during training. Furthermore, Multi-Head Attention is proposed as a solution to allow the model to jointly attend to information from different representation subspaces at different positions. By projecting queries, keys, and values into lower-dimensional subspaces using learned linear projections, and then performing attention in parallel, the model can capture a richer set of dependencies. This contrasts with single-head attention, where averaging can inhibit the learning of diverse relationships. The paper also explores positional encoding, finding that sinusoidal encodings perform similarly to learned embeddings but offer potential benefits for extrapolating to longer sequences.\n\n2. KEY HIGHLIGHTS:\n*   Scaled Dot-Product Attention uses a scaling factor of $1/\\sqrt{d_k}$ to prevent softmax saturation and maintain gradient stability with large key dimensions.\n*   Multi-Head Attention improves stability and captures diverse dependencies by projecting queries, keys, and values into multiple subspaces and performing attention in parallel.\n*   Subspace projection in Multi-Head Attention allows the model to attend to information from different representation subspaces, avoiding the averaging inhibition of single-head attention.\n*   Sinusoidal positional encodings are shown to perform comparably to learned embeddings and may offer better extrapolation capabilities to unseen sequence lengths.",
+      "qa_pairs": [
+        {
+          "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+          "answer": "For large values of the key dimension ($d_k$), dot products between queries and keys can grow large, pushing the softmax function into regions with extremely small gradients, hindering learning."
+        },
+        {
+          "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+          "answer": "The authors scale the dot products by $1/\\sqrt{d_k}$. This scaling factor is crucial for maintaining gradient stability during training."
+        },
+        {
+          "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+          "answer": "Multi-Head Attention is proposed as a solution."
+        },
+        {
+          "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+          "answer": "By projecting queries, keys, and values into lower-dimensional subspaces using learned linear projections, and then performing attention in parallel, the model can capture a richer set of dependencies. This contrasts with single-head attention, where averaging can inhibit the learning of diverse relationships."
+        },
+        {
+          "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+          "answer": "The dot products are scaled by $1/\\sqrt{d_k}$."
+        },
+        {
+          "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+          "answer": "Not enough information in summary"
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+              "answer": "For large values of the key dimension ($d_k$), dot products between queries and keys can grow large, pushing the softmax function into regions with extremely small gradients, hindering learning."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+              "answer": "The authors scale the dot products by $1/\\sqrt{d_k}$. This scaling factor is crucial for maintaining gradient stability during training."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states 'Not enough information in summary' but the article's footnote (4) provides this information: 'assume that the components of q and k are independent random variables with mean 0 and variance 1. Then their dot product, q · k = sum(qi*ki)/sqrt(dk), has mean 0 and variance dk.'"
+          },
+          {
+            "qa": {
+              "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+              "answer": "Multi-Head Attention is proposed as a solution."
+            },
+            "result": false,
+            "issue": "The summary states that Multi-Head Attention is proposed as a solution, but the question asks for an alternative that performs *better* than unscaled dot-product attention. The paper mentions additive attention as an alternative that performs better than unscaled dot-product attention for large key dimensions."
+          },
+          {
+            "qa": {
+              "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+              "answer": "By projecting queries, keys, and values into lower-dimensional subspaces using learned linear projections, and then performing attention in parallel, the model can capture a richer set of dependencies. This contrasts with single-head attention, where averaging can inhibit the learning of diverse relationships."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+              "answer": "The dot products are scaled by $1/\\sqrt{d_k}$."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states 'Not enough information in summary' but the article's footnote (4) provides this information: 'assume that the components of q and k are independent random variables with mean 0 and variance 1. Then their dot product, q · k = sum(qi*ki)/sqrt(dk), has mean 0 and variance dk.'"
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Scaled Dot-Product Attention — scaling factor and gradient stability",
+          "Multi-Head Attention — benefits of subspace projection",
+          "Positional Encoding — sinusoidal vs. learned",
+          "Statistical properties of dot products — query/key vector assumptions and variance",
+          "Additive attention — comparison to scaled dot-product for large key dimensions",
+          "Multi-Head Attention — parallel attention in subspaces"
+        ]
+      },
+      "correct_count_all": 4,
+      "correct_count_acu": 1,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Multi-Head Attention — benefits for stability and diverse dependencies",
+        "Multi-Head Attention — benefits of subspace projection",
+        "Positional Encoding — sinusoidal vs. learned",
+        "Statistical properties of dot products — relation to softmax saturation and variance",
+        "Statistical properties of dot products — query/key vector assumptions and variance",
+        "Comparison of attention to RNNs/CNNs — parallelization and path length",
+        "Statistical properties of dot products — relation to softmax saturation",
+        "Scaled Dot-Product Attention — scaling factor and gradient stability",
+        "Multi-Head Attention — subspace projection and averaging effect",
+        "Comparison of attention to RNNs and CNNs — path length and complexity",
+        "Scaled Dot-Product Attention — explanation of scaling factor and purpose",
+        "Multi-Head Attention — benefits of subspace projection and stability",
+        "Transformer architecture — comparison to RNNs and CNNs",
+        "Scaled Dot-Product Attention — explanation of scaling factor and its purpose",
+        "Transformer architecture — encoder-decoder self-attention and parallelization",
+        "Positional Encoding — sinusoidal vs. learned and extrapolation",
+        "Transformer architecture — encoder-decoder structure and self-attention applications",
+        "Transformer architecture — encoder/decoder self-attention and parallelization",
+        "Positional Encoding — sinusoidal vs. learned embeddings",
+        "Transformer architecture — encoder/decoder self-attention",
+        "Alternative attention mechanisms — comparison to unscaled dot-product",
+        "Scaled Dot-Product Attention — purpose and scaling factor",
+        "Alternative attention mechanisms — comparison to additive attention",
+        "Transformer architecture — comparison to RNNs/CNNs for parallelization and path length"
+      ],
+      "sections_to_highlight_size": 24
+    },
+    {
+      "iteration_number": 15,
+      "summary": "1. SUMMARY:\nThis paper introduces the Transformer, a novel architecture that eschews recurrence and convolutions, relying entirely on attention mechanisms for sequence transduction. The core innovation is Scaled Dot-Product Attention, which addresses the issue of large dot products saturating the softmax function by scaling them with the inverse square root of the key dimension (${\\sqrt{d_k}}$). This scaling is crucial for maintaining stable gradients, especially with larger key dimensions where unscaled dot-product attention can lead to very small gradients. Multi-Head Attention further enhances this by projecting queries, keys, and values into multiple lower-dimensional subspaces, allowing the model to jointly attend to diverse information from different representation subspaces at different positions. This parallel processing across subspaces improves the model's ability to capture various dependencies. The paper also compares attention mechanisms to RNNs and CNNs, highlighting attention's advantage in parallelization and shorter path lengths for learning long-range dependencies. Positional encodings, specifically sinusoidal ones, are introduced to inject sequence order information, with a note that learned embeddings yield similar results but sinusoidal ones might offer better extrapolation to longer sequences.\n\n2. KEY HIGHLIGHTS:\n*   Scaled Dot-Product Attention combats softmax saturation and gradient instability by scaling dot products by $1/\\sqrt{d_k}$.\n*   Multi-Head Attention allows parallel attention in different learned subspaces, enabling the model to attend to diverse dependencies, with subspace projection being beneficial for stability.\n*   The Transformer's reliance on self-attention offers greater parallelization and shorter path lengths for learning long-range dependencies compared to RNNs and CNNs.\n*   Sinusoidal positional encodings are used to inject sequence order information, with learned embeddings showing comparable performance but potentially less extrapolation capability.",
+      "qa_pairs": [
+        {
+          "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+          "answer": "When the dimensionality of the keys (dk) is large, unscaled dot-product attention can lead to very small gradients due to saturation of the softmax function."
+        },
+        {
+          "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+          "answer": "Scaled Dot-Product Attention counteracts vanishing gradients by scaling the dot products with the inverse square root of the key dimension (${\\sqrt{d_k}}$) before they are passed through the softmax function."
+        },
+        {
+          "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+          "answer": "Multi-Head Attention projects queries, keys, and values into multiple lower-dimensional subspaces, which is beneficial for stability."
+        },
+        {
+          "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+          "answer": "The dot products are scaled by the inverse square root of the key dimension ($1/\\sqrt{d_k}$) before the softmax function to stabilize attention."
+        },
+        {
+          "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+          "answer": "Not enough information in summary"
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+              "answer": "When the dimensionality of the keys (dk) is large, unscaled dot-product attention can lead to very small gradients due to saturation of the softmax function."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+              "answer": "Scaled Dot-Product Attention counteracts vanishing gradients by scaling the dot products with the inverse square root of the key dimension (${\\sqrt{d_k}}$) before they are passed through the softmax function."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not contain the information about the statistical assumptions of query and key vectors that explain why dot products grow large. The article's footnote states that if the components of q and k are independent random variables with mean 0 and variance 1, then their dot product has mean 0 and variance dk. This information is missing from the summary."
+          },
+          {
+            "qa": {
+              "question": "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states that 'Additive attention computes the compatibility function using a feed-forward network with a single hidden layer' and that 'While the two are similar in theoretical complexity, dot-product attention is much faster and more space-efficient in practice, since it can be implemented using highly optimized matrix multiplication code.' It also mentions that 'additive attention outperforms dot product attention without scaling for larger values of dk'. This information is missing from the summary."
+          },
+          {
+            "qa": {
+              "question": "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?",
+              "answer": "Multi-Head Attention projects queries, keys, and values into multiple lower-dimensional subspaces, which is beneficial for stability."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+              "answer": "The dot products are scaled by the inverse square root of the key dimension ($1/\\sqrt{d_k}$) before the softmax function to stabilize attention."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not contain the hypothesis about the variance of the dot product of the query and key vectors. The article's footnote states that if the components of q and k are independent random variables with mean 0 and variance 1, then their dot product has mean 0 and variance dk."
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Scaled Dot-Product Attention — scaling factor and gradient stability",
+          "Multi-Head Attention — benefits for stability and diverse dependencies",
+          "Positional Encoding — sinusoidal vs. learned",
+          "Transformer architecture — comparison to RNNs/CNNs for parallelization and path length",
+          "Statistical properties of dot products — assumptions and variance",
+          "Alternative attention mechanisms — comparison to additive attention"
+        ]
+      },
+      "correct_count_all": 4,
+      "correct_count_acu": 1,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Multi-Head Attention — benefits for stability and diverse dependencies",
+        "Multi-Head Attention — benefits of subspace projection",
+        "Positional Encoding — sinusoidal vs. learned",
+        "Multi-Head Attention — parallel attention in subspaces",
+        "Statistical properties of dot products — relation to softmax saturation and variance",
+        "Statistical properties of dot products — query/key vector assumptions and variance",
+        "Comparison of attention to RNNs/CNNs — parallelization and path length",
+        "Statistical properties of dot products — relation to softmax saturation",
+        "Scaled Dot-Product Attention — scaling factor and gradient stability",
+        "Additive attention — comparison to scaled dot-product for large key dimensions",
+        "Multi-Head Attention — subspace projection and averaging effect",
+        "Comparison of attention to RNNs and CNNs — path length and complexity",
+        "Scaled Dot-Product Attention — explanation of scaling factor and purpose",
+        "Multi-Head Attention — benefits of subspace projection and stability",
+        "Transformer architecture — comparison to RNNs and CNNs",
+        "Scaled Dot-Product Attention — explanation of scaling factor and its purpose",
+        "Transformer architecture — encoder-decoder self-attention and parallelization",
+        "Positional Encoding — sinusoidal vs. learned and extrapolation",
+        "Transformer architecture — encoder-decoder structure and self-attention applications",
+        "Transformer architecture — encoder/decoder self-attention and parallelization",
+        "Positional Encoding — sinusoidal vs. learned embeddings",
+        "Transformer architecture — encoder/decoder self-attention",
+        "Alternative attention mechanisms — comparison to unscaled dot-product",
+        "Scaled Dot-Product Attention — purpose and scaling factor",
+        "Alternative attention mechanisms — comparison to additive attention",
+        "Transformer architecture — comparison to RNNs/CNNs for parallelization and path length"
+      ],
+      "sections_to_highlight_size": 26
+    }
+  ],
+  "final_summary": "1. SUMMARY:\nThis paper introduces the Transformer, a novel architecture that eschews recurrence and convolutions, relying entirely on attention mechanisms for sequence transduction. The core innovation is Scaled Dot-Product Attention, which addresses the issue of large dot products saturating the softmax function by scaling them with the inverse square root of the key dimension (${\\sqrt{d_k}}$). This scaling is crucial for maintaining stable gradients, especially with larger key dimensions where unscaled dot-product attention can lead to very small gradients. Multi-Head Attention further enhances this by projecting queries, keys, and values into multiple lower-dimensional subspaces, allowing the model to jointly attend to diverse information from different representation subspaces at different positions. This parallel processing across subspaces improves the model's ability to capture various dependencies. The paper also compares attention mechanisms to RNNs and CNNs, highlighting attention's advantage in parallelization and shorter path lengths for learning long-range dependencies. Positional encodings, specifically sinusoidal ones, are introduced to inject sequence order information, with a note that learned embeddings yield similar results but sinusoidal ones might offer better extrapolation to longer sequences.\n\n2. KEY HIGHLIGHTS:\n*   Scaled Dot-Product Attention combats softmax saturation and gradient instability by scaling dot products by $1/\\sqrt{d_k}$.\n*   Multi-Head Attention allows parallel attention in different learned subspaces, enabling the model to attend to diverse dependencies, with subspace projection being beneficial for stability.\n*   The Transformer's reliance on self-attention offers greater parallelization and shorter path lengths for learning long-range dependencies compared to RNNs and CNNs.\n*   Sinusoidal positional encodings are used to inject sequence order information, with learned embeddings showing comparable performance but potentially less extrapolation capability.",
+  "total_iterations": 15,
+  "status": "max_iterations_reached",
+  "questions": [
+    "What specific issue does the paper identify with dot-product attention when the dimensionality of the keys (dk) is large?",
+    "How does the proposed \"Scaled Dot-Product Attention\" mechanism counteract the problem of vanishing gradients in the softmax function?",
+    "According to the paper's footnote, what statistical assumption about the query and key vectors explains why their dot products grow large in magnitude?",
+    "Besides the scaling factor, what other attention mechanism is mentioned as a common alternative that performs better than unscaled dot-product attention for large key dimensions?",
+    "How does the reduction of key/value dimensions in each head of Multi-Head Attention indirectly contribute to more stable attention calculations?"
+  ],
+  "acu_questions": [
+    "ACU. By what factor are the dot products scaled before the softmax function to stabilize attention?",
+    "ACU. As hypothesized in the paper, what is the variance of the dot product of the query and key vectors?"
+  ]
+}

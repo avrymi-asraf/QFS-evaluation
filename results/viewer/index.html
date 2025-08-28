@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QFS Evaluation Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .controls {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        select {
+            padding: 8px;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .results {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .summary {
+            white-space: pre-wrap;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        .qa-pair {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .qa-pair h4 {
+            margin: 0 0 10px 0;
+            color: #2c5282;
+        }
+
+        .qa-pair p {
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .qa-result {
+            margin-top: 8px;
+            font-weight: bold;
+        }
+
+        .qa-result.pass {
+            color: #2f855a;
+        }
+
+        .qa-result.fail {
+            color: #c53030;
+        }
+
+        .qa-issue {
+            margin-top: 4px;
+            color: #b7791f;
+            font-size: 0.9em;
+        }
+
+        .missing-topics {
+            color: #c53030;
+            margin-top: 15px;
+        }
+
+        h2 {
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+
+        .metadata {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .iteration {
+            border: 1px solid #e2e8f0;
+            margin: 15px 0;
+        }
+
+        .iteration h3 {
+            background-color: #edf2f7;
+            margin: 0;
+            padding: 10px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="controls">
+        <select id="runSelect">
+            <option value="">Select a run...</option>
+        </select>
+        <select id="articleSelect" disabled>
+            <option value="">Select an article...</option>
+        </select>
+    </div>
+    <div id="results" class="results">
+        <p>Select a run and article to view results.</p>
+    </div>
+
+    <script>
+        // Directory-based discovery (no CSV dependency)
+        // Lightweight logger (enable with ?debug=1)
+        const DEBUG = (new URLSearchParams(window.location.search).get('debug') || '1') !== '0';
+        const Logger = {
+            info: (...args) => { if (DEBUG) console.log('[QFS]', new Date().toISOString(), ...args); },
+            warn: (...args) => { if (DEBUG) console.warn('[QFS]', new Date().toISOString(), ...args); },
+            error: (...args) => { console.error('[QFS]', new Date().toISOString(), ...args); },
+            group: (label) => { if (DEBUG) console.group('[QFS]', label); },
+            groupEnd: () => { if (DEBUG) console.groupEnd(); },
+            time: (label) => { if (DEBUG) console.time('[QFS] ' + label); },
+            timeEnd: (label) => { if (DEBUG) console.timeEnd('[QFS] ' + label); }
+        };
+
+        window.addEventListener('error', (e) => {
+            Logger.error('Window error:', e.message, e.filename + ':' + e.lineno + ':' + e.colno);
+        });
+        window.addEventListener('unhandledrejection', (e) => {
+            Logger.error('Unhandled promise rejection:', e.reason);
+        });
+
+        const RUN_CACHE = {}; // run_name -> { articles: [{file, display}] }
+
+        function parseDirListing(htmlText) {
+            // Parses a simple directory listing (like Python's http.server) and returns {files, dirs}
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(htmlText, 'text/html');
+            const anchors = Array.from(doc.querySelectorAll('a'));
+            const files = [];
+            const dirs = [];
+            anchors.forEach(a => {
+                const href = a.getAttribute('href');
+                if (!href || href.startsWith('?') || href === '../') return;
+                if (href.endsWith('/')) {
+                    dirs.push(href.replace(/\/$/, ''));
+                } else {
+                    files.push(href);
+                }
+            });
+            return { files, dirs };
+        }
+
+        async function fetchDir(url) {
+            Logger.group('fetchDir');
+            Logger.info('Listing URL:', url);
+            Logger.time('list ' + url);
+            const resp = await fetch(url + '?_=' + Date.now());
+            Logger.info('HTTP status:', resp.status, resp.statusText);
+            if (!resp.ok) {
+                Logger.groupEnd();
+                throw new Error('Failed to list ' + url);
+            }
+            const text = await resp.text();
+            const parsed = parseDirListing(text);
+            Logger.info('Parsed listing:', { files: parsed.files.length, dirs: parsed.dirs.length });
+            Logger.timeEnd('list ' + url);
+            Logger.groupEnd();
+            return parsed;
+        }
+
+        async function loadRuns() {
+            const runSelect = document.getElementById('runSelect');
+            runSelect.innerHTML = '<option value="">Select a run...</option>';
+            try {
+                Logger.group('loadRuns');
+                Logger.info('Discovering runs under parent folder');
+                const listing = await fetchDir('../');
+                const runs = listing.dirs.filter(d => !['raw', 'viewer'].includes(d)).sort();
+                Logger.info('Runs found:', runs);
+                runs.forEach(run => {
+                    RUN_CACHE[run] = { articles: [] }; // fill on demand
+                    const option = document.createElement('option');
+                    option.value = run;
+                    option.textContent = run;
+                    runSelect.appendChild(option);
+                });
+                if (!runs.length) {
+                    document.getElementById('results').innerHTML = '<p>No run directories found under this folder.</p>';
+                }
+                Logger.groupEnd();
+            } catch (e) {
+                Logger.error('loadRuns failed:', e);
+                document.getElementById('results').innerHTML = '<p>Unable to load run directories (directory listing may be disabled).</p>';
+            }
+        }
+
+        async function loadArticles(run) {
+            const articleSelect = document.getElementById('articleSelect');
+            articleSelect.innerHTML = '<option value="">Select an article...</option>';
+            articleSelect.disabled = true;
+            if (!run) return;
+            try {
+                Logger.group('loadArticles');
+                Logger.info('Run selected:', run);
+                const listing = await fetchDir(`../${run}/`);
+                const jsonFiles = listing.files.filter(f => f.endsWith('.json') && !['manifest.json', 'meta.json'].includes(f));
+                Logger.info('Article JSON files:', jsonFiles);
+                const articles = jsonFiles.map(f => ({ file: f, display: f.replace(/\.json$/, '').replace(/-/g, ' ') }));
+                RUN_CACHE[run].articles = articles;
+                articles.sort((a, b) => a.display.localeCompare(b.display))
+                    .forEach(a => {
+                        const option = document.createElement('option');
+                        option.value = a.file;
+                        option.textContent = a.display;
+                        articleSelect.appendChild(option);
+                    });
+                if (articles.length) articleSelect.disabled = false;
+                Logger.info('Articles loaded:', articles.map(a => a.display));
+                Logger.groupEnd();
+            } catch (e) {
+                Logger.error('Failed to load articles for run', run, e);
+            }
+        }
+
+        async function loadResults(run, article) {
+            try {
+                Logger.group('loadResults');
+                Logger.info('Loading result JSON:', { run, article });
+                const response = await fetch(`../${run}/${article}`);
+                Logger.info('Result HTTP status:', response.status, response.statusText);
+                const data = await response.json();
+                Logger.info('Result keys:', Object.keys(data));
+
+                // Try to read manifest.json if present; otherwise proceed without it
+                let manifest = {};
+                try {
+                    const manifestResponse = await fetch(`../${run}/manifest.json`);
+                    Logger.info('Manifest HTTP status:', manifestResponse.status, manifestResponse.statusText);
+                    if (manifestResponse.ok) {
+                        manifest = await manifestResponse.json();
+                    }
+                } catch (_) { /* optional */ }
+
+                // Build metadata block, showing only available fields
+                let metaHtml = '<div class="metadata">';
+                metaHtml += `<p><strong>Run:</strong> ${run}</p>`;
+                if (manifest.timestamp) metaHtml += `<p><strong>Timestamp:</strong> ${manifest.timestamp}</p>`;
+                if (manifest.branch) metaHtml += `<p><strong>Branch:</strong> ${manifest.branch}</p>`;
+                if (manifest.commit) metaHtml += `<p><strong>Commit:</strong> ${manifest.commit}</p>`;
+                if (data.query) metaHtml += `<p><strong>Query:</strong> ${data.query}</p>`;
+                if (data.max_iterations !== undefined && data.max_iterations !== null) metaHtml += `<p><strong>Max Iterations:</strong> ${data.max_iterations}</p>`;
+                if (data.status) metaHtml += `<p><strong>Status:</strong> ${data.status}</p>`;
+                if (data.total_iterations !== undefined && data.total_iterations !== null) metaHtml += `<p><strong>Total Iterations:</strong> ${data.total_iterations}</p>`;
+                metaHtml += '</div>';
+
+                let html = `
+                    ${metaHtml}
+                    <h2>Final Summary</h2>
+                    <div class="summary">${data.final_summary || ''}</div>
+                    <h2>Iterations</h2>
+                `;
+
+                const iterations = Array.isArray(data.iterations) ? data.iterations : [];
+                Logger.info('Iterations count:', iterations.length);
+                iterations.forEach((iteration, index) => {
+                    // Build evaluation map (question -> {result, issue}) from either iteration.qa_evaluations or nested judge.evaluations
+                    const evals = {};
+                    if (Array.isArray(iteration.qa_evaluations)) {
+                        iteration.qa_evaluations.forEach(ev => {
+                            if (ev && ev.qa && ev.qa.question) {
+                                evals[ev.qa.question] = { result: ev.result, issue: ev.issue };
+                            }
+                        });
+                    }
+                    // Fallback: look into judge.evaluations if needed
+                    if (iteration.judge && Array.isArray(iteration.judge.evaluations)) {
+                        iteration.judge.evaluations.forEach(ev => {
+                            if (ev && ev.qa && ev.qa.question && !(ev.qa.question in evals)) {
+                                evals[ev.qa.question] = { result: ev.result, issue: ev.issue };
+                            }
+                        });
+                    }
+
+                    const qaPairs = iteration.qa_pairs || [];
+                    Logger.info(`Iteration ${iteration.iteration_number || (index + 1)}: QA pairs:`, qaPairs.length);
+                    const qaHtml = qaPairs.map(qa => {
+                        // New format: each qa is an object {question, answer}
+                        const question = qa.question || '';
+                        const answer = qa.answer || '';
+                        const evaluation = evals[question];
+                        const passed = evaluation ? evaluation.result : null;
+                        const issue = evaluation ? evaluation.issue : null;
+                        return `
+                            <div class="qa-pair">
+                                <h4>Q: ${question}</h4>
+                                <p>A: ${answer}</p>
+                                ${passed !== null ? `<div class="qa-result ${passed ? 'pass' : 'fail'}">Result: ${passed ? 'PASS' : 'FAIL'}</div>` : ''}
+                                ${issue ? `<div class="qa-issue">Reason: ${issue}</div>` : ''}
+                            </div>
+                        `;
+                    }).join('');
+
+                    html += `
+                        <div class="iteration" style="margin-bottom: 30px; padding: 20px; background-color: #f8f9fa; border-radius: 8px;">
+                            <h3>Iteration ${iteration.iteration_number || (index + 1)}</h3>
+                            ${(iteration.correct_count_all !== undefined || iteration.correct_count_acu !== undefined) ? `
+                                <div class="metadata">
+                                    ${iteration.correct_count_all !== undefined ? `<p><strong>Correct Count (All):</strong> ${iteration.correct_count_all}</p>` : ''}
+                                    ${iteration.correct_count_acu !== undefined ? `<p><strong>Correct Count (ACU):</strong> ${iteration.correct_count_acu}</p>` : ''}
+                                </div>
+                            ` : ''}
+                            <div class="summary">${iteration.summary || ''}</div>
+                            <h4>Q&A Pairs</h4>
+                            ${qaHtml || '<p>No Q&A pairs.</p>'}
+                            ${iteration.missing_topics && iteration.missing_topics.length > 0 ? `
+                                <h4>Missing Topics</h4>
+                                <div class="missing-topics">
+                                    <ul>
+                                        ${iteration.missing_topics.map(topic => `<li>${topic}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                });
+
+                document.getElementById('results').innerHTML = html;
+                Logger.groupEnd();
+            } catch (error) {
+                Logger.error('Error loading results:', error);
+                document.getElementById('results').innerHTML = '<p>Error loading results. Please try again.</p>';
+            }
+        }
+
+        document.getElementById('runSelect').addEventListener('change', (e) => {
+            const run = e.target.value;
+            Logger.info('Run changed:', run);
+            if (run) {
+                loadArticles(run);
+            } else {
+                document.getElementById('articleSelect').disabled = true;
+                document.getElementById('articleSelect').innerHTML = '<option value="">Select an article...</option>';
+                document.getElementById('results').innerHTML = '<p>Select a run and article to view results.</p>';
+            }
+        });
+
+        document.getElementById('articleSelect').addEventListener('change', (e) => {
+            const run = document.getElementById('runSelect').value;
+            const article = e.target.value;
+            Logger.info('Article changed:', { run, article });
+            if (run && article) {
+                loadResults(run, article);
+            }
+        });
+
+        // Load runs when the page loads
+        loadRuns();
+    </script>
+</body>
+
+</html>
+

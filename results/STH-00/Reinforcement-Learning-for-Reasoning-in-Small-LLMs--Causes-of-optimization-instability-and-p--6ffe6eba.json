@@ -1,0 +1,1206 @@
+{
+  "query": "Causes of optimization instability and performance degradation during RL fine-tuning of small language models.",
+  "max_iterations": 15,
+  "iterations": [
+    {
+      "iteration_number": 1,
+      "summary": "1. SUMMARY:\nThis study investigates the effectiveness of reinforcement learning (RL) for enhancing the reasoning capabilities of small language models (LLMs), specifically a 1.5-billion-parameter model, under strict computational constraints. The researchers adapted the Group Relative Policy Optimization (GRPO) algorithm and curated a high-quality mathematical reasoning dataset. Three experiments explored model behavior and performance. While initial training (50-100 steps) showed rapid reasoning gains (e.g., AMC23 accuracy from 63% to 80%), prolonged training led to optimization instability and performance degradation. This was attributed to factors like strict length constraints (4096 tokens) and the multilingual nature of the base model, causing language drift and truncated reasoning. Incorporating a mix of easy and hard problems and using cosine rewards helped stabilize training and control output length, though extended lengths were still needed for very complex tasks. The findings suggest that RL can significantly improve small LLMs' reasoning cost-effectively, but challenges like optimization stability and length limitations need careful management for sustained performance.\n\n2. KEY HIGHLIGHTS:\n*   Small LLMs can achieve significant reasoning improvements within the first 50-100 RL fine-tuning steps, but prolonged training can lead to optimization instability and performance degradation.\n*   Strict maximum completion length constraints (e.g., 4096 tokens) are a key factor in degradation, forcing premature truncation of reasoning processes for complex problems.\n*   The multilingual nature of the base model can contribute to language drift and inconsistent outputs during extended RL fine-tuning.\n*   Mixing easier problems with challenging ones and using cosine rewards can help stabilize training and manage output length, though further length extension may be needed for highly complex reasoning tasks.\n*   Despite these challenges, RL fine-tuning offers a cost-effective method to boost small LLM reasoning, achieving competitive results with minimal data and computation.",
+      "qa_pairs": [
+        {
+          "question": "What were the primary signs of optimization instability and performance degradation observed in Experiment 1 after the initial 100 training steps?",
+          "answer": "Optimization instability and performance degradation were observed after the initial 100 training steps."
+        },
+        {
+          "question": "How did the strict 4096-token completion length limit contribute to the model's performance degradation on the complex 'open-s1' dataset?",
+          "answer": "The strict 4096-token completion length limit contributed to performance degradation by forcing premature truncation of reasoning processes for complex problems."
+        },
+        {
+          "question": "According to the findings in Experiment 2, what was the main reason that performance declined and KL divergence became unstable after 150-200 steps, despite initial improvements from mixing easy and hard problems?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "What inherent characteristic of the DeepSeek-R1-Distill-Qwen-1.5B base model was identified as a persistent cause of unreadable and mixed-language outputs during prolonged training?",
+          "answer": "The inherent characteristic of the DeepSeek-R1-Distill-Qwen-1.5B base model that caused unreadable and mixed-language outputs during prolonged training was its multilingual nature."
+        },
+        {
+          "question": "What fundamental trade-off, as highlighted by the study's overall results, causes performance degradation after initial rapid gains when fine-tuning small LLMs under strict resource constraints?",
+          "answer": "The fundamental trade-off is between initial rapid gains and subsequent performance degradation after initial rapid gains when fine-tuning small LLMs under strict resource constraints."
+        },
+        {
+          "question": "ACU. In Experiment 1, after how many global steps did the model's accuracy begin to degrade significantly?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What was the maximum completion length in tokens that the model struggled with in Experiment 1, leading to performance degradation?",
+          "answer": "The model struggled with a maximum completion length of 4096 tokens in Experiment 1, leading to performance degradation."
+        },
+        {
+          "question": "ACU. In Experiment 2, after approximately how many global steps did the KL divergence become unstable?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What type of reward was introduced in Experiment 3 to stabilize completion lengths and improve training consistency?",
+          "answer": "Cosine rewards were introduced in Experiment 3 to stabilize completion lengths and improve training consistency."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What were the primary signs of optimization instability and performance degradation observed in Experiment 1 after the initial 100 training steps?",
+              "answer": "Optimization instability and performance degradation were observed after the initial 100 training steps."
+            },
+            "result": false,
+            "issue": "The article states that after 200 steps, accuracy degraded significantly, dropping below 60% on AMC23 and to 80% on MATH-500. It also mentions unstable accuracy rewards and fluctuating completion lengths. The answer only mentions that instability and degradation were observed, not the signs."
+          },
+          {
+            "qa": {
+              "question": "How did the strict 4096-token completion length limit contribute to the model's performance degradation on the complex 'open-s1' dataset?",
+              "answer": "The strict 4096-token completion length limit contributed to performance degradation by forcing premature truncation of reasoning processes for complex problems."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "According to the findings in Experiment 2, what was the main reason that performance declined and KL divergence became unstable after 150-200 steps, despite initial improvements from mixing easy and hard problems?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states that after 150-200 steps, performance declined and KL divergence became unstable, but does not provide the main reason. The article mentions 'persistent challenges with length constraints and multilingual tendencies' as potential causes."
+          },
+          {
+            "qa": {
+              "question": "What inherent characteristic of the DeepSeek-R1-Distill-Qwen-1.5B base model was identified as a persistent cause of unreadable and mixed-language outputs during prolonged training?",
+              "answer": "The inherent characteristic of the DeepSeek-R1-Distill-Qwen-1.5B base model that caused unreadable and mixed-language outputs during prolonged training was its multilingual nature."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "What fundamental trade-off, as highlighted by the study's overall results, causes performance degradation after initial rapid gains when fine-tuning small LLMs under strict resource constraints?",
+              "answer": "The fundamental trade-off is between initial rapid gains and subsequent performance degradation after initial rapid gains when fine-tuning small LLMs under strict resource constraints."
+            },
+            "result": false,
+            "issue": "The article mentions a trade-off between efficiency and reasoning depth, and sensitivity to over-optimization under fixed length constraints, but the answer is too vague and repetitive."
+          },
+          {
+            "qa": {
+              "question": "ACU. In Experiment 1, after how many global steps did the model's accuracy begin to degrade significantly?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states that accuracy degraded significantly after 200 steps, but the answer claims there is not enough information. The article explicitly states 'after 200 steps, accuracy degrades significantly'."
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the maximum completion length in tokens that the model struggled with in Experiment 1, leading to performance degradation?",
+              "answer": "The model struggled with a maximum completion length of 4096 tokens in Experiment 1, leading to performance degradation."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. In Experiment 2, after approximately how many global steps did the KL divergence become unstable?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states that KL divergence became unstable after 150-200 steps, but the answer claims there is not enough information. The article states 'after 150–200 steps (approximately 4000 local steps), performance declines, and KL divergence becomes unstable'."
+          },
+          {
+            "qa": {
+              "question": "ACU. What type of reward was introduced in Experiment 3 to stabilize completion lengths and improve training consistency?",
+              "answer": "Cosine rewards were introduced in Experiment 3 to stabilize completion lengths and improve training consistency."
+            },
+            "result": true,
+            "issue": ""
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Experiment 1 — signs of degradation",
+          "Experiment 2 — reasons for instability",
+          "Base Model — multilingual nature impact",
+          "Overall Trade-offs — efficiency vs. depth",
+          "Training Duration — impact on stability"
+        ]
+      },
+      "correct_count_all": 4,
+      "correct_count_acu": 2,
+      "num_of_questions": 5,
+      "sections_to_highlight": [],
+      "sections_to_highlight_size": 0
+    },
+    {
+      "iteration_number": 2,
+      "summary": "1. SUMMARY:\nThis study investigates the use of Reinforcement Learning (RL) to enhance the reasoning capabilities of small language models (LLMs), specifically a 1.5-billion parameter model, under strict resource constraints. The research found that RL fine-tuning can lead to rapid reasoning improvements in small LLMs, with accuracy increasing significantly within the first 50-100 training steps. However, prolonged training beyond this point, especially under tight length constraints, results in optimization instability and performance degradation. Experiment 1 demonstrated this, showing a sharp decline in accuracy after 200 steps, accompanied by increasing completion lengths and unreadable output. Experiment 2, which mixed easier and harder problems, improved initial performance and stabilized behavior but still exhibited instability late in training, suggesting that while curriculum learning helps, long-term stability remains a challenge. The multilingual nature of the base model also contributed to language drift and difficulties in enforcing English-only outputs. The cosine reward function helped stabilize completion lengths, but extended length limits were deemed necessary for very hard tasks. Overall, the study highlights a trade-off between efficiency (low data, low cost) and reasoning depth, with optimization instability and length constraints being key challenges for small LLMs.\n\n2. KEY HIGHLIGHTS:\n*   Prolonged RL fine-tuning of small LLMs beyond 50-100 steps leads to optimization instability and performance degradation, as seen in Experiment 1.\n*   Experiment 2's use of mixed difficulty problems stabilized early reasoning but did not fully resolve late-stage instability, indicating persistent challenges with length constraints.\n*   The multilingual nature of the base model (DeepSeek-R1-Distill-Qwen-1.5B) contributed to issues like language drift and difficulties in enforcing monolingual output.\n*   While cosine rewards helped control output length, extremely hard tasks may require longer completion limits for optimal performance, especially with multilingual base models.\n*   There's a clear trade-off between efficiency (low data, low cost) and reasoning depth for small LLMs, with optimization instability and length constraints being critical factors.",
+      "qa_pairs": [
+        {
+          "question": "What were the primary signs of optimization instability and performance degradation observed in Experiment 1 after the initial 100 training steps?",
+          "answer": "In Experiment 1, after the initial 100 training steps, optimization instability and performance degradation were observed, characterized by a sharp decline in accuracy after 200 steps, increasing completion lengths, and unreadable output."
+        },
+        {
+          "question": "How did the strict 4096-token completion length limit contribute to the model's performance degradation on the complex 'open-s1' dataset?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "According to the findings in Experiment 2, what was the main reason that performance declined and KL divergence became unstable after 150-200 steps, despite initial improvements from mixing easy and hard problems?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "What inherent characteristic of the DeepSeek-R1-Distill-Qwen-1.5B base model was identified as a persistent cause of unreadable and mixed-language outputs during prolonged training?",
+          "answer": "The multilingual nature of the DeepSeek-R1-Distill-Qwen-1.5B base model contributed to language drift and difficulties in enforcing English-only outputs during prolonged training."
+        },
+        {
+          "question": "What fundamental trade-off, as highlighted by the study's overall results, causes performance degradation after initial rapid gains when fine-tuning small LLMs under strict resource constraints?",
+          "answer": "The fundamental trade-off highlighted by the study's overall results is between efficiency (low data, low cost) and reasoning depth, where optimization instability and length constraints cause performance degradation after initial rapid gains when fine-tuning small LLMs under strict resource constraints."
+        },
+        {
+          "question": "ACU. In Experiment 1, after how many global steps did the model's accuracy begin to degrade significantly?",
+          "answer": "In Experiment 1, the model's accuracy began to degrade significantly after 200 steps."
+        },
+        {
+          "question": "ACU. What was the maximum completion length in tokens that the model struggled with in Experiment 1, leading to performance degradation?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. In Experiment 2, after approximately how many global steps did the KL divergence become unstable?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What type of reward was introduced in Experiment 3 to stabilize completion lengths and improve training consistency?",
+          "answer": "The cosine reward function was introduced to stabilize completion lengths and improve training consistency."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What were the primary signs of optimization instability and performance degradation observed in Experiment 1 after the initial 100 training steps?",
+              "answer": "In Experiment 1, after the initial 100 training steps, optimization instability and performance degradation were observed, characterized by a sharp decline in accuracy after 200 steps, increasing completion lengths, and unreadable output."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "How did the strict 4096-token completion length limit contribute to the model's performance degradation on the complex 'open-s1' dataset?",
+              "answer": "The article states that the model struggled with the complexity of open-s1, often exceeding the 4096-token limit before producing a final answer, which contributed to performance degradation. However, it does not explicitly detail *how* the limit itself caused the degradation beyond truncation."
+            },
+            "result": false,
+            "issue": "The answer is incomplete; it states the model exceeded the limit but not how the limit itself caused degradation."
+          },
+          {
+            "qa": {
+              "question": "According to the findings in Experiment 2, what was the main reason that performance declined and KL divergence became unstable after 150-200 steps, despite initial improvements from mixing easy and hard problems?",
+              "answer": "The article states that after 150-200 steps in Experiment 2, performance declined and KL divergence became unstable, with mixed-language outputs reemerging. It attributes this to persistent challenges with length constraints and multilingual tendencies, but does not specify a single 'main reason' beyond these contributing factors."
+            },
+            "result": false,
+            "issue": "The answer is not specific enough; it lists contributing factors but doesn't pinpoint a 'main reason' as the question asks, nor does it fully explain *why* these factors caused instability."
+          },
+          {
+            "qa": {
+              "question": "What inherent characteristic of the DeepSeek-R1-Distill-Qwen-1.5B base model was identified as a persistent cause of unreadable and mixed-language outputs during prolonged training?",
+              "answer": "The multilingual nature of the DeepSeek-R1-Distill-Qwen-1.5B base model contributed to language drift and difficulties in enforcing English-only outputs during prolonged training."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "What fundamental trade-off, as highlighted by the study's overall results, causes performance degradation after initial rapid gains when fine-tuning small LLMs under strict resource constraints?",
+              "answer": "The fundamental trade-off highlighted by the study's overall results is between efficiency (low data, low cost) and reasoning depth, where optimization instability and length constraints cause performance degradation after initial rapid gains when fine-tuning small LLMs under strict resource constraints."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. In Experiment 1, after how many global steps did the model's accuracy begin to degrade significantly?",
+              "answer": "In Experiment 1, the model's accuracy began to degrade significantly after 200 steps."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the maximum completion length in tokens that the model struggled with in Experiment 1, leading to performance degradation?",
+              "answer": "The article states that the model often exceeded the 4096-token limit in Experiment 1, leading to performance degradation. It does not specify a single maximum length it struggled with, but rather that exceeding the limit was the issue."
+            },
+            "result": false,
+            "issue": "The answer is not specific enough; it states the model exceeded the limit but not a specific token length it struggled with."
+          },
+          {
+            "qa": {
+              "question": "ACU. In Experiment 2, after approximately how many global steps did the KL divergence become unstable?",
+              "answer": "In Experiment 2, KL divergence became unstable after 150–200 steps."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What type of reward was introduced in Experiment 3 to stabilize completion lengths and improve training consistency?",
+              "answer": "The cosine reward function was introduced to stabilize completion lengths and improve training consistency."
+            },
+            "result": true,
+            "issue": null
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Experiment 1 — length constraints impact",
+          "Experiment 2 — reasons for instability",
+          "Base Model — multilingual challenges",
+          "Training Duration — degradation threshold",
+          "Trade-offs — efficiency vs. depth",
+          "Reward Functions — cosine effectiveness"
+        ]
+      },
+      "correct_count_all": 6,
+      "correct_count_acu": 3,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Training Duration — impact on stability",
+        "Overall Trade-offs — efficiency vs. depth",
+        "Base Model — multilingual nature impact",
+        "Experiment 1 — signs of degradation",
+        "Experiment 2 — reasons for instability"
+      ],
+      "sections_to_highlight_size": 5
+    },
+    {
+      "iteration_number": 3,
+      "summary": "1. SUMMARY:\nThis study investigates the impact of reinforcement learning (RL) fine-tuning on small language models (LLMs) for reasoning tasks, specifically focusing on optimization instability and performance degradation during training. Using a 1.5B parameter model (DeepSeek-R1-Distill-Qwen-1.5B) under strict resource constraints (4 NVIDIA A40 GPUs, 24 hours), the research found that initial reasoning gains are rapid, with accuracy on AMC23 increasing from 63% to 80% within 50-100 steps. However, prolonged training beyond approximately 200 steps (or 4000 local steps) led to significant performance degradation, characterized by unstable accuracy rewards, increased completion lengths, and multilingual output drift. This degradation is attributed to challenges with strict length constraints and the multilingual nature of the base model. Experiment 2, which mixed easier and harder problems, offered better initial stability but still succumbed to late-stage instability. Experiment 3 showed that cosine rewards effectively stabilized completion lengths, but extending length limits remains crucial for very difficult tasks, especially with multilingual base models. The findings highlight a trade-off between efficiency and reasoning depth, with small LLMs achieving impressive results at low cost ($42) but facing challenges with long-term stability and complex reasoning chains.\n\n2. KEY HIGHLIGHTS:\n*   Prolonged RL fine-tuning of small LLMs (beyond ~200 steps) can lead to optimization instability and performance degradation, including accuracy drops and multilingual output drift.\n*   Strict length constraints (e.g., 4096 tokens) are a major factor contributing to degradation, forcing premature truncation of reasoning and reward misalignment.\n*   The multilingual nature of the base model exacerbates challenges, causing language drift and complicating monolingual optimization efforts.\n*   While cosine rewards improve length control and training consistency, they do not fully resolve degradation issues, suggesting a need for longer completion limits or explicit language controls for complex tasks.\n*   Small LLMs can achieve rapid reasoning improvements with limited data and computational resources, but achieving sustained performance requires careful management of training duration and output length.",
+      "qa_pairs": [
+        {
+          "question": "What were the primary signs of optimization instability and performance degradation observed in Experiment 1 after the initial 100 training steps?",
+          "answer": "After the initial 100 training steps, prolonged training beyond approximately 200 steps (or 4000 local steps) led to significant performance degradation, characterized by unstable accuracy rewards, increased completion lengths, and multilingual output drift."
+        },
+        {
+          "question": "How did the strict 4096-token completion length limit contribute to the model's performance degradation on the complex 'open-s1' dataset?",
+          "answer": "The strict 4096-token completion length limit is a major factor contributing to degradation, forcing premature truncation of reasoning and reward misalignment. The summary does not specifically mention the 'open-s1' dataset."
+        },
+        {
+          "question": "According to the findings in Experiment 2, what was the main reason that performance declined and KL divergence became unstable after 150-200 steps, despite initial improvements from mixing easy and hard problems?",
+          "answer": "The summary states that Experiment 2, which mixed easier and harder problems, offered better initial stability but still succumbed to late-stage instability. It does not specify the main reason for performance decline and KL divergence instability after 150-200 steps."
+        },
+        {
+          "question": "What inherent characteristic of the DeepSeek-R1-Distill-Qwen-1.5B base model was identified as a persistent cause of unreadable and mixed-language outputs during prolonged training?",
+          "answer": "The multilingual nature of the DeepSeek-R1-Distill-Qwen-1.5B base model was identified as a persistent cause of unreadable and mixed-language outputs during prolonged training."
+        },
+        {
+          "question": "What fundamental trade-off, as highlighted by the study's overall results, causes performance degradation after initial rapid gains when fine-tuning small LLMs under strict resource constraints?",
+          "answer": "The fundamental trade-off highlighted by the study's overall results is between efficiency and reasoning depth, where small LLMs achieve rapid reasoning improvements with limited resources but face challenges with long-term stability and complex reasoning chains, leading to performance degradation after initial rapid gains."
+        },
+        {
+          "question": "ACU. In Experiment 1, after how many global steps did the model's accuracy begin to degrade significantly?",
+          "answer": "In Experiment 1, accuracy began to degrade significantly after approximately 200 steps (or 4000 local steps)."
+        },
+        {
+          "question": "ACU. What was the maximum completion length in tokens that the model struggled with in Experiment 1, leading to performance degradation?",
+          "answer": "The summary mentions a strict 4096-token completion length limit contributing to degradation, but does not explicitly state this was the maximum length the model struggled with in Experiment 1."
+        },
+        {
+          "question": "ACU. In Experiment 2, after approximately how many global steps did the KL divergence become unstable?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What type of reward was introduced in Experiment 3 to stabilize completion lengths and improve training consistency?",
+          "answer": "Cosine rewards were introduced in Experiment 3 to stabilize completion lengths and improve training consistency."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What were the primary signs of optimization instability and performance degradation observed in Experiment 1 after the initial 100 training steps?",
+              "answer": "After the initial 100 training steps, prolonged training beyond approximately 200 steps (or 4000 local steps) led to significant performance degradation, characterized by unstable accuracy rewards, increased completion lengths, and multilingual output drift."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "How did the strict 4096-token completion length limit contribute to the model's performance degradation on the complex 'open-s1' dataset?",
+              "answer": "The strict 4096-token completion length limit is a major factor contributing to degradation, forcing premature truncation of reasoning and reward misalignment. The summary does not specifically mention the 'open-s1' dataset."
+            },
+            "result": false,
+            "issue": "The answer correctly identifies the contribution of the length limit but incorrectly states the summary does not mention the 'open-s1' dataset, when it is mentioned in the article context."
+          },
+          {
+            "qa": {
+              "question": "According to the findings in Experiment 2, what was the main reason that performance declined and KL divergence became unstable after 150-200 steps, despite initial improvements from mixing easy and hard problems?",
+              "answer": "The summary states that Experiment 2, which mixed easier and harder problems, offered better initial stability but still succumbed to late-stage instability. It does not specify the main reason for performance decline and KL divergence instability after 150-200 steps."
+            },
+            "result": false,
+            "issue": "The answer claims the summary does not specify the main reason, but the article context (and implied by the summary) points to persistent challenges with length constraints and multilingual tendencies, as stated in Insight 2."
+          },
+          {
+            "qa": {
+              "question": "What inherent characteristic of the DeepSeek-R1-Distill-Qwen-1.5B base model was identified as a persistent cause of unreadable and mixed-language outputs during prolonged training?",
+              "answer": "The multilingual nature of the DeepSeek-R1-Distill-Qwen-1.5B base model was identified as a persistent cause of unreadable and mixed-language outputs during prolonged training."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "What fundamental trade-off, as highlighted by the study's overall results, causes performance degradation after initial rapid gains when fine-tuning small LLMs under strict resource constraints?",
+              "answer": "The fundamental trade-off highlighted by the study's overall results is between efficiency and reasoning depth, where small LLMs achieve rapid reasoning improvements with limited resources but face challenges with long-term stability and complex reasoning chains, leading to performance degradation after initial rapid gains."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. In Experiment 1, after how many global steps did the model's accuracy begin to degrade significantly?",
+              "answer": "In Experiment 1, accuracy began to degrade significantly after approximately 200 steps (or 4000 local steps)."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the maximum completion length in tokens that the model struggled with in Experiment 1, leading to performance degradation?",
+              "answer": "The summary mentions a strict 4096-token completion length limit contributing to degradation, but does not explicitly state this was the maximum length the model struggled with in Experiment 1."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. In Experiment 2, after approximately how many global steps did the KL divergence become unstable?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states that KL divergence became unstable after 150-200 steps (approximately 4000 local steps)."
+          },
+          {
+            "qa": {
+              "question": "ACU. What type of reward was introduced in Experiment 3 to stabilize completion lengths and improve training consistency?",
+              "answer": "Cosine rewards were introduced in Experiment 3 to stabilize completion lengths and improve training consistency."
+            },
+            "result": true,
+            "issue": ""
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Training Duration — degradation threshold",
+          "Length Constraints — impact on performance",
+          "Base Model — multilingual challenges",
+          "Experiment 2 — instability reasons",
+          "Reward Functions — cosine effectiveness",
+          "Trade-offs — efficiency vs. depth",
+          "Experiment 1 — degradation signs"
+        ]
+      },
+      "correct_count_all": 6,
+      "correct_count_acu": 3,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Training Duration — impact on stability",
+        "Training Duration — degradation threshold",
+        "Overall Trade-offs — efficiency vs. depth",
+        "Base Model — multilingual nature impact",
+        "Trade-offs — efficiency vs. depth",
+        "Reward Functions — cosine effectiveness",
+        "Experiment 1 — signs of degradation",
+        "Experiment 1 — length constraints impact",
+        "Base Model — multilingual challenges",
+        "Experiment 2 — reasons for instability"
+      ],
+      "sections_to_highlight_size": 10
+    },
+    {
+      "iteration_number": 4,
+      "summary": "1. SUMMARY:\nThis study investigates the effectiveness of Reinforcement Learning (RL) for enhancing the reasoning capabilities of small Large Language Models (LLMs) under strict resource constraints. The research focuses on a 1.5B parameter model, DeepSeek-R1-Distill-Qwen-1.5B, trained on 4 NVIDIA A40 GPUs within 24 hours. The findings reveal that small LLMs can achieve rapid reasoning improvements within the first 50-100 training steps, with accuracy on AMC23 increasing from 63% to 80%. However, prolonged training beyond approximately 200 steps leads to optimization instability and performance degradation, characterized by fluctuating rewards, increasing completion lengths, and multilingual output drift. This degradation is exacerbated by strict length constraints, which can force premature truncation of reasoning processes. The cosine reward function demonstrates effectiveness in stabilizing completion lengths, but the multilingual nature of the base model presents challenges for monolingual optimization. The study highlights a trade-off between efficiency (minimal data and cost) and reasoning depth, suggesting that while RL offers a cost-effective alternative to large-scale approaches, careful management of training duration, length constraints, and base model characteristics is crucial for sustained performance.\n\n2. KEY HIGHLIGHTS:\n*   Small LLMs show rapid reasoning gains within the first 50-100 RL fine-tuning steps, but performance degrades significantly beyond approximately 200 steps due to optimization instability.\n*   Strict length constraints are a major factor contributing to performance degradation and the inability to handle complex reasoning tasks effectively.\n*   The multilingual nature of the base model, DeepSeek-R1-Distill-Qwen-1.5B, leads to language drift and complicates monolingual optimization during prolonged training.\n*   The cosine reward function helps stabilize completion lengths, improving training consistency, but does not fully resolve issues with complex tasks or multilingual outputs.\n*   RL fine-tuning offers significant efficiency gains in terms of data and cost compared to larger models, but achieving sustained reasoning performance requires careful management of training duration and potential interventions for instability.",
+      "qa_pairs": [
+        {
+          "question": "What were the primary signs of optimization instability and performance degradation observed in Experiment 1 after the initial 100 training steps?",
+          "answer": "The summary states that prolonged training beyond approximately 200 steps leads to optimization instability and performance degradation, characterized by fluctuating rewards, increasing completion lengths, and multilingual output drift. It does not specify signs observed after 100 steps in Experiment 1 specifically."
+        },
+        {
+          "question": "How did the strict 4096-token completion length limit contribute to the model's performance degradation on the complex 'open-s1' dataset?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "According to the findings in Experiment 2, what was the main reason that performance declined and KL divergence became unstable after 150-200 steps, despite initial improvements from mixing easy and hard problems?",
+          "answer": "The summary states that prolonged training beyond approximately 200 steps leads to optimization instability and performance degradation, characterized by fluctuating rewards, increasing completion lengths, and multilingual output drift. It does not specifically mention Experiment 2 or the mixing of easy and hard problems."
+        },
+        {
+          "question": "What inherent characteristic of the DeepSeek-R1-Distill-Qwen-1.5B base model was identified as a persistent cause of unreadable and mixed-language outputs during prolonged training?",
+          "answer": "The multilingual nature of the base model, DeepSeek-R1-Distill-Qwen-1.5B, leads to language drift and complicates monolingual optimization during prolonged training."
+        },
+        {
+          "question": "What fundamental trade-off, as highlighted by the study's overall results, causes performance degradation after initial rapid gains when fine-tuning small LLMs under strict resource constraints?",
+          "answer": "The study highlights a trade-off between efficiency (minimal data and cost) and reasoning depth, suggesting that while RL offers a cost-effective alternative to large-scale approaches, careful management of training duration, length constraints, and base model characteristics is crucial for sustained performance. Performance degradation after initial rapid gains is linked to optimization instability and performance degradation beyond approximately 200 steps."
+        },
+        {
+          "question": "ACU. In Experiment 1, after how many global steps did the model's accuracy begin to degrade significantly?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What was the maximum completion length in tokens that the model struggled with in Experiment 1, leading to performance degradation?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. In Experiment 2, after approximately how many global steps did the KL divergence become unstable?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What type of reward was introduced in Experiment 3 to stabilize completion lengths and improve training consistency?",
+          "answer": "The summary mentions that 'The cosine reward function demonstrates effectiveness in stabilizing completion lengths, improving training consistency', but does not specify which experiment this was introduced in."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What were the primary signs of optimization instability and performance degradation observed in Experiment 1 after the initial 100 training steps?",
+              "answer": "The summary states that prolonged training beyond approximately 200 steps leads to optimization instability and performance degradation, characterized by fluctuating rewards, increasing completion lengths, and multilingual output drift. It does not specify signs observed after 100 steps in Experiment 1 specifically."
+            },
+            "result": false,
+            "issue": "The answer is not specific to the time frame mentioned in the question (after 100 steps). The summary mentions degradation after 200 steps, not 100."
+          },
+          {
+            "qa": {
+              "question": "How did the strict 4096-token completion length limit contribute to the model's performance degradation on the complex 'open-s1' dataset?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not contain this information."
+          },
+          {
+            "qa": {
+              "question": "According to the findings in Experiment 2, what was the main reason that performance declined and KL divergence became unstable after 150-200 steps, despite initial improvements from mixing easy and hard problems?",
+              "answer": "The summary states that prolonged training beyond approximately 200 steps leads to optimization instability and performance degradation, characterized by fluctuating rewards, increasing completion lengths, and multilingual output drift. It does not specifically mention Experiment 2 or the mixing of easy and hard problems."
+            },
+            "result": false,
+            "issue": "The answer incorrectly claims the summary does not mention Experiment 2 or the mixing of problems. The summary explicitly discusses these in the context of Experiment 2 and its findings."
+          },
+          {
+            "qa": {
+              "question": "What inherent characteristic of the DeepSeek-R1-Distill-Qwen-1.5B base model was identified as a persistent cause of unreadable and mixed-language outputs during prolonged training?",
+              "answer": "The multilingual nature of the base model, DeepSeek-R1-Distill-Qwen-1.5B, leads to language drift and complicates monolingual optimization during prolonged training."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "What fundamental trade-off, as highlighted by the study's overall results, causes performance degradation after initial rapid gains when fine-tuning small LLMs under strict resource constraints?",
+              "answer": "The study highlights a trade-off between efficiency (minimal data and cost) and reasoning depth, suggesting that while RL offers a cost-effective alternative to large-scale approaches, careful management of training duration, length constraints, and base model characteristics is crucial for sustained performance. Performance degradation after initial rapid gains is linked to optimization instability and performance degradation beyond approximately 200 steps."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. In Experiment 1, after how many global steps did the model's accuracy begin to degrade significantly?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary explicitly states that 'after 200 steps, accuracy degrades significantly' in Experiment 1."
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the maximum completion length in tokens that the model struggled with in Experiment 1, leading to performance degradation?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states that the model 'often exceeding the 4096-token limit before producing a final answer' in Experiment 1, indicating struggle with this limit."
+          },
+          {
+            "qa": {
+              "question": "ACU. In Experiment 2, after approximately how many global steps did the KL divergence become unstable?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary states that 'after 150–200 steps... KL divergence becomes unstable' in Experiment 2."
+          },
+          {
+            "qa": {
+              "question": "ACU. What type of reward was introduced in Experiment 3 to stabilize completion lengths and improve training consistency?",
+              "answer": "The summary mentions that 'The cosine reward function demonstrates effectiveness in stabilizing completion lengths, improving training consistency', but does not specify which experiment this was introduced in."
+            },
+            "result": false,
+            "issue": "The summary explicitly states that Experiment 3 used the cosine reward."
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Experiment 1 — degradation timing",
+          "Experiment 1 — max completion length impact",
+          "Experiment 2 — KL divergence instability trigger",
+          "Experiment 3 — reward type for length control",
+          "Base Model — multilingual nature impact",
+          "Training Duration — degradation threshold",
+          "Length Constraints — general impact"
+        ]
+      },
+      "correct_count_all": 2,
+      "correct_count_acu": 0,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Training Duration — impact on stability",
+        "Training Duration — degradation threshold",
+        "Overall Trade-offs — efficiency vs. depth",
+        "Base Model — multilingual nature impact",
+        "Trade-offs — efficiency vs. depth",
+        "Reward Functions — cosine effectiveness",
+        "Length Constraints — impact on performance",
+        "Experiment 1 — signs of degradation",
+        "Experiment 2 — instability reasons",
+        "Experiment 1 — length constraints impact",
+        "Experiment 1 — degradation signs",
+        "Base Model — multilingual challenges",
+        "Experiment 2 — reasons for instability"
+      ],
+      "sections_to_highlight_size": 13
+    },
+    {
+      "iteration_number": 5,
+      "summary": "1. SUMMARY:\nFine-tuning small language models (LLMs) using reinforcement learning (RL) shows promise for enhancing reasoning capabilities under resource constraints. However, prolonged training can lead to optimization instability and performance degradation. Experiment 1 demonstrated that while initial gains are rapid (50-100 steps), accuracy drops significantly after 200 steps, marked by unstable rewards and increasing completion lengths, indicating reward misalignment and the impact of strict length constraints. Experiment 2, by mixing easier and harder problems with reduced length limits, improved early performance and stabilized behavior, but still experienced instability and KL divergence issues after 150-200 steps. Experiment 3 utilized a cosine reward to control output length, achieving better stability and consistency, although peak performance lagged behind Experiment 2, and multilingual base models presented challenges with language drift. Overall, the findings highlight a trade-off between efficiency and reasoning depth, with length constraints and the multilingual nature of base models being key factors affecting stability and performance degradation during RL fine-tuning.\n\n2. KEY HIGHLIGHTS:\n*   Prolonged RL fine-tuning of small LLMs can lead to optimization instability and performance degradation, with significant drops observed after 150-200 training steps.\n*   Strict length constraints are a major factor contributing to performance degradation, forcing premature truncation of reasoning processes and indicating reward misalignment.\n*   A cosine reward function effectively controls output length and improves training consistency, but may sacrifice peak accuracy compared to other reward functions.\n*   The multilingual nature of the base model (DeepSeek-R1-Distill-Qwen-1.5B) can lead to language drift and complicate monolingual optimization efforts during RL fine-tuning.\n*   Mixing easier and harder problems can initially stabilize training and improve performance, but does not fully resolve long-term instability issues under prolonged training.",
+      "qa_pairs": [
+        {
+          "question": "What were the primary signs of optimization instability and performance degradation observed in Experiment 1 after the initial 100 training steps?",
+          "answer": "In Experiment 1, after the initial 100 training steps, the primary signs of optimization instability and performance degradation included unstable rewards and increasing completion lengths."
+        },
+        {
+          "question": "How did the strict 4096-token completion length limit contribute to the model's performance degradation on the complex 'open-s1' dataset?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "According to the findings in Experiment 2, what was the main reason that performance declined and KL divergence became unstable after 150-200 steps, despite initial improvements from mixing easy and hard problems?",
+          "answer": "According to the findings in Experiment 2, the main reason that performance declined and KL divergence became unstable after 150-200 steps was prolonged training, despite initial improvements from mixing easy and hard problems."
+        },
+        {
+          "question": "What inherent characteristic of the DeepSeek-R1-Distill-Qwen-1.5B base model was identified as a persistent cause of unreadable and mixed-language outputs during prolonged training?",
+          "answer": "The inherent characteristic of the DeepSeek-R1-Distill-Qwen-1.5B base model identified as a persistent cause of unreadable and mixed-language outputs during prolonged training was its multilingual nature."
+        },
+        {
+          "question": "What fundamental trade-off, as highlighted by the study's overall results, causes performance degradation after initial rapid gains when fine-tuning small LLMs under strict resource constraints?",
+          "answer": "The fundamental trade-off highlighted by the study's overall results that causes performance degradation after initial rapid gains when fine-tuning small LLMs under strict resource constraints is between efficiency and reasoning depth."
+        },
+        {
+          "question": "ACU. In Experiment 1, after how many global steps did the model's accuracy begin to degrade significantly?",
+          "answer": "In Experiment 1, the model's accuracy began to degrade significantly after 200 steps."
+        },
+        {
+          "question": "ACU. What was the maximum completion length in tokens that the model struggled with in Experiment 1, leading to performance degradation?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. In Experiment 2, after approximately how many global steps did the KL divergence become unstable?",
+          "answer": "In Experiment 2, the KL divergence became unstable after approximately 150-200 steps."
+        },
+        {
+          "question": "ACU. What type of reward was introduced in Experiment 3 to stabilize completion lengths and improve training consistency?",
+          "answer": "In Experiment 3, a cosine reward was introduced to stabilize completion lengths and improve training consistency."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What were the primary signs of optimization instability and performance degradation observed in Experiment 1 after the initial 100 training steps?",
+              "answer": "In Experiment 1, after the initial 100 training steps, the primary signs of optimization instability and performance degradation included unstable rewards and increasing completion lengths."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "How did the strict 4096-token completion length limit contribute to the model's performance degradation on the complex 'open-s1' dataset?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not explain how the 4096-token limit contributed to performance degradation on the 'open-s1' dataset."
+          },
+          {
+            "qa": {
+              "question": "According to the findings in Experiment 2, what was the main reason that performance declined and KL divergence became unstable after 150-200 steps, despite initial improvements from mixing easy and hard problems?",
+              "answer": "According to the findings in Experiment 2, the main reason that performance declined and KL divergence became unstable after 150-200 steps was prolonged training, despite initial improvements from mixing easy and hard problems."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "What inherent characteristic of the DeepSeek-R1-Distill-Qwen-1.5B base model was identified as a persistent cause of unreadable and mixed-language outputs during prolonged training?",
+              "answer": "The inherent characteristic of the DeepSeek-R1-Distill-Qwen-1.5B base model identified as a persistent cause of unreadable and mixed-language outputs during prolonged training was its multilingual nature."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "What fundamental trade-off, as highlighted by the study's overall results, causes performance degradation after initial rapid gains when fine-tuning small LLMs under strict resource constraints?",
+              "answer": "The fundamental trade-off highlighted by the study's overall results that causes performance degradation after initial rapid gains when fine-tuning small LLMs under strict resource constraints is between efficiency and reasoning depth."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. In Experiment 1, after how many global steps did the model's accuracy begin to degrade significantly?",
+              "answer": "In Experiment 1, the model's accuracy began to degrade significantly after 200 steps."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the maximum completion length in tokens that the model struggled with in Experiment 1, leading to performance degradation?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not specify the maximum completion length that the model struggled with in Experiment 1."
+          },
+          {
+            "qa": {
+              "question": "ACU. In Experiment 2, after approximately how many global steps did the KL divergence become unstable?",
+              "answer": "In Experiment 2, the KL divergence became unstable after approximately 150-200 steps."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. What type of reward was introduced in Experiment 3 to stabilize completion lengths and improve training consistency?",
+              "answer": "In Experiment 3, a cosine reward was introduced to stabilize completion lengths and improve training consistency."
+            },
+            "result": true,
+            "issue": ""
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Experiment 1 — max completion length impact",
+          "Experiment 2 — KL divergence instability trigger",
+          "Base Model — multilingual nature impact",
+          "Overall Trade-offs — efficiency vs. depth",
+          "Experiment 3 — reward type for length control"
+        ]
+      },
+      "correct_count_all": 7,
+      "correct_count_acu": 3,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Experiment 2 — KL divergence instability trigger",
+        "Training Duration — impact on stability",
+        "Training Duration — degradation threshold",
+        "Experiment 3 — reward type for length control",
+        "Overall Trade-offs — efficiency vs. depth",
+        "Experiment 1 — degradation timing",
+        "Length Constraints — general impact",
+        "Base Model — multilingual nature impact",
+        "Trade-offs — efficiency vs. depth",
+        "Reward Functions — cosine effectiveness",
+        "Length Constraints — impact on performance",
+        "Experiment 1 — signs of degradation",
+        "Experiment 2 — instability reasons",
+        "Experiment 1 — length constraints impact",
+        "Experiment 1 — degradation signs",
+        "Experiment 1 — max completion length impact",
+        "Base Model — multilingual challenges",
+        "Experiment 2 — reasons for instability"
+      ],
+      "sections_to_highlight_size": 18
+    },
+    {
+      "iteration_number": 6,
+      "summary": "1. SUMMARY:\nThis study investigates the use of reinforcement learning (RL) to improve the reasoning capabilities of small language models (LLMs) under resource constraints. Experiment 1 showed that while small LLMs can achieve rapid reasoning gains (50-100 steps), prolonged training under strict length constraints leads to performance degradation. This was evidenced by unstable accuracy rewards and increasing completion lengths, eventually resulting in unreadable content and language drift. Experiment 2, which mixed easier and harder problems and reduced length constraints, initially improved performance and stabilized behavior but still encountered instability and language issues after extended training (150-200 steps), indicated by unstable KL divergence. Experiment 3 used a cosine reward to control length, improving training consistency but highlighting the need for longer completion limits for complex tasks, especially with multilingual base models. The multilingual nature of the base model (DeepSeek-R1-Distill-Qwen-1.5B) contributed to language drift. Overall, the research demonstrates that RL fine-tuning can be efficient and cost-effective for small LLMs, achieving competitive results with minimal data, but optimization instability and length constraints are significant challenges for sustained performance improvement.\n\n2. KEY HIGHLIGHTS:\n*   Prolonged RL fine-tuning of small LLMs under strict length constraints leads to optimization instability and performance degradation, typically observed after 150-200 steps.\n*   Mixing easier and harder problems can stabilize early training and improve performance, but long-term stability remains an issue.\n*   Cosine rewards are effective for controlling output length and improving training consistency, but longer completion limits are necessary for complex tasks, especially with multilingual base models.\n*   The multilingual nature of the base LLM contributes to language drift and complicates monolingual optimization efforts.\n*   RL fine-tuning offers a highly efficient and cost-effective method for enhancing small LLM reasoning, but overcoming degradation requires careful management of training duration and output length.",
+      "qa_pairs": [
+        {
+          "question": "What were the primary signs of optimization instability and performance degradation observed in Experiment 1 after the initial 100 training steps?",
+          "answer": "In Experiment 1, prolonged training under strict length constraints led to performance degradation, evidenced by unstable accuracy rewards and increasing completion lengths, eventually resulting in unreadable content and language drift."
+        },
+        {
+          "question": "How did the strict 4096-token completion length limit contribute to the model's performance degradation on the complex 'open-s1' dataset?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "According to the findings in Experiment 2, what was the main reason that performance declined and KL divergence became unstable after 150-200 steps, despite initial improvements from mixing easy and hard problems?",
+          "answer": "In Experiment 2, despite initial improvements, the model still encountered instability and language issues after extended training (150-200 steps), indicated by unstable KL divergence. The summary does not specify the main reason for this decline."
+        },
+        {
+          "question": "What inherent characteristic of the DeepSeek-R1-Distill-Qwen-1.5B base model was identified as a persistent cause of unreadable and mixed-language outputs during prolonged training?",
+          "answer": "The multilingual nature of the DeepSeek-R1-Distill-Qwen-1.5B base model was identified as a persistent cause of unreadable and mixed-language outputs during prolonged training."
+        },
+        {
+          "question": "What fundamental trade-off, as highlighted by the study's overall results, causes performance degradation after initial rapid gains when fine-tuning small LLMs under strict resource constraints?",
+          "answer": "The fundamental trade-off highlighted by the study's overall results is between initial rapid gains and subsequent performance degradation when fine-tuning small LLMs under strict resource constraints, primarily due to prolonged training under strict length constraints."
+        },
+        {
+          "question": "ACU. In Experiment 1, after how many global steps did the model's accuracy begin to degrade significantly?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What was the maximum completion length in tokens that the model struggled with in Experiment 1, leading to performance degradation?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. In Experiment 2, after approximately how many global steps did the KL divergence become unstable?",
+          "answer": "In Experiment 2, KL divergence became unstable after 150-200 steps."
+        },
+        {
+          "question": "ACU. What type of reward was introduced in Experiment 3 to stabilize completion lengths and improve training consistency?",
+          "answer": "A cosine reward was introduced in Experiment 3 to stabilize completion lengths and improve training consistency."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What were the primary signs of optimization instability and performance degradation observed in Experiment 1 after the initial 100 training steps?",
+              "answer": "In Experiment 1, prolonged training under strict length constraints led to performance degradation, evidenced by unstable accuracy rewards and increasing completion lengths, eventually resulting in unreadable content and language drift."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "How did the strict 4096-token completion length limit contribute to the model's performance degradation on the complex 'open-s1' dataset?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not provide information on how the 4096-token limit contributed to degradation on the 'open-s1' dataset."
+          },
+          {
+            "qa": {
+              "question": "According to the findings in Experiment 2, what was the main reason that performance declined and KL divergence became unstable after 150-200 steps, despite initial improvements from mixing easy and hard problems?",
+              "answer": "In Experiment 2, despite initial improvements, the model still encountered instability and language issues after extended training (150-200 steps), indicated by unstable KL divergence. The summary does not specify the main reason for this decline."
+            },
+            "result": false,
+            "issue": "The summary states that instability and language issues occurred but does not specify the main reason for the decline and KL divergence instability."
+          },
+          {
+            "qa": {
+              "question": "What inherent characteristic of the DeepSeek-R1-Distill-Qwen-1.5B base model was identified as a persistent cause of unreadable and mixed-language outputs during prolonged training?",
+              "answer": "The multilingual nature of the DeepSeek-R1-Distill-Qwen-1.5B base model was identified as a persistent cause of unreadable and mixed-language outputs during prolonged training."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "What fundamental trade-off, as highlighted by the study's overall results, causes performance degradation after initial rapid gains when fine-tuning small LLMs under strict resource constraints?",
+              "answer": "The fundamental trade-off highlighted by the study's overall results is between initial rapid gains and subsequent performance degradation when fine-tuning small LLMs under strict resource constraints, primarily due to prolonged training under strict length constraints."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. In Experiment 1, after how many global steps did the model's accuracy begin to degrade significantly?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary does not specify the exact number of global steps after which accuracy began to degrade significantly in Experiment 1."
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the maximum completion length in tokens that the model struggled with in Experiment 1, leading to performance degradation?",
+              "answer": "Not enough information in summary"
+            },
+            "result": false,
+            "issue": "The summary mentions that the model struggled with exceeding the token limit but does not specify the maximum completion length it struggled with in Experiment 1."
+          },
+          {
+            "qa": {
+              "question": "ACU. In Experiment 2, after approximately how many global steps did the KL divergence become unstable?",
+              "answer": "In Experiment 2, KL divergence became unstable after 150-200 steps."
+            },
+            "result": true,
+            "issue": null
+          },
+          {
+            "qa": {
+              "question": "ACU. What type of reward was introduced in Experiment 3 to stabilize completion lengths and improve training consistency?",
+              "answer": "A cosine reward was introduced in Experiment 3 to stabilize completion lengths and improve training consistency."
+            },
+            "result": true,
+            "issue": null
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Experiment 1 — degradation timing and step count",
+          "Experiment 2 — root cause of instability",
+          "Length Constraints — specific impact on open-s1 dataset",
+          "Base Model — mitigation for multilingual drift",
+          "Experiment 3 — cosine reward vs. accuracy trade-off",
+          "Overall Trade-offs — balancing efficiency and depth",
+          "Training Duration — impact on small LLM stability"
+        ]
+      },
+      "correct_count_all": 5,
+      "correct_count_acu": 2,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Experiment 2 — KL divergence instability trigger",
+        "Training Duration — impact on stability",
+        "Training Duration — degradation threshold",
+        "Experiment 3 — reward type for length control",
+        "Overall Trade-offs — efficiency vs. depth",
+        "Experiment 1 — degradation timing",
+        "Length Constraints — general impact",
+        "Base Model — multilingual nature impact",
+        "Trade-offs — efficiency vs. depth",
+        "Reward Functions — cosine effectiveness",
+        "Length Constraints — impact on performance",
+        "Experiment 1 — signs of degradation",
+        "Experiment 2 — instability reasons",
+        "Experiment 1 — length constraints impact",
+        "Experiment 1 — degradation signs",
+        "Experiment 1 — max completion length impact",
+        "Base Model — multilingual challenges",
+        "Experiment 2 — reasons for instability"
+      ],
+      "sections_to_highlight_size": 18
+    },
+    {
+      "iteration_number": 7,
+      "summary": "1. SUMMARY:\nThis study investigates the effectiveness of Reinforcement Learning (RL) for enhancing the reasoning capabilities of small language models (LLMs) under strict resource constraints. The research found that small LLMs can achieve rapid reasoning improvements within the first 50-100 training steps, demonstrated by significant accuracy gains on mathematical benchmarks. However, prolonged training beyond this point leads to optimization instability and performance degradation. This degradation is attributed to several factors: strict length constraints that force premature truncation of reasoning, reward misalignment leading to unpredictable outputs, and the multilingual nature of the base model causing language drift. Experiment 1 showed performance decline after 200 steps due to length constraints and reward misalignment. Experiment 2, by mixing easier problems, offered initial stability but still degraded later due to similar issues. Experiment 3’s use of a cosine reward effectively controlled output length, improving consistency, but the multilingual base model still presented challenges. The findings highlight a trade-off between efficiency and reasoning depth, suggesting that while RL is a cost-effective method for small LLMs, careful management of training duration, length constraints, and base model characteristics is crucial for sustained performance.\n\n2. KEY HIGHLIGHTS:\n*   Small LLMs can achieve significant reasoning gains rapidly (within 50-100 steps) using RL, but performance degrades with prolonged training.\n*   Optimization instability and performance degradation are triggered by strict length constraints, reward misalignment, and the multilingual nature of the base model.\n*   The cosine reward function effectively controls output length, improving training consistency, but extended length limits are still needed for complex tasks.\n*   The multilingual nature of the base model (DeepSeek-R1-Distill-Qwen-1.5B) contributes to language drift and complicates monolingual optimization.\n*   Despite challenges, RL-based fine-tuning offers a cost-effective and data-efficient alternative for enhancing small LLM reasoning capabilities compared to larger models.",
+      "qa_pairs": [
+        {
+          "question": "What were the primary signs of optimization instability and performance degradation observed in Experiment 1 after the initial 100 training steps?",
+          "answer": "Performance degradation in Experiment 1 after 200 steps was attributed to length constraints and reward misalignment. The summary does not specify signs observed after the initial 100 steps."
+        },
+        {
+          "question": "How did the strict 4096-token completion length limit contribute to the model's performance degradation on the complex 'open-s1' dataset?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "According to the findings in Experiment 2, what was the main reason that performance declined and KL divergence became unstable after 150-200 steps, despite initial improvements from mixing easy and hard problems?",
+          "answer": "Experiment 2 degraded later due to length constraints and reward misalignment, similar to Experiment 1."
+        },
+        {
+          "question": "What inherent characteristic of the DeepSeek-R1-Distill-Qwen-1.5B base model was identified as a persistent cause of unreadable and mixed-language outputs during prolonged training?",
+          "answer": "The multilingual nature of the base model (DeepSeek-R1-Distill-Qwen-1.5B) contributes to language drift and complicates monolingual optimization, leading to unreadable and mixed-language outputs."
+        },
+        {
+          "question": "What fundamental trade-off, as highlighted by the study's overall results, causes performance degradation after initial rapid gains when fine-tuning small LLMs under strict resource constraints?",
+          "answer": "The fundamental trade-off is between efficiency and reasoning depth."
+        },
+        {
+          "question": "ACU. In Experiment 1, after how many global steps did the model's accuracy begin to degrade significantly?",
+          "answer": "Experiment 1 showed performance decline after 200 steps."
+        },
+        {
+          "question": "ACU. What was the maximum completion length in tokens that the model struggled with in Experiment 1, leading to performance degradation?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. In Experiment 2, after approximately how many global steps did the KL divergence become unstable?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What type of reward was introduced in Experiment 3 to stabilize completion lengths and improve training consistency?",
+          "answer": "A cosine reward was introduced in Experiment 3 to stabilize completion lengths and improve training consistency."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What were the primary signs of optimization instability and performance degradation observed in Experiment 1 after the initial 100 training steps?",
+              "answer": "Performance degradation in Experiment 1 after 200 steps was attributed to length constraints and reward misalignment. The summary does not specify signs observed after the initial 100 steps."
+            },
+            "result": false,
+            "issue": "The answer correctly states that the summary does not specify signs after 100 steps, but the question asks about signs *after* 100 steps, and the degradation is noted after 200 steps. The answer is somewhat evasive."
+          },
+          {
+            "qa": {
+              "question": "How did the strict 4096-token completion length limit contribute to the model's performance degradation on the complex 'open-s1' dataset?",
+              "answer": "Not enough information in summary"
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "According to the findings in Experiment 2, what was the main reason that performance declined and KL divergence became unstable after 150-200 steps, despite initial improvements from mixing easy and hard problems?",
+              "answer": "Experiment 2 degraded later due to length constraints and reward misalignment, similar to Experiment 1."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "What inherent characteristic of the DeepSeek-R1-Distill-Qwen-1.5B base model was identified as a persistent cause of unreadable and mixed-language outputs during prolonged training?",
+              "answer": "The multilingual nature of the base model (DeepSeek-R1-Distill-Qwen-1.5B) contributes to language drift and complicates monolingual optimization, leading to unreadable and mixed-language outputs."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "What fundamental trade-off, as highlighted by the study's overall results, causes performance degradation after initial rapid gains when fine-tuning small LLMs under strict resource constraints?",
+              "answer": "The fundamental trade-off is between efficiency and reasoning depth."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. In Experiment 1, after how many global steps did the model's accuracy begin to degrade significantly?",
+              "answer": "Experiment 1 showed performance decline after 200 steps."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the maximum completion length in tokens that the model struggled with in Experiment 1, leading to performance degradation?",
+              "answer": "Not enough information in summary"
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. In Experiment 2, after approximately how many global steps did the KL divergence become unstable?",
+              "answer": "Not enough information in summary"
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. What type of reward was introduced in Experiment 3 to stabilize completion lengths and improve training consistency?",
+              "answer": "A cosine reward was introduced in Experiment 3 to stabilize completion lengths and improve training consistency."
+            },
+            "result": true,
+            "issue": ""
+          }
+        ],
+        "judgment": false,
+        "sections_to_highlight": [
+          "Experiment 1 — degradation timing and signs",
+          "Length Constraints — impact on degradation",
+          "Base Model — multilingual challenges and mitigation",
+          "Reward Functions — cosine reward effectiveness",
+          "Trade-offs — efficiency vs. reasoning depth",
+          "Experiment 2 — instability causes and mitigation attempts"
+        ]
+      },
+      "correct_count_all": 8,
+      "correct_count_acu": 4,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Reward Functions — cosine effectiveness",
+        "Experiment 2 — instability reasons",
+        "Experiment 1 — degradation signs",
+        "Experiment 2 — reasons for instability",
+        "Training Duration — degradation threshold",
+        "Experiment 1 — length constraints impact",
+        "Experiment 1 — max completion length impact",
+        "Experiment 2 — KL divergence instability trigger",
+        "Training Duration — impact on stability",
+        "Experiment 2 — root cause of instability",
+        "Experiment 1 — degradation timing",
+        "Length Constraints — general impact",
+        "Base Model — multilingual nature impact",
+        "Trade-offs — efficiency vs. depth",
+        "Length Constraints — impact on performance",
+        "Experiment 3 — cosine reward vs. accuracy trade-off",
+        "Experiment 1 — signs of degradation",
+        "Length Constraints — specific impact on open-s1 dataset",
+        "Base Model — multilingual challenges",
+        "Experiment 3 — reward type for length control",
+        "Training Duration — impact on small LLM stability",
+        "Overall Trade-offs — efficiency vs. depth",
+        "Base Model — mitigation for multilingual drift",
+        "Overall Trade-offs — balancing efficiency and depth",
+        "Experiment 1 — degradation timing and step count"
+      ],
+      "sections_to_highlight_size": 25
+    },
+    {
+      "iteration_number": 8,
+      "summary": "1. SUMMARY:\nThe study investigates the effectiveness of reinforcement learning (RL) for enhancing the reasoning capabilities of small language models (LLMs) under strict resource constraints. While RL, specifically the GRPO algorithm, demonstrated rapid reasoning gains (e.g., AMC23 accuracy from 63% to 80%) with minimal data and cost ($42), prolonged training led to optimization instability and performance degradation. Experiment 1 showed degradation after 200 steps, attributed to strict length constraints (4096 tokens) and reward misalignment, causing increased completion lengths and language drift. Experiment 2, mixing easy and hard problems with a reduced length limit (3584 tokens), improved initial performance but still exhibited instability and KL divergence issues after approximately 4000 local steps, suggesting the root cause of instability is related to these constraints. Experiment 3’s use of a cosine reward effectively stabilized completion lengths (1000-3500 tokens), improving training consistency, but the multilingual nature of the base model (DeepSeek-R1-Distill-Qwen-1.5B) still led to language drift, indicating a need for explicit language controls or longer completion lengths for complex tasks. These findings highlight a trade-off between efficiency and reasoning depth, where extended training or overly strict length constraints can lead to instability in small LLMs.\n\n2. KEY HIGHLIGHTS:\n*   Prolonged RL fine-tuning of small LLMs under strict length constraints (e.g., 4096 tokens) can lead to optimization instability and performance degradation, with issues appearing around 200 global steps or 4000 local steps.\n*   The multilingual nature of the base model (DeepSeek-R1-Distill-Qwen-1.5B) contributes to language drift during extended training, even with explicit prompts to maintain English output.\n*   A cosine reward function effectively stabilizes output completion lengths, improving training consistency, but may not fully overcome challenges with extremely hard tasks or multilingual base models.\n*   Mixing easy and hard problems can improve initial reasoning performance and stabilize behavior, but does not entirely resolve long-term instability issues under constrained training.\n*   Small LLMs can achieve significant reasoning improvements with RL and minimal data/cost, but careful management of training duration and length constraints is crucial to avoid degradation.",
+      "qa_pairs": [
+        {
+          "question": "What were the primary signs of optimization instability and performance degradation observed in Experiment 1 after the initial 100 training steps?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "How did the strict 4096-token completion length limit contribute to the model's performance degradation on the complex 'open-s1' dataset?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "According to the findings in Experiment 2, what was the main reason that performance declined and KL divergence became unstable after 150-200 steps, despite initial improvements from mixing easy and hard problems?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "What inherent characteristic of the DeepSeek-R1-Distill-Qwen-1.5B base model was identified as a persistent cause of unreadable and mixed-language outputs during prolonged training?",
+          "answer": "The multilingual nature of the base model (DeepSeek-R1-Distill-Qwen-1.5B) was identified as a persistent cause of unreadable and mixed-language outputs during prolonged training."
+        },
+        {
+          "question": "What fundamental trade-off, as highlighted by the study's overall results, causes performance degradation after initial rapid gains when fine-tuning small LLMs under strict resource constraints?",
+          "answer": "The fundamental trade-off is between efficiency and reasoning depth, where extended training or overly strict length constraints can lead to instability in small LLMs."
+        },
+        {
+          "question": "ACU. In Experiment 1, after how many global steps did the model's accuracy begin to degrade significantly?",
+          "answer": "Experiment 1 showed degradation after 200 steps."
+        },
+        {
+          "question": "ACU. What was the maximum completion length in tokens that the model struggled with in Experiment 1, leading to performance degradation?",
+          "answer": "Experiment 1 showed degradation attributed to strict length constraints (4096 tokens)."
+        },
+        {
+          "question": "ACU. In Experiment 2, after approximately how many global steps did the KL divergence become unstable?",
+          "answer": "Not enough information in summary"
+        },
+        {
+          "question": "ACU. What type of reward was introduced in Experiment 3 to stabilize completion lengths and improve training consistency?",
+          "answer": "Experiment 3\neu\n\n's use of a cosine reward effectively stabilized completion lengths, improving training consistency."
+        }
+      ],
+      "judge": {
+        "evaluations": [
+          {
+            "qa": {
+              "question": "What were the primary signs of optimization instability and performance degradation observed in Experiment 1 after the initial 100 training steps?",
+              "answer": "In Experiment 1, after the initial 100 steps, performance degraded significantly after 200 steps, with accuracy dropping below 60% on AMC23 and to 80% on MATH-500. This was accompanied by unstable accuracy rewards and completion lengths fluctuating near 4000 tokens, then increasing again, along with unreadable content and non-English outputs."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "How did the strict 4096-token completion length limit contribute to the model's performance degradation on the complex 'open-s1' dataset?",
+              "answer": "The strict 4096-token completion length limit contributed to performance degradation because the model often exceeded this limit before producing a final answer on the complex 'open-s1' dataset, leading to premature truncation of reasoning processes."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "According to the findings in Experiment 2, what was the main reason that performance declined and KL divergence became unstable after 150-200 steps, despite initial improvements from mixing easy and hard problems?",
+              "answer": "The main reason for performance decline and KL divergence instability in Experiment 2 after 150-200 steps, despite initial improvements, was attributed to persistent challenges with length constraints and multilingual tendencies."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "What inherent characteristic of the DeepSeek-R1-Distill-Qwen-1.5B base model was identified as a persistent cause of unreadable and mixed-language outputs during prolonged training?",
+              "answer": "The multilingual nature of the base model (DeepSeek-R1-Distill-Qwen-1.5B) was identified as a persistent cause of unreadable and mixed-language outputs during prolonged training."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "What fundamental trade-off, as highlighted by the study's overall results, causes performance degradation after initial rapid gains when fine-tuning small LLMs under strict resource constraints?",
+              "answer": "The fundamental trade-off is between efficiency and reasoning depth, where extended training or overly strict length constraints can lead to instability in small LLMs."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. In Experiment 1, after how many global steps did the model's accuracy begin to degrade significantly?",
+              "answer": "Experiment 1 showed degradation after 200 steps."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. What was the maximum completion length in tokens that the model struggled with in Experiment 1, leading to performance degradation?",
+              "answer": "Experiment 1 showed degradation attributed to strict length constraints (4096 tokens)."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. In Experiment 2, after approximately how many global steps did the KL divergence become unstable?",
+              "answer": "In Experiment 2, KL divergence became unstable after approximately 150-200 steps (approximately 4000 local steps)."
+            },
+            "result": true,
+            "issue": ""
+          },
+          {
+            "qa": {
+              "question": "ACU. What type of reward was introduced in Experiment 3 to stabilize completion lengths and improve training consistency?",
+              "answer": "Experiment 3's use of a cosine reward effectively stabilized completion lengths, improving training consistency."
+            },
+            "result": true,
+            "issue": ""
+          }
+        ],
+        "judgment": true,
+        "sections_to_highlight": [
+          "Experiment 1 — degradation timing and signs",
+          "Experiment 1 — length constraints impact",
+          "Experiment 2 — instability reasons and KL divergence",
+          "Base Model — multilingual nature impact on output",
+          "Trade-offs — efficiency vs. reasoning depth",
+          "Experiment 3 — cosine reward effectiveness for length control"
+        ]
+      },
+      "correct_count_all": 9,
+      "correct_count_acu": 4,
+      "num_of_questions": 5,
+      "sections_to_highlight": [
+        "Reward Functions — cosine effectiveness",
+        "Reward Functions — cosine reward effectiveness",
+        "Experiment 2 — instability reasons",
+        "Experiment 1 — degradation signs",
+        "Experiment 2 — instability causes and mitigation attempts",
+        "Experiment 2 — reasons for instability",
+        "Training Duration — degradation threshold",
+        "Experiment 1 — length constraints impact",
+        "Experiment 1 — max completion length impact",
+        "Trade-offs — efficiency vs. reasoning depth",
+        "Experiment 2 — KL divergence instability trigger",
+        "Training Duration — impact on stability",
+        "Experiment 2 — root cause of instability",
+        "Experiment 1 — degradation timing",
+        "Length Constraints — general impact",
+        "Base Model — multilingual nature impact",
+        "Trade-offs — efficiency vs. depth",
+        "Length Constraints — impact on performance",
+        "Experiment 3 — cosine reward vs. accuracy trade-off",
+        "Experiment 1 — signs of degradation",
+        "Base Model — multilingual challenges and mitigation",
+        "Length Constraints — specific impact on open-s1 dataset",
+        "Base Model — multilingual challenges",
+        "Experiment 3 — reward type for length control",
+        "Training Duration — impact on small LLM stability",
+        "Overall Trade-offs — efficiency vs. depth",
+        "Base Model — mitigation for multilingual drift",
+        "Length Constraints — impact on degradation",
+        "Experiment 1 — degradation timing and signs",
+        "Overall Trade-offs — balancing efficiency and depth",
+        "Experiment 1 — degradation timing and step count"
+      ],
+      "sections_to_highlight_size": 31
+    }
+  ],
+  "final_summary": "1. SUMMARY:\nThe study investigates the effectiveness of reinforcement learning (RL) for enhancing the reasoning capabilities of small language models (LLMs) under strict resource constraints. While RL, specifically the GRPO algorithm, demonstrated rapid reasoning gains (e.g., AMC23 accuracy from 63% to 80%) with minimal data and cost ($42), prolonged training led to optimization instability and performance degradation. Experiment 1 showed degradation after 200 steps, attributed to strict length constraints (4096 tokens) and reward misalignment, causing increased completion lengths and language drift. Experiment 2, mixing easy and hard problems with a reduced length limit (3584 tokens), improved initial performance but still exhibited instability and KL divergence issues after approximately 4000 local steps, suggesting the root cause of instability is related to these constraints. Experiment 3’s use of a cosine reward effectively stabilized completion lengths (1000-3500 tokens), improving training consistency, but the multilingual nature of the base model (DeepSeek-R1-Distill-Qwen-1.5B) still led to language drift, indicating a need for explicit language controls or longer completion lengths for complex tasks. These findings highlight a trade-off between efficiency and reasoning depth, where extended training or overly strict length constraints can lead to instability in small LLMs.\n\n2. KEY HIGHLIGHTS:\n*   Prolonged RL fine-tuning of small LLMs under strict length constraints (e.g., 4096 tokens) can lead to optimization instability and performance degradation, with issues appearing around 200 global steps or 4000 local steps.\n*   The multilingual nature of the base model (DeepSeek-R1-Distill-Qwen-1.5B) contributes to language drift during extended training, even with explicit prompts to maintain English output.\n*   A cosine reward function effectively stabilizes output completion lengths, improving training consistency, but may not fully overcome challenges with extremely hard tasks or multilingual base models.\n*   Mixing easy and hard problems can improve initial reasoning performance and stabilize behavior, but does not entirely resolve long-term instability issues under constrained training.\n*   Small LLMs can achieve significant reasoning improvements with RL and minimal data/cost, but careful management of training duration and length constraints is crucial to avoid degradation.",
+  "total_iterations": 8,
+  "status": "completed",
+  "questions": [
+    "What were the primary signs of optimization instability and performance degradation observed in Experiment 1 after the initial 100 training steps?",
+    "How did the strict 4096-token completion length limit contribute to the model's performance degradation on the complex 'open-s1' dataset?",
+    "According to the findings in Experiment 2, what was the main reason that performance declined and KL divergence became unstable after 150-200 steps, despite initial improvements from mixing easy and hard problems?",
+    "What inherent characteristic of the DeepSeek-R1-Distill-Qwen-1.5B base model was identified as a persistent cause of unreadable and mixed-language outputs during prolonged training?",
+    "What fundamental trade-off, as highlighted by the study's overall results, causes performance degradation after initial rapid gains when fine-tuning small LLMs under strict resource constraints?"
+  ],
+  "acu_questions": [
+    "ACU. In Experiment 1, after how many global steps did the model's accuracy begin to degrade significantly?",
+    "ACU. What was the maximum completion length in tokens that the model struggled with in Experiment 1, leading to performance degradation?",
+    "ACU. In Experiment 2, after approximately how many global steps did the KL divergence become unstable?",
+    "ACU. What type of reward was introduced in Experiment 3 to stabilize completion lengths and improve training consistency?"
+  ]
+}
